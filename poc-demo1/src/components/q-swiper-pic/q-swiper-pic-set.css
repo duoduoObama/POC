@@ -1,0 +1,47 @@
+#q-swiper-pic-set .options {
+  display: flex;
+  align-items: center;
+}
+#q-swiper-pic-set .options-menu {
+  width: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+  position: relative;
+}
+#q-swiper-pic-set .options-menu-content {
+  width: 130px;
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: -114px;
+  background-color: #fff;
+  box-shadow: 0 0 2px 2px #cacaca;
+  z-index: 100;
+}
+#q-swiper-pic-set .options-menu-content-item {
+  width: 130px;
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+#q-swiper-pic-set .options-menu-content-item:hover {
+  background-color: #d8e4fd;
+}
+#q-swiper-pic-set .options-menu-content-item > span {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #707070;
+  line-height: 30px;
+}
+#q-swiper-pic-set .addBtn {
+  background-color: #1890ff;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 6px;
+  cursor: pointer;
+}

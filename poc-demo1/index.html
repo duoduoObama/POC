@@ -7,7 +7,34 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div
+        data-x="123"
+        data-y="65"
+        class="draggable2 can-drop focus"
+        style="
+          left: 123px;
+          top: 65px;
+          width: 772px;
+          height: 472px;
+          background-color: rgb(255, 255, 255);
+          opacity: 1;
+          z-index: 1;
+          position: absolute;
+          overflow: hidden;
+        "
+      >
+        <q-static-pic
+          data-data='{"id":"drag-qammlu475rwe","text":"静态图片","group":"媒体","width":150,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjE0MzAxODM0Mzk5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMCAxMDI0VjBoMTAyNHYxMDI0SDB6TTkzMy42NDcwNTkgOTAuMzUyOTQxSDkwLjM1Mjk0MXY3NjguNTIyMDM5TDM1MS4zNzI1NDkgNDcxLjg0MzEzN2wyMjAuODYyNzQ1IDI2MS4wMTk2MDggMTQwLjU0OTAyLTExMC40MzEzNzIgMjIwLjg2Mjc0NSAyMjkuMDQ0NzA1VjkwLjM1Mjk0MXpNNjcyLjYyNzQ1MSAzMzEuMjk0MTE4YTkwLjM1Mjk0MSA5MC4zNTI5NDEgMCAxIDEgOTAuMzUyOTQxIDkwLjM1Mjk0MSA5MC4zNTI5NDEgOTAuMzUyOTQxIDAgMCAxLTkwLjM1Mjk0MS05MC4zNTI5NDF6IiBwLWlkPSIyNzI3IiBmaWxsPSIjYmZiZmJmIj48L3BhdGg+PC9zdmc+","datatype":1,"options":{"url":"https://picsum.photos/440/242","displayMode":"自适应"},"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjE0MzAxODM0Mzk5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMCAxMDI0VjBoMTAyNHYxMDI0SDB6TTkzMy42NDcwNTkgOTAuMzUyOTQxSDkwLjM1Mjk0MXY3NjguNTIyMDM5TDM1MS4zNzI1NDkgNDcxLjg0MzEzN2wyMjAuODYyNzQ1IDI2MS4wMTk2MDggMTQwLjU0OTAyLTExMC40MzEzNzIgMjIwLjg2Mjc0NSAyMjkuMDQ0NzA1VjkwLjM1Mjk0MXpNNjcyLjYyNzQ1MSAzMzEuMjk0MTE4YTkwLjM1Mjk0MSA5MC4zNTI5NDEgMCAxIDEgOTAuMzUyOTQxIDkwLjM1Mjk0MSA5MC4zNTI5NDEgOTAuMzUyOTQxIDAgMCAxLTkwLjM1Mjk0MS05MC4zNTI5NDF6IiBwLWlkPSIyNzI3IiBmaWxsPSIjYmZiZmJmIj48L3BhdGg+PC9zdmc+","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-static-pic","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+          data-component="true"
+          id="drag-qammlu475rwe"
+          title="undefined"
+          data-parent-id="inner-dropzone"
+          data-x="256"
+          data-y="144"
+        ></q-static-pic>
+      </div>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
