@@ -1,3 +1,7 @@
+import { createApp, nextTick } from "vue/dist/vue.esm-browser";
+import Ajv from "ajv";
+import { obEvents } from "../../util/rx";
+
 /**
  * 创建webComponent组件类
  */
@@ -146,9 +150,13 @@ export class QSwiperPic extends HTMLElement {
           };
           const check = ajv.compile(shchema);
           obEvents.currentSelectedPoint(id).subscribe((data) => {
-            const { body } = _.cloneDeep(data);
-            if (data.replyStatus && Array.isArray(data.reply) && data.reply.length) {
-              const temp = _.cloneDeep(data);
+            const { body } = JSON.parse(JSON.stringify(data));
+            if (
+              data.replyStatus &&
+              Array.isArray(data.reply) &&
+              data.reply.length
+            ) {
+              const temp = JSON.parse(JSON.stringify(data));
               temp.eventData = { type: "reply" };
               temp.sender = data.receiver;
               temp.receiver = "eventBus";
@@ -169,7 +177,7 @@ export class QSwiperPic extends HTMLElement {
         changeBgImg() {
           this.bgImg = [];
           this.data.options.forEach((item) => {
-            const temp = _.cloneDeep(item);
+            const temp = JSON.parse(JSON.stringify(item));
             temp.title =
               temp.displayMode === "自适应"
                 ? "url(" + temp.title + ") no-repeat center center/contain"
@@ -182,7 +190,9 @@ export class QSwiperPic extends HTMLElement {
         },
         async createSwiper() {
           const { origin } = this.data;
-          const { Swiper } = await import(origin + "/ui-builder/js/lay-module/swiper/swiper-bundle.esm.browser.min.js");
+          const { Swiper } = await import(
+            "https://cdn.bootcdn.net/ajax/libs/Swiper/7.2.0/swiper-bundle.esm.browser.min.js"
+          );
           const delay = 2000;
           this.swiper = new Swiper(this.$refs.swiperContainer, {
             noSwiping: true, // 关闭手动切换
@@ -201,7 +211,12 @@ export class QSwiperPic extends HTMLElement {
           let len = 0;
           setInterval(() => {
             let { activeIndex } = this.swiper;
-            if (len > 2 && oldActiveIndex === activeIndex && this.swiper && this.swiper.autoplay) {
+            if (
+              len > 2 &&
+              oldActiveIndex === activeIndex &&
+              this.swiper &&
+              this.swiper.autoplay
+            ) {
               this.swiper.autoplay.run();
               len = 0;
             }
@@ -218,7 +233,10 @@ export class QSwiperPic extends HTMLElement {
             type,
             eventData: e,
           };
-          obEvents.setSelectedPoint(message, JSON.parse(JSON.stringify(this.data)));
+          obEvents.setSelectedPoint(
+            message,
+            JSON.parse(JSON.stringify(this.data))
+          );
         },
       },
       mounted() {

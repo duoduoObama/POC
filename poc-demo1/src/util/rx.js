@@ -1,4 +1,5 @@
 import { BehaviorSubject, filter } from "rxjs";
+// import { pageScript } from "../page/index";
 
 function ObservableMethods() {
   /**
@@ -27,6 +28,7 @@ function ObservableMethods() {
    * @param {*} selectedPointsIfo
    */
   this.setSelectedPoint = (eventName, selectedPointsIfo = {}) => {
+    pageScript(eventName, selectedPointsIfo);
     if (typeof eventName === `string`) {
       this.obSubject.next({
         receiver: eventName,
