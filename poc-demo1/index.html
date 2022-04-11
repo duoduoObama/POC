@@ -5,18 +5,27 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <!-- 导入样式 -->
+    <link rel="stylesheet" href="./src/plugins/element-plus@2.1.8/index.css" />
+    <link rel="stylesheet" href="./src/plugins/ant-design-vue@3.1.1/antd.css" />
+    <!-- 导入 Vue 3 -->
+    <script src="./src/plugins/vue@3.2.0/vue.global.prod.js"></script>
+    <!-- 导入组件库 -->
+    <script src="./src/plugins/element-plus@2.1.8/index.full.min.js"></script>
+    <script src="./src/plugins/dayjs@1.11.0/dayjs.min.js"></script>
+    <script src="./src/plugins/ant-design-vue@3.1.1/antd.js"></script>
   </head>
   <body>
     <div id="app">
-      <div
+      <!-- <div
         data-x="123"
         data-y="65"
         class="draggable2 can-drop focus"
         style="
           left: 123px;
           top: 65px;
-          width: 772px;
-          height: 472px;
+          width: 572px;
+          height: 372px;
           background-color: rgb(255, 255, 255);
           opacity: 1;
           z-index: 1;
@@ -33,8 +42,148 @@
           data-x="256"
           data-y="144"
         ></q-static-pic>
+      </div> -->
+      <div
+        data-x="123"
+        data-y="465"
+        class="draggable2 can-drop focus"
+        style="
+          left: 123px;
+          top: 465px;
+          width: 572px;
+          height: 372px;
+          background-color: rgb(255, 255, 255);
+          opacity: 1;
+          z-index: 1;
+          position: absolute;
+          overflow: hidden;
+        "
+      >
+        <q-swiper-pic
+          data-data='{"id":"drag-qammlu475rwe","text":"静态图片","group":"媒体","width":150,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjE0MzAxODM0Mzk5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMCAxMDI0VjBoMTAyNHYxMDI0SDB6TTkzMy42NDcwNTkgOTAuMzUyOTQxSDkwLjM1Mjk0MXY3NjguNTIyMDM5TDM1MS4zNzI1NDkgNDcxLjg0MzEzN2wyMjAuODYyNzQ1IDI2MS4wMTk2MDggMTQwLjU0OTAyLTExMC40MzEzNzIgMjIwLjg2Mjc0NSAyMjkuMDQ0NzA1VjkwLjM1Mjk0MXpNNjcyLjYyNzQ1MSAzMzEuMjk0MTE4YTkwLjM1Mjk0MSA5MC4zNTI5NDEgMCAxIDEgOTAuMzUyOTQxIDkwLjM1Mjk0MSA5MC4zNTI5NDEgOTAuMzUyOTQxIDAgMCAxLTkwLjM1Mjk0MS05MC4zNTI5NDF6IiBwLWlkPSIyNzI3IiBmaWxsPSIjYmZiZmJmIj48L3BhdGg+PC9zdmc+","datatype":1,"options":[{"title":"https://picsum.photos/440/242","displayMode":"自适应"},{"title":"https://picsum.photos/440/242","displayMode":"自适应"},{"title":"https://picsum.photos/440/242","displayMode":"自适应"}],"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjE0MzAxODM0Mzk5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMCAxMDI0VjBoMTAyNHYxMDI0SDB6TTkzMy42NDcwNTkgOTAuMzUyOTQxSDkwLjM1Mjk0MXY3NjguNTIyMDM5TDM1MS4zNzI1NDkgNDcxLjg0MzEzN2wyMjAuODYyNzQ1IDI2MS4wMTk2MDggMTQwLjU0OTAyLTExMC40MzEzNzIgMjIwLjg2Mjc0NSAyMjkuMDQ0NzA1VjkwLjM1Mjk0MXpNNjcyLjYyNzQ1MSAzMzEuMjk0MTE4YTkwLjM1Mjk0MSA5MC4zNTI5NDEgMCAxIDEgOTAuMzUyOTQxIDkwLjM1Mjk0MSA5MC4zNTI5NDEgOTAuMzUyOTQxIDAgMCAxLTkwLjM1Mjk0MS05MC4zNTI5NDF6IiBwLWlkPSIyNzI3IiBmaWxsPSIjYmZiZmJmIj48L3BhdGg+PC9zdmc+","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-static-pic","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+          data-component="true"
+          id="drag-qammlu475rwe"
+          title="undefined"
+          data-parent-id="inner-dropzone"
+          data-x="256"
+          data-y="144"
+        ></q-swiper-pic>
+      </div>
+      <div id="stepInfo">
+        <div
+          data-x="0"
+          data-y="30"
+          class="draggable2 can-drop focus"
+          style="
+            left: 10%;
+            top: 30px;
+            width: 80%;
+            height: 200px;
+            background-color: rgb(255, 255, 255);
+            opacity: 1;
+            z-index: 1;
+            position: absolute;
+            overflow: hidden;
+          "
+        >
+          <q-step
+            data-data='{"id":"drag-qammlu475hay","text":"步骤条","group":"导航","width":450,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"","datatype":1,"options":{"percent": 100,"current":0,"data":[{"title":"步骤一","subTitle":"副标题","description":"这是一个描述。"},{"title":"步骤二","subTitle":"副标题","description":"这是一个描述。"},{"title":"步骤三","subTitle":"副标题","description":"这是一个描述。"}]},"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-static-pic","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+            data-component="true"
+            id="drag-qammlu475hay"
+            data-parent-id="inner-dropzone"
+            data-x="256"
+            data-y="144"
+          ></q-step>
+        </div>
+        <div
+          data-x="0"
+          data-y="300"
+          class="draggable2 can-drop focus"
+          style="
+            left: 15%;
+            top: 300px;
+            width: 80%;
+            height: 300px;
+            background-color: rgb(255, 255, 255);
+            opacity: 1;
+            z-index: 1;
+            position: absolute;
+            overflow: hidden;
+          "
+        >
+          <q-form
+            data-data='{"id":"drag-qaum3hl75hay","text":"表单","group":"数据录入","width":450,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"","datatype":1,"options":{"username":"","pass":"","checkPass":"","age":null},"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-form","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+            data-component="true"
+            id="drag-qaum3hl75hay"
+            data-parent-id="inner-dropzone"
+            data-x="256"
+            data-y="144"
+          ></q-form>
+        </div>
+        <div
+          data-x="0"
+          data-y="300"
+          class="draggable2 can-drop focus"
+          style="
+            left: 40%;
+            top: 650px;
+            width: 15%;
+            height: 100px;
+            background-color: rgb(255, 255, 255);
+            opacity: 1;
+            z-index: 1;
+            position: absolute;
+            overflow: hidden;
+          "
+        >
+          <q-button
+            data-data='{"id":"drag-c32qheh3evp6","text":"按钮","group":"文本","width":450,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"","datatype":1,"options":{"text":"上一步","type":"primary","disabled":false},"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-button","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+            data-component="true"
+            id="drag-c32qheh3evp6"
+            data-parent-id="inner-dropzone"
+            data-x="256"
+            data-y="144"
+          ></q-button>
+        </div>
+        <div
+          data-x="0"
+          data-y="300"
+          class="draggable2 can-drop focus"
+          style="
+            left: 50%;
+            top: 650px;
+            width: 15%;
+            height: 100px;
+            background-color: rgb(255, 255, 255);
+            opacity: 1;
+            z-index: 1;
+            position: absolute;
+            overflow: hidden;
+          "
+        >
+          <q-button
+            data-data='{"id":"drag-vwzbynxadx9w","text":"按钮","group":"文本","width":450,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"","datatype":1,"options":{"text":"下一步","type":"primary","disabled":false},"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-button","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+            data-component="true"
+            id="drag-vwzbynxadx9w"
+            data-parent-id="inner-dropzone"
+            data-x="256"
+            data-y="144"
+          ></q-button>
+        </div>
       </div>
     </div>
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="./main.js"></script>
+    <script src="./src/plugins/jquery@3.6.0/jquery@3.6.0.min.js"></script>
+    <script src="./src/page/index.js"></script>
+    <!-- <script>
+      const app = {
+        data() {
+          return {};
+        },
+        mounted() {},
+      };
+      const app2 = Vue.createApp(app);
+      app2.mount("#app");
+    </script> -->
   </body>
 </html>
