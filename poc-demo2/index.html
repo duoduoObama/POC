@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app">
+      <a-steps v-model:current="current" type="navigation" :style="stepStyle">
+        <a-step title="Step 1"> 123123123 </a-step>
+        <a-step title="Step 2"></a-step>
+        <a-step title="Step 3"></a-step>
+        <a-step title="Step 4"></a-step>
+      </a-steps>
+
+      <div>
+        <a-button
+          class="editable-add-btn"
+          style="margin-bottom: 8px"
+          @click="handleAdd"
+          >Add</a-button
+        >
+        <a-table bordered :data-source="dataSource" :columns="columns">
+          <template v-slot:bodyCell="{ column, text, record }">
+            <template v-if="column.dataIndex === 'name'">
+              <div class="editable-cell">
+                <div
+                  v-if="editableData[record.key]"
+                  class="editable-cell-input-wrapper"
+                >
+                  <a-input
+                    v-model:value="editableData[record.key].name"
+                    @pressEnter="save(record.key)"
+                  ></a-input>
+                  <check-outlined
+                    class="editable-cell-icon-check"
+                    @click="save(record.key)"
+                  ></check-outlined>
+                </div>
+                <div v-else class="editable-cell-text-wrapper">
+                  {{ text || ' ' }}{{editableData[record.key]}}
+                  <edit-outlined
+                    class="editable-cell-icon"
+                    @click="edit(record.key)"
+                  ></edit-outlined>
+                </div>
+              </div>
+            </template>
+            <template v-else-if="column.dataIndex === 'operation'">
+              {{12312312}}
+              <a-popconfirm
+                v-if="dataSource.length"
+                title="Sure to delete?"
+                @confirm="onDelete(record.key)"
+              >
+                <a>Delete</a>
+              </a-popconfirm>
+            </template>
+          </template>
+        </a-table>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
