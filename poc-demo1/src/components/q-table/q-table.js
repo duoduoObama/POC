@@ -1,6 +1,8 @@
-// import styles from "element-plus/dist/index.css";
-import styles from "../../plugins/ant-design-vue@3.1.1/antd.css";
+import { createApp, nextTick } from "vue";
+import antd from "ant-design-vue/dist/antd";
+import styles from "ant-design-vue/dist/antd.css";
 import Ajv from "ajv";
+import { obEvents } from "../../util/rx";
 
 /**
  * 创建webComponent组件类
@@ -254,7 +256,7 @@ export class QTable extends HTMLElement {
       },
       mounted() {
         this.receiveInfo();
-        Vue.nextTick(() => {
+        nextTick(() => {
           const style = document.createElement("style");
           style.textContent = selfComponent.styleText;
           root.appendChild(style);
@@ -262,8 +264,7 @@ export class QTable extends HTMLElement {
       },
     };
 
-    const app = Vue.createApp(component);
-    app.use(ElementPlus);
+    const app = createApp(component);
     app.use(antd);
     app.mount(root);
     this.#componentInstance = app;

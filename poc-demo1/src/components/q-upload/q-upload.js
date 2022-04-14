@@ -1,6 +1,8 @@
-// import styles from "element-plus/dist/index.css";
-import styles from "../../plugins/ant-design-vue@3.1.1/antd.css";
+import { createApp, nextTick } from "vue";
+import antd from "ant-design-vue/dist/antd";
+import styles from "ant-design-vue/dist/antd.css";
 import Ajv from "ajv";
+import { obEvents } from "../../util/rx";
 
 /**
  * 创建webComponent组件类
@@ -152,7 +154,7 @@ export class QUpload extends HTMLElement {
         beforeUpload(file, fileList) {
           const isImg = file.type === "image/png" || file.type === "image/jpeg";
           if (!isImg) {
-            antd.message.error(`${file.name} 不是jpeg/png文件`);
+            this.$message.error(`${file.name} 不是jpeg/png文件`);
           }
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -203,7 +205,7 @@ export class QUpload extends HTMLElement {
       },
       mounted() {
         this.receiveInfo();
-        Vue.nextTick(() => {
+        nextTick(() => {
           const style = document.createElement("style");
           style.textContent = selfComponent.styleText;
           root.appendChild(style);
@@ -211,8 +213,7 @@ export class QUpload extends HTMLElement {
       },
     };
 
-    const app = Vue.createApp(component);
-    app.use(ElementPlus);
+    const app = createApp(component);
     app.use(antd);
     app.mount(root);
     this.#componentInstance = app;

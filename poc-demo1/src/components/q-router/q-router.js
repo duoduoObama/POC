@@ -1,3 +1,6 @@
+import { createRouter, createWebHashHistory } from "vue-router";
+import { createApp, nextTick } from "vue";
+
 /**
  * 创建webComponent组件类
  */
@@ -99,7 +102,7 @@ export class QRouter extends HTMLElement {
           
             <!-- 路由匹配到的iframe类型组件将渲染在这里 -->
             <div
-              v-for="{meta:{component,isIframe},path} in data.options.path.filter(c=>c.isIframe)" 
+              v-for="{meta:{component,isIframe},path} in data.options.data.path.filter(c=>c.isIframe)" 
               v-show="$route.meta.keepAlive&&$route.meta.isIframe&&$route.path===path"
             >
               <component :key="path" :is="component" />
@@ -120,7 +123,7 @@ export class QRouter extends HTMLElement {
       },
       mounted() {
         this.receiveInfo();
-        Vue.nextTick(() => {
+        nextTick(() => {
           const style = document.createElement("style");
           style.textContent = selfComponent.styleText;
           root.appendChild(style);
@@ -129,7 +132,9 @@ export class QRouter extends HTMLElement {
     };
 
     const {
-      options: { path = [] },
+      options: {
+        data: { path = [] },
+      },
     } = this.data;
     // 1. 定义路由组件.
     // 也可以从其他文件导入
@@ -171,11 +176,11 @@ export class QRouter extends HTMLElement {
     // 2. 定义一些路由
     // 每个路由都需要映射到一个组件。
     const routes = path;
-    const router = VueRouter.createRouter({
-      history: VueRouter.createWebHashHistory(),
+    const router = createRouter({
+      history: createWebHashHistory(),
       routes, // `routes: routes` 的缩写
     });
-    const app = Vue.createApp(component);
+    const app = createApp(component);
     //确保 _use_ 路由实例使
     //整个应用支持路由。
     app.use(router);

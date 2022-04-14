@@ -1,8 +1,5 @@
-(function () {
-  setTimeout(() => {
-    getTableData();
-  }, 1000);
-})();
+import { obEvents } from "../util/rx";
+import { message } from "ant-design-vue";
 
 let globalData = {
   form: {},
@@ -209,16 +206,20 @@ function upload(eventInfo) {
   globalData.upload = eventInfo.options;
 }
 
+function cancelBtn() {
+  window.location.replace("#/table");
+}
+
 function finishBtn() {
   if (!globalData.upload.avatar) {
-    antd.message.error("请上传头像!");
+    message.error("请上传头像!");
     return;
   }
   if (
     Object.keys(globalData.form).length === 0 ||
     Object.keys(globalData.form2).length === 0
   ) {
-    antd.message.error("信息缺失,请重新添加!");
+    message.error("信息缺失,请重新添加!");
     return;
   }
   if (globalData.dataKey === "") {
@@ -374,6 +375,10 @@ function pageScript(eventName, eventInfo) {
       // 图片选择，将数据保存到全局变量上
       upload(eventInfo);
       break;
+    case "drag-8iv4dcr4hkcd":
+      // 取消按钮
+      cancelBtn();
+      break;
     case "drag-2v2e2ryqw18z":
       // 完成按钮
       finishBtn();
@@ -396,3 +401,5 @@ function guid() {
     return v.toString(16);
   });
 }
+
+export { pageScript, getTableData };

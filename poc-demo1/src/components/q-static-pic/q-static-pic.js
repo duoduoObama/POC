@@ -1,5 +1,9 @@
-import { createApp, nextTick } from "vue/dist/vue.esm-browser";
+import { createApp, nextTick } from "vue";
+import antd from "ant-design-vue/dist/antd";
+import styles from "ant-design-vue/dist/antd.css";
 import Ajv from "ajv";
+import { obEvents } from "../../util/rx";
+
 /**
  * 静态图片
  */
