@@ -5,7 +5,7 @@ import Ajv from "ajv";
 /**
  * 创建webComponent组件类
  */
-export class QButton extends HTMLElement {
+export class QTable extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -101,7 +101,37 @@ export class QButton extends HTMLElement {
     const component = {
       template: ` 
           <div class="container">
-            <a-button :type="data.options.type" :disabled="data.options.disabled" @click="sendMessage">{{ data.options.text }}</a-button>
+            <a-table :columns="columns" :data-source="data.options" :scroll="{ x: 1500, y: 600 }">
+              <template #bodyCell="{ column, record }">
+                <template v-if="column.key === 'tags'">
+                  <span v-for="item in record.tags">
+                    <a-tag v-if="item === '地域'" color="pink">{{item}}</a-tag>
+                    <a-tag v-else-if="item === '购物类型'" color="red">{{item}}</a-tag>
+                    <a-tag v-else-if="item === '教育程度'" color="orange">{{item}}</a-tag>
+                    <a-tag v-else-if="item === '活跃程度'" color="green">{{item}}</a-tag>
+                    <a-tag v-else-if="item === '品牌偏好'" color="cyan">{{item}}</a-tag>
+                    <a-tag v-else-if="item === '购买力'" color="blue">{{item}}</a-tag>
+                  </span>
+                </template>
+                <template v-else-if="column.key === 'avatar'">
+                  <a-avatar :src="record.avatar" :size="45" />
+                </template>
+                <template v-else-if="column.key === 'admin'">
+                  <span>{{record.admin ? "是" : "否"}}</span>
+                </template>
+                <template v-else-if="column.key === 'operation'">
+                  <a @click="action(record,'change')">修改</a>
+                  <a-divider type="vertical" />
+                  <a-popconfirm
+                    v-if="data.options.length"
+                    title="确定删除吗?"
+                    @confirm="action(record,'delete')"
+                  >
+                    <a>删除</a>
+                  </a-popconfirm>
+                </template>
+              </template>
+            </a-table>
           </div>
           `,
       watch: {
@@ -115,46 +145,98 @@ export class QButton extends HTMLElement {
           deep: true,
         },
       },
-      components: {},
       created() {
         this.data = selfComponent.data;
       },
       data() {
         return {
           data: {},
+          columns: [
+            {
+              title: "头像",
+              width: 100,
+              dataIndex: "avatar",
+              key: "avatar",
+              fixed: "left",
+            },
+            {
+              title: "用户名",
+              width: 100,
+              dataIndex: "username",
+              key: "username",
+              fixed: "left",
+            },
+            {
+              title: "年龄",
+              width: 100,
+              dataIndex: "age",
+              key: "age",
+              fixed: "left",
+            },
+            {
+              title: "地区",
+              dataIndex: "province",
+              key: "province",
+              width: 150,
+            },
+            { title: "组别", dataIndex: "group", key: "group", width: 150 },
+            { title: "标签", dataIndex: "tags", key: "tags", width: 150 },
+            { title: "用户星级", dataIndex: "rate", key: "rate", width: 150 },
+            { title: "管理员", dataIndex: "admin", key: "admin", width: 150 },
+            {
+              title: "操作",
+              key: "operation",
+              fixed: "right",
+              width: 120,
+            },
+          ],
         };
       },
       methods: {
         receiveInfo() {
           const { id, text } = this.data;
+          obEvents.currentSelectedPoint(id).subscribe((data) => {
+            this.bindEvent(data);
+          });
+        },
+        action(record, type) {
+          const message = {
+            sender: this.data.id,
+            receiver: "eventBus",
+            type: type,
+            data: record,
+          };
+          obEvents.setSelectedPoint(
+            message,
+            JSON.parse(JSON.stringify(this.data))
+          );
+        },
+        bindEvent(data) {
+          const { header = {}, body } = data;
+          const { dst = [] } = header;
           const ajv = new Ajv();
           const shchema = {
             type: "array",
             items: {
               type: "object",
               properties: {
-                image: { type: "string" },
+                username: { type: "string" },
+                age: { type: "number" },
+                group: { type: "string" },
               },
-              required: ["image"],
+              required: ["username", "age", "group"],
             },
           };
           const check = ajv.compile(shchema);
-          obEvents.currentSelectedPoint(id).subscribe((data) => {
-            this.bindEvent(data);
-          });
-        },
-        bindEvent(data) {
-          const { header = {}, body } = data;
-          const { dst = [] } = header;
           dst.forEach((item, index) => {
             switch (item) {
-              case "changeDisable":
-                if (typeof body.disabled === "boolean") {
-                  this.data.options.disabled = body.disabled;
-                  selfComponent.dataset.data = JSON.stringify(this.data);
-                }
-                break;
               case "changeOptions":
+                if (check(body.tableData)) {
+                  this.data.options = body.tableData;
+                } else {
+                  this.data.options = [];
+                }
+                selfComponent.dataset.data = JSON.stringify(this.data);
                 break;
             }
           });
@@ -198,6 +280,8 @@ export class QButton extends HTMLElement {
     if (this.componentInstance) {
       this.componentInstance._instance.data.data = this.data;
     }
+
+    // this.componentInit();
   }
 
   /**
@@ -211,4 +295,4 @@ export class QButton extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-button", QButton);
+customElements.define("q-table", QTable);

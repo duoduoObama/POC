@@ -5,7 +5,7 @@ import Ajv from "ajv";
 /**
  * 创建webComponent组件类
  */
-export class QForm extends HTMLElement {
+export class QForm2 extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -102,25 +102,65 @@ export class QForm extends HTMLElement {
       template: ` 
         <a-form
           ref="formRef"
-          name="custom-validation"
           :model="data.options"
-          :rules="rules"
+          name="validate_other"
           v-bind="layout"
+          :rules="rules"
           @finish="handleFinish"
           @finishFailed="handleFinishFailed"
         >
-          <a-form-item has-feedback label="UserName" name="username">
-            <a-input v-model:value="data.options.username" type="text" autocomplete="off" />
+          <a-form-item
+            name="province"
+            label="用户地区"
+            has-feedback
+          >
+            <a-select v-model:value="data.options.province" placeholder="请选择省份">
+              <a-select-option v-for="item in provinces" :value="item">{{item}}</a-select-option>
+            </a-select>
           </a-form-item>
-          <a-form-item has-feedback label="Password" name="pass">
-            <a-input v-model:value="data.options.pass" type="password" autocomplete="off" />
+      
+          <a-form-item name="admin" label="管理员权限">
+            <a-switch v-model:checked="data.options.admin" />
           </a-form-item>
-          <a-form-item has-feedback label="Confirm" name="checkPass">
-            <a-input v-model:value="data.options.checkPass" type="password" autocomplete="off" />
+      
+          <a-form-item name="group" label="用户组别">
+            <a-radio-group v-model:value="data.options.group">
+              <a-radio value="研发">研发</a-radio>
+              <a-radio value="运营">运营</a-radio>
+              <a-radio value="产品">产品</a-radio>
+              <a-radio value="行政">行政</a-radio>
+            </a-radio-group>
           </a-form-item>
-          <a-form-item has-feedback label="Age" name="age">
-            <a-input-number v-model:value="data.options.age" style="width: 50%" />
+      
+          <a-form-item name="tags" label="用户标签">
+            <a-checkbox-group v-model:value="data.options.tags">
+              <a-row>
+                <a-col :span="8">
+                  <a-checkbox value="地域" style="line-height: 32px">地域</a-checkbox>
+                </a-col>
+                <a-col :span="8">
+                  <a-checkbox value="购物类型" style="line-height: 32px">购物类型</a-checkbox>
+                </a-col>
+                <a-col :span="8">
+                  <a-checkbox value="教育程度" style="line-height: 32px">教育程度</a-checkbox>
+                </a-col>
+                <a-col :span="8">
+                  <a-checkbox value="活跃程度" style="line-height: 32px">活跃程度</a-checkbox>
+                </a-col>
+                <a-col :span="8">
+                  <a-checkbox value="品牌偏好" style="line-height: 32px">品牌偏好</a-checkbox>
+                </a-col>
+                <a-col :span="8">
+                  <a-checkbox value="购买力" style="line-height: 32px">购买力</a-checkbox>
+                </a-col>
+              </a-row>
+            </a-checkbox-group>
           </a-form-item>
+      
+          <a-form-item name="rate" label="用户星级">
+            <a-rate v-model:value="data.options.rate" />
+          </a-form-item>
+
           <a-form-item :wrapper-col="{ span: 14, offset: 4 }" style="display: none" >
             <a-button id="submit" type="primary" html-type="submit">提交</a-button>
           </a-form-item>
@@ -144,35 +184,75 @@ export class QForm extends HTMLElement {
         return {
           data: {},
           rules: {
-            username: [
+            province: [
               {
                 required: true,
-                validator: this.validateUsername,
+                validator: this.validateProvince,
                 trigger: "change",
               },
             ],
-            pass: [
+            group: [
               {
                 required: true,
-                validator: this.validatePass,
+                validator: this.validateGroup,
                 trigger: "change",
               },
             ],
-            checkPass: [
+            tags: [
               {
                 required: true,
-                validator: this.validatePass2,
+                validator: this.validateTags,
                 trigger: "change",
               },
             ],
-            age: [
-              { required: true, validator: this.checkAge, trigger: "change" },
+            rate: [
+              {
+                required: true,
+                validator: this.validateRate,
+                trigger: "change",
+              },
             ],
           },
           layout: {
-            labelCol: { span: 4 },
+            labelCol: { span: 6 },
             wrapperCol: { span: 14 },
           },
+          provinces: [
+            "河北省",
+            "山西省",
+            "内蒙古自治区",
+            "辽宁省",
+            "吉林省",
+            "黑龙江省",
+            "江苏省",
+            "浙江省",
+            "安徽省",
+            "福建省",
+            "江西省",
+            "山东省",
+            "河南省",
+            "湖北省",
+            "湖南省",
+            "广东省",
+            "广西壮族自治区",
+            "海南省",
+            "四川省",
+            "贵州省",
+            "云南省",
+            "陕西省",
+            "甘肃省",
+            "青海省",
+            "西藏自治区",
+            "宁夏回族自治区",
+            "台湾省",
+            "北京市",
+            "天津市",
+            "上海市",
+            "重庆市",
+            "香港",
+            "澳门",
+            "新疆维吾尔自治区",
+          ],
         };
       },
       methods: {
@@ -180,61 +260,44 @@ export class QForm extends HTMLElement {
           const { id, text } = this.data;
           const ajv = new Ajv();
           const shchema = {
-            type: "object",
-            properties: {
-              username: { type: "string" },
-              pass: { type: "string" },
-              checkPass: { type: "string" },
-              age: { type: "number" },
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                image: { type: "string" },
+              },
+              required: ["image"],
             },
-            required: ["username", "pass", "checkPass", "age"],
           };
           const check = ajv.compile(shchema);
           obEvents.currentSelectedPoint(id).subscribe((data) => {
             this.bindEvent(data);
           });
         },
-        async checkAge(rule, value) {
-          if (!value) {
-            return Promise.reject("请输入年龄");
-          }
-          if (!Number.isInteger(value)) {
-            return Promise.reject("请输入整数");
-          } else {
-            if (value < 18) {
-              return Promise.reject("年龄应该大于18岁");
-            } else {
-              return Promise.resolve();
-            }
-          }
-        },
-        async validateUsername(rule, value) {
-          const reg = new RegExp("^[A-Za-z0-9_]+$");
+        async validateProvince(rule, value) {
           if (value === "") {
-            return Promise.reject("请输入用户名");
-          } else if (!reg.test(value)) {
-            return Promise.reject("请输入字母、数字、下划线组合");
-          } else if (value.length > 16) {
-            return Promise.reject("字符最多为16位");
+            return Promise.reject("请选择地区");
           } else {
             return Promise.resolve();
           }
         },
-        async validatePass(rule, value) {
+        async validateGroup(rule, value) {
           if (value === "") {
-            return Promise.reject("请输入密码");
+            return Promise.reject("请选择组别");
           } else {
-            if (this.data.options.checkPass !== "") {
-              this.$refs.formRef.validateFields("checkPass");
-            }
             return Promise.resolve();
           }
         },
-        async validatePass2(rule, value) {
-          if (value === "") {
-            return Promise.reject("请输入密码");
-          } else if (value !== this.data.options.pass) {
-            return Promise.reject("两次密码不一致!");
+        async validateTags(rule, value) {
+          if (value.length === 0) {
+            return Promise.reject("请选择标签");
+          } else {
+            return Promise.resolve();
+          }
+        },
+        async validateRate(rule, value) {
+          if (value === 0) {
+            return Promise.reject("请选择星级");
           } else {
             return Promise.resolve();
           }
@@ -250,6 +313,7 @@ export class QForm extends HTMLElement {
         },
         handleSubmit() {
           root.querySelector("#submit").click();
+          // this.$refs.formRef.submit();
         },
         resetForm() {
           this.$refs.formRef.resetFields();
@@ -262,12 +326,18 @@ export class QForm extends HTMLElement {
           const shchema = {
             type: "object",
             properties: {
-              username: { type: "string" },
-              pass: { type: "string" },
-              checkPass: { type: "string" },
-              age: { type: "number" },
+              province: { type: "string" },
+              admin: { type: "boolean" },
+              group: { type: "string" },
+              tags: {
+                type: "array",
+                items: {
+                  type: "string",
+                },
+              },
+              rate: { type: "number" },
             },
-            required: ["username", "pass", "checkPass", "age"],
+            required: ["province", "group", "tags", "rate"],
           };
           const check = ajv.compile(shchema);
           dst.forEach((item, index) => {
@@ -339,4 +409,4 @@ export class QForm extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-form", QForm);
+customElements.define("q-form2", QForm2);

@@ -5,7 +5,7 @@ import Ajv from "ajv";
 /**
  * 创建webComponent组件类
  */
-export class QButton extends HTMLElement {
+export class QUpload extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -101,7 +101,14 @@ export class QButton extends HTMLElement {
     const component = {
       template: ` 
           <div class="container">
-            <a-button :type="data.options.type" :disabled="data.options.disabled" @click="sendMessage">{{ data.options.text }}</a-button>
+            <a-upload-dragger
+              :before-upload="beforeUpload"
+            >
+              <p class="ant-upload-drag-icon">
+                <a-avatar :src="data.options.avatar" :size="80" />
+              </p>
+              <p class="ant-upload-text">点击或将文件拖拽到此处以上传头像</p>
+            </a-upload-dragger>
           </div>
           `,
       watch: {
@@ -115,7 +122,6 @@ export class QButton extends HTMLElement {
           deep: true,
         },
       },
-      components: {},
       created() {
         this.data = selfComponent.data;
       },
@@ -143,18 +149,43 @@ export class QButton extends HTMLElement {
             this.bindEvent(data);
           });
         },
+        beforeUpload(file, fileList) {
+          const isImg = file.type === "image/png" || file.type === "image/jpeg";
+          if (!isImg) {
+            antd.message.error(`${file.name} 不是jpeg/png文件`);
+          }
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            this.data.options.avatar = e.target.result;
+            selfComponent.dataset.data = JSON.stringify(this.data);
+            this.sendMessage();
+          };
+          return false;
+        },
         bindEvent(data) {
           const { header = {}, body } = data;
           const { dst = [] } = header;
+          const ajv = new Ajv();
+          const shchema = {
+            type: "object",
+            properties: {
+              avatar: { type: "string" },
+            },
+            required: ["avatar"],
+          };
+          const check = ajv.compile(shchema);
           dst.forEach((item, index) => {
             switch (item) {
-              case "changeDisable":
-                if (typeof body.disabled === "boolean") {
-                  this.data.options.disabled = body.disabled;
-                  selfComponent.dataset.data = JSON.stringify(this.data);
-                }
+              case "clearOptions":
+                this.data.options.avatar = "";
+                selfComponent.dataset.data = JSON.stringify(this.data);
                 break;
               case "changeOptions":
+                if (check(body)) {
+                  this.data.options = body;
+                  selfComponent.dataset.data = JSON.stringify(this.data);
+                }
                 break;
             }
           });
@@ -194,7 +225,6 @@ export class QButton extends HTMLElement {
   loadInfo(elem) {
     this.shadow = elem.shadowRoot;
     this.data = JSON.parse(elem.dataset.data);
-
     if (this.componentInstance) {
       this.componentInstance._instance.data.data = this.data;
     }
@@ -211,4 +241,4 @@ export class QButton extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-button", QButton);
+customElements.define("q-upload", QUpload);

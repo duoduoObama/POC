@@ -1,7 +1,6 @@
 // import styles from "element-plus/dist/index.css";
 import styles from "../../plugins/ant-design-vue@3.1.1/antd.css";
 import Ajv from "ajv";
-import { obEvents } from "../../util/rx";
 
 /**
  * 创建webComponent组件类
@@ -102,7 +101,7 @@ export class QStep extends HTMLElement {
     const component = {
       template: ` 
           <div class="container">
-            <a-steps :percent="" :current="data.options.current">
+            <a-steps :current="data.options.current">
               <a-step v-for="(item,index) in data.options.data" :key="index" :title="item.title" :sub-title="item.subTitle" :description="item.description" />
             </a-steps>
           </div>
@@ -111,7 +110,6 @@ export class QStep extends HTMLElement {
         data: {
           handler(newValue, oldValue) {
             try {
-              console.log(newValue);
             } catch (error) {
               console.log(error);
             }
@@ -143,38 +141,34 @@ export class QStep extends HTMLElement {
           };
           const check = ajv.compile(shchema);
           obEvents.currentSelectedPoint(id).subscribe((data) => {
-            const { body } = JSON.parse(JSON.stringify(data));
-            if (
-              data.replyStatus &&
-              Array.isArray(data.reply) &&
-              data.reply.length
-            ) {
-              const temp = JSON.parse(JSON.stringify(data));
-              temp.eventData = { type: "reply" };
-              temp.sender = data.receiver;
-              temp.receiver = "eventBus";
-              obEvents.setSelectedPoint(temp, JSON.parse(JSON.stringify(body)));
+            this.bindEvent(data);
+          });
+        },
+        bindEvent(data) {
+          const { header = {}, body } = data;
+          const { dst = [] } = header;
+          dst.forEach((item, index) => {
+            switch (item) {
+              case "changeCurrent":
+                if (
+                  Number.isInteger(body.current) &&
+                  body.current >= 0 &&
+                  body.current <= 2
+                ) {
+                  this.data.options.current = body.current;
+                  selfComponent.dataset.data = JSON.stringify(this.data);
+                  this.sendMessage();
+                }
+                break;
+              case "changeOptions":
+                break;
             }
-            if (check(body)) {
-              if (this.swiper.destroy) {
-                this.swiper.destroy();
-              }
-
-              this.data.options = body;
-              selfComponent.dataset.data = JSON.stringify(this.data);
-              return;
-            }
-            antd.message.warn(`${text}:接收数据与当前组件不匹配!`);
           });
         },
         sendMessage(e, node, index) {
-          const { type } = e;
           const message = {
             sender: this.data.id,
-            node: { ...node, index },
             receiver: "eventBus",
-            type,
-            eventData: e,
           };
           obEvents.setSelectedPoint(
             message,
@@ -206,12 +200,9 @@ export class QStep extends HTMLElement {
   loadInfo(elem) {
     this.shadow = elem.shadowRoot;
     this.data = JSON.parse(elem.dataset.data);
-
     if (this.componentInstance) {
-      this.componentInstance.data = this.data;
+      this.componentInstance._instance.data.data = this.data;
     }
-
-    // this.componentInit();
   }
 
   /**

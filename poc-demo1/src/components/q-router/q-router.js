@@ -1,11 +1,7 @@
-// import styles from "element-plus/dist/index.css";
-import styles from "../../plugins/ant-design-vue@3.1.1/antd.css";
-import Ajv from "ajv";
-
 /**
  * 创建webComponent组件类
  */
-export class QButton extends HTMLElement {
+export class QRouter extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -28,20 +24,11 @@ export class QButton extends HTMLElement {
    * 隔离样式
    */
   styleText = `
-      .container {
-        width: 100%;
-        height: 100%;
-      }
-      .swiper{
-        --swiper-pagination-color: skyblue;
-      }
-      .swiper {
-        height:100%;
-      }
-      .swiper-wrapper{
-        height:100%;
-      }
-      `;
+        .container {
+          width: 100%;
+          height: 100%;
+        } 
+        `;
 
   constructor() {
     super();
@@ -52,9 +39,6 @@ export class QButton extends HTMLElement {
     const div = document.createElement("div");
     style.textContent = this.styleText;
     this.shadow.appendChild(style);
-    const sheet = new CSSStyleSheet();
-    sheet.replace(styles);
-    this.shadow.adoptedStyleSheets = [sheet];
     this.shadow.appendChild(div);
   }
 
@@ -96,28 +80,34 @@ export class QButton extends HTMLElement {
    * @param {*} data 传入组件data-data数据
    * @param {*} root 挂载到当前webcomponent节点
    */
-  createComponentInstance(root) {
+  async createComponentInstance(root) {
     const selfComponent = this;
     const component = {
       template: ` 
-          <div class="container">
-            <a-button :type="data.options.type" :disabled="data.options.disabled" @click="sendMessage">{{ data.options.text }}</a-button>
-          </div>
-          `,
-      watch: {
-        data: {
-          handler(newValue, oldValue) {
-            try {
-            } catch (error) {
-              console.log(error);
-            }
-          },
-          deep: true,
-        },
-      },
-      components: {},
+          <div class="container" ref="container" id="app">
+            <!-- 路由出口 -->
+            <!-- 路由匹配到的普通组件将渲染在这里 -->
+            <router-view v-slot="{ Component }">
+              <keep-alive>
+                <component
+                  :key="$route.path"
+                  :is="Component"
+                  v-if="$route.meta.keepAlive&&!$route.meta.isIframe"
+                />
+              </keep-alive>
+            </router-view>
+          
+            <!-- 路由匹配到的iframe类型组件将渲染在这里 -->
+            <div
+              v-for="{meta:{component,isIframe},path} in data.options.path.filter(c=>c.isIframe)" 
+              v-show="$route.meta.keepAlive&&$route.meta.isIframe&&$route.path===path"
+            >
+              <component :key="path" :is="component" />
+            </div>  
+          </div>    
+            `,
       created() {
-        this.data = selfComponent.data;
+        this.data = selfComponent.data || {};
       },
       data() {
         return {
@@ -125,50 +115,8 @@ export class QButton extends HTMLElement {
         };
       },
       methods: {
-        receiveInfo() {
-          const { id, text } = this.data;
-          const ajv = new Ajv();
-          const shchema = {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                image: { type: "string" },
-              },
-              required: ["image"],
-            },
-          };
-          const check = ajv.compile(shchema);
-          obEvents.currentSelectedPoint(id).subscribe((data) => {
-            this.bindEvent(data);
-          });
-        },
-        bindEvent(data) {
-          const { header = {}, body } = data;
-          const { dst = [] } = header;
-          dst.forEach((item, index) => {
-            switch (item) {
-              case "changeDisable":
-                if (typeof body.disabled === "boolean") {
-                  this.data.options.disabled = body.disabled;
-                  selfComponent.dataset.data = JSON.stringify(this.data);
-                }
-                break;
-              case "changeOptions":
-                break;
-            }
-          });
-        },
-        sendMessage(e, node, index) {
-          const message = {
-            sender: this.data.id,
-            receiver: "eventBus",
-          };
-          obEvents.setSelectedPoint(
-            message,
-            JSON.parse(JSON.stringify(this.data))
-          );
-        },
+        receiveInfo() {},
+        sendMessage(e) {},
       },
       mounted() {
         this.receiveInfo();
@@ -180,9 +128,57 @@ export class QButton extends HTMLElement {
       },
     };
 
+    const {
+      options: { path = [] },
+    } = this.data;
+    // 1. 定义路由组件.
+    // 也可以从其他文件导入
+    const slotComponent = (slotName) => ({
+      template: `<div></div>`,
+      data() {
+        return {
+          name: this.name,
+        };
+      },
+      methods: {
+        appendSlot() {
+          slotName.forEach((item) => {
+            const slot = document.createElement("slot");
+            slot.name = item;
+            this.$el.appendChild(slot);
+          });
+        },
+      },
+      mounted() {
+        this.$nextTick(() => {
+          this.appendSlot();
+        });
+      },
+    });
+    path.forEach((element) => {
+      const { url, keepAlive, isIframe, slotName } = element;
+      const component = slotComponent(slotName);
+      Object.assign(element, {
+        path: url,
+        component,
+        meta: {
+          keepAlive,
+          isIframe,
+          component,
+        },
+      });
+    });
+    // 2. 定义一些路由
+    // 每个路由都需要映射到一个组件。
+    const routes = path;
+    const router = VueRouter.createRouter({
+      history: VueRouter.createWebHashHistory(),
+      routes, // `routes: routes` 的缩写
+    });
     const app = Vue.createApp(component);
-    app.use(ElementPlus);
-    app.use(antd);
+    //确保 _use_ 路由实例使
+    //整个应用支持路由。
+    app.use(router);
     app.mount(root);
     this.#componentInstance = app;
   }
@@ -211,4 +207,4 @@ export class QButton extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-button", QButton);
+customElements.define("q-router", QRouter);

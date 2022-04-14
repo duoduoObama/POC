@@ -1,6 +1,5 @@
 import { createApp, nextTick } from "vue/dist/vue.esm-browser";
 import Ajv from "ajv";
-import { obEvents } from "../../util/rx";
 
 /**
  * 创建webComponent组件类

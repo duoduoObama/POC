@@ -5,7 +5,7 @@ import Ajv from "ajv";
 /**
  * 创建webComponent组件类
  */
-export class QButton extends HTMLElement {
+export class QSearch extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -101,7 +101,12 @@ export class QButton extends HTMLElement {
     const component = {
       template: ` 
           <div class="container">
-            <a-button :type="data.options.type" :disabled="data.options.disabled" @click="sendMessage">{{ data.options.text }}</a-button>
+            <a-input-search
+              v-model:value="data.options.text"
+              placeholder="请输入搜索内容"
+              enter-button
+              @search="onSearch"
+            />
           </div>
           `,
       watch: {
@@ -140,24 +145,11 @@ export class QButton extends HTMLElement {
           };
           const check = ajv.compile(shchema);
           obEvents.currentSelectedPoint(id).subscribe((data) => {
-            this.bindEvent(data);
+            // this.bindEvent(data);
           });
         },
-        bindEvent(data) {
-          const { header = {}, body } = data;
-          const { dst = [] } = header;
-          dst.forEach((item, index) => {
-            switch (item) {
-              case "changeDisable":
-                if (typeof body.disabled === "boolean") {
-                  this.data.options.disabled = body.disabled;
-                  selfComponent.dataset.data = JSON.stringify(this.data);
-                }
-                break;
-              case "changeOptions":
-                break;
-            }
-          });
+        onSearch(e) {
+          this.sendMessage();
         },
         sendMessage(e, node, index) {
           const message = {
@@ -211,4 +203,4 @@ export class QButton extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-button", QButton);
+customElements.define("q-search", QSearch);

@@ -1,6 +1,3 @@
-import { BehaviorSubject, filter } from "rxjs";
-// import { pageScript } from "../page/index";
-
 function ObservableMethods() {
   /**
    * 事件总线
@@ -29,6 +26,7 @@ function ObservableMethods() {
    */
   this.setSelectedPoint = (eventName, selectedPointsIfo = {}) => {
     pageScript(eventName, selectedPointsIfo);
+    return;
     if (typeof eventName === `string`) {
       this.obSubject.next({
         receiver: eventName,
@@ -74,9 +72,9 @@ function ObservableMethods() {
   this.currentSelectedPoint = (eventName) => {
     this.createEvent();
     return this.obSubject.pipe(
-      filter((x) => x !== 0),
-      filter((x) => x.receiver && x.receiver.includes(eventName))
-      // debounceTime(500)
+      rxjs.operators.filter((x) => x !== 0),
+      rxjs.operators.filter((x) => x.receiver && x.receiver.includes(eventName))
+      // rxjs.operators.debounceTime(500)
     );
   };
 
@@ -85,10 +83,10 @@ function ObservableMethods() {
    */
   this.createEvent = () => {
     if (!this.obSubject) {
-      const subject = new BehaviorSubject(0);
+      const subject = new rxjs.BehaviorSubject(0);
       this.obSubject = subject;
     }
   };
 }
 
-export const obEvents = new ObservableMethods();
+var obEvents = new ObservableMethods();
