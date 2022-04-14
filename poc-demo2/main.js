@@ -14,11 +14,10 @@ import {
   watch,
   toRefs,
 } from "vue";
-import { QRouter2 } from "./src/util/q-router2";
+import { QRouter2 } from "./src/components/q-router/q-router2";
 import { QRouterConfig } from "./src/components/q-router-config/q-router-config";
 import { obEvents } from "./src/util/rx";
 import { eventBusSubscribe } from "./src/util/eventbus";
-import { getElementTree } from "./src/util/util";
 
 const component = defineComponent({
   template: `

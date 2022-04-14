@@ -83,7 +83,7 @@ export class QRouter2 extends HTMLElement {
    * @param {*} root 挂载到当前webcomponent节点
    */
   async createComponentInstance(root) {
-    const { nextTick } = await import("./common/vue.esm-browser.js");
+    const { nextTick } = await import("../../util/common/vue.esm-browser.js");
     const selfComponent = this;
     const component = {
       template: ` 
