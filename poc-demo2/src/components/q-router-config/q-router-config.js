@@ -1,12 +1,13 @@
-import { createApp, nextTick } from "vue/dist/vue.esm-browser";
-import Ajv from "ajv";
+import { createApp, nextTick } from "vue";
+import { obEvents } from "../../util/rx";
+import { cloneDeep } from "lodash-es";
 /**
- * 静态图片
+ * 路由配置表
  */
 /**
  * 创建webComponent组件类
  */
-export class QStaticPic extends HTMLElement {
+export class QRouterConfig extends HTMLElement {
   /**
    * 定义组件暴露参数为用户进行修改
    */
@@ -28,11 +29,7 @@ export class QStaticPic extends HTMLElement {
   /**
    * 隔离样式
    */
-  styleText = `
-    .container {
-      width: 100%;
-      height: 100%;
-    }
+  styleText = ` 
     `;
 
   constructor() {
@@ -89,103 +86,68 @@ export class QStaticPic extends HTMLElement {
     const selfComponent = this;
     const component = {
       template: ` 
-        <div class="container" ref="imgbody">
-            <div :style="{width: '100%',height: '100%',background: bgImg}" @click.stop="sendMessage" 
-              @dblclick.stop="sendMessage" @mouseenter="sendMessage" @mouseleave="sendMessage"></div>
-            <div v-if="data.invalid" style="width:100%;border-top:1px solid rgb(205,92,92);border-bottom:1px solid rgb(205,92,92);color:rgb(205,92,92);position: absolute;bottom: 0;text-align: center;background-color: antiquewhite;opacity: 0.9;">已失效</div>
+        <div class="container">
+          <div class="mdc-card mdc-card-h100">
+          路由配置表
+          </div>
         </div> 
         `,
-      watch: {
-        data: {
-          handler(newValue, oldValue) {
-            try {
-              this.changeBgImg();
-            } catch (error) {
-              console.log(error);
-            }
-          },
-          deep: true,
-        },
-      },
       created() {
         this.data = selfComponent.data;
       },
       data() {
         return {
           data: {},
-          bgImg: "",
+          eventType: ["事件", "数据"],
         };
       },
       methods: {
         receiveInfo() {
           const { id, text } = this.data;
-          const ajv = new Ajv();
-          const shchema = {
-            type: "string",
-          };
-          const check = ajv.compile(shchema);
           obEvents.currentSelectedPoint(id).subscribe((data) => {
-            const { body } = _.cloneDeep(data);
-            if (
-              data.replyStatus &&
-              Array.isArray(data.reply) &&
-              data.reply.length
-            ) {
-              const temp = _.cloneDeep(data);
-              temp.eventData = { type: "reply" };
-              temp.sender = data.receiver;
-              temp.receiver = "eventBus";
-              obEvents.setSelectedPoint(temp, JSON.parse(JSON.stringify(body)));
-            }
-            if (check(body)) {
+            const { body } = cloneDeep(data);
+            if (typeof body === `string` || typeof body === `number`) {
               this.data.options = body;
               selfComponent.dataset.data = JSON.stringify(this.data);
+              return;
+            } else if (typeof body === `object`) {
+              this.data.options = JSON.stringify(body);
               return;
             }
             antd.message.warn(`${text}:接收数据与当前组件不匹配!`);
           });
         },
-        setHttpHeader(url) {
-          const [ip] = url.split(":");
-          const regexIP =
-            /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/;
-
-          if (
-            regexIP.test(ip) &&
-            !url.includes("http://") &&
-            !url.includes("https://")
-          ) {
-            return `http://${url}`;
+        runRoutingConfiguration() {
+          const { currentPlatform = true, options } = this.data;
+          // 如果为false表示为运行时
+          if (!currentPlatform) {
+            options.forEach((current) => {
+              const {
+                eventType,
+                target,
+                applyTime,
+                whetherToRepeat,
+                triggerEvent = [],
+                source,
+              } = current;
+              if (eventType === this.eventType[1]) {
+                customEvents.triggerEvent(
+                  {
+                    applyTime,
+                    whetherToRepeat,
+                    select: triggerEvent,
+                    receiver: source,
+                  },
+                  target
+                );
+              }
+            });
           }
-          return url;
-        },
-        changeBgImg() {
-          this.bgImg =
-            this.data.options.displayMode === "自适应"
-              ? "url(" +
-                this.data.options.url +
-                ") no-repeat center center/contain"
-              : "url(" +
-                this.data.options.url +
-                ") no-repeat center center/100% 100%";
-        },
-        sendMessage(e) {
-          const { type } = e;
-          const message = {
-            sender: this.data.id,
-            receiver: "eventBus",
-            type,
-            eventData: e,
-          };
-          obEvents.setSelectedPoint(
-            message,
-            JSON.parse(JSON.stringify(this.data))
-          );
         },
       },
-      mounted() {
+      async mounted() {
         this.receiveInfo();
-        this.changeBgImg();
+        this.runRoutingConfiguration();
         nextTick(() => {
           const style = document.createElement("style");
           style.textContent = selfComponent.styleText;
@@ -194,7 +156,6 @@ export class QStaticPic extends HTMLElement {
       },
     };
     const app = createApp(component).mount(root);
-    console.log(app);
     this.#componentInstance = app;
   }
 
@@ -222,4 +183,4 @@ export class QStaticPic extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-static-pic", QStaticPic);
+customElements.define("q-router-config", QRouterConfig);
