@@ -208,7 +208,8 @@ export class QStep extends HTMLElement {
     this.data = JSON.parse(elem.dataset.data);
 
     if (this.componentInstance) {
-      this.componentInstance.data = this.data;
+      console.log(this.componentInstance._instance.data);
+      this.componentInstance._instance.data.data = this.data;
     }
 
     // this.componentInit();

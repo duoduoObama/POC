@@ -8,60 +8,106 @@
   </head>
   <body>
     <div id="app">
-      <a-steps v-model:current="current" type="navigation" :style="stepStyle">
-        <a-step title="Step 1"> 123123123 </a-step>
-        <a-step title="Step 2"></a-step>
-        <a-step title="Step 3"></a-step>
-        <a-step title="Step 4"></a-step>
-      </a-steps>
-
-      <div>
-        <a-button
-          class="editable-add-btn"
-          style="margin-bottom: 8px"
-          @click="handleAdd"
-          >Add</a-button
-        >
-        <a-table bordered :data-source="dataSource" :columns="columns">
-          <template v-slot:bodyCell="{ column, text, record }">
-            <template v-if="column.dataIndex === 'name'">
-              <div class="editable-cell">
-                <div
-                  v-if="editableData[record.key]"
-                  class="editable-cell-input-wrapper"
-                >
-                  <a-input
-                    v-model:value="editableData[record.key].name"
-                    @pressEnter="save(record.key)"
-                  ></a-input>
-                  <check-outlined
-                    class="editable-cell-icon-check"
-                    @click="save(record.key)"
-                  ></check-outlined>
-                </div>
-                <div v-else class="editable-cell-text-wrapper">
-                  {{ text || ' ' }}{{editableData[record.key]}}
-                  <edit-outlined
-                    class="editable-cell-icon"
-                    @click="edit(record.key)"
-                  ></edit-outlined>
+      <q-router2
+        data-data='{
+        "data": {},
+        "options": {
+          "whetherToShowTab":false,
+          "path": [
+            { "url": "/table", "keepAlive": true, "isIframe": false ,"slotName":"table" },
+            { "url": "/add", "keepAlive": true, "isIframe": false ,"slotName":"content" },
+            { "url": "/edit", "keepAlive": true, "isIframe": false ,"slotName":"content" }
+          ]
+        }
+      }'
+      >
+        <div slot="content">
+          <a-steps
+            v-model:current="current"
+            @change="changeStepsHash"
+            type="navigation"
+          >
+            <a-step title="新增用户"></a-step>
+            <a-step title="编辑用户"></a-step>
+          </a-steps>
+          <div>
+            <q-router2
+              data-data='{
+            "data": {},
+            "options": {
+              "whetherToShowTab":false,
+              "path": [
+                { "url": "/add", "keepAlive": true, "isIframe": false ,"slotName":"add" },
+                { "url": "/edit", "keepAlive": true, "isIframe": false ,"slotName":"edit" }
+              ]
+            }
+          }'
+            >
+              <div slot="add">
+                <div class="content-from">
+                  <a-form
+                    :model="formState"
+                    v-bind="layout"
+                    name="nest-messages"
+                    :validate-messages="validateMessages"
+                    @finish="onFinish"
+                  >
+                    <a-form-item
+                      :name="['user', 'name']"
+                      label="Name"
+                      :rules="[{ required: true }]"
+                    >
+                      <a-input v-model:value="formState.user.name" />
+                    </a-form-item>
+                    <a-form-item
+                      :name="['user', 'email']"
+                      label="Email"
+                      :rules="[{ type: 'email',required: true }]"
+                    >
+                      <a-input v-model:value="formState.user.email" />
+                    </a-form-item>
+                    <a-form-item
+                      :name="['user', 'age']"
+                      label="Age"
+                      :rules="[{ type: 'number', min: 0, max: 99 ,required: true}]"
+                    >
+                      <a-input-number v-model:value="formState.user.age" />
+                    </a-form-item>
+                    <a-form-item :name="['user', 'website']" label="Website">
+                      <a-input v-model:value="formState.user.website" />
+                    </a-form-item>
+                    <a-form-item :name="['user', 'address']" label="address">
+                      <a-textarea v-model:value="formState.user.address" />
+                    </a-form-item>
+                    <a-form-item
+                      :wrapper-col="{ ...layout.wrapperCol, offset: 8 }"
+                    >
+                      <a-button type="primary" html-type="submit"
+                        >提交</a-button
+                      >
+                    </a-form-item>
+                  </a-form>
                 </div>
               </div>
-            </template>
-            <template v-else-if="column.dataIndex === 'operation'">
-              {{12312312}}
-              <a-popconfirm
-                v-if="dataSource.length"
-                title="Sure to delete?"
-                @confirm="onDelete(record.key)"
-              >
-                <a>Delete</a>
-              </a-popconfirm>
-            </template>
-          </template>
-        </a-table>
-      </div>
+              <div slot="edit">
+                <q-table :user="addUser"></q-table>
+              </div>
+            </q-router2>
+          </div>
+        </div>
+        <div slot="table">
+          <q-table :user="addUser"></q-table>
+        </div>
+      </q-router2>
     </div>
+    <q-router-config
+      data-data='{"id":"drag-1si947z9k0np","text":"路由配置表","group":"数据源","width":150,"height":150,"x":"0","y":"0","create_time":"2020-11-12 10:54:06","image":"","datatype":1,"options":[{"title":"text->text","target":"form","trigger":["click"],"receive":[{"source":"table","event":["changeOptions"],"script":"\n    /**\n    * @params data 为发起组件绑定数据\n    * @params eventData 触发节点信息\n    * @params node 为发起组件的发起节点信息（如果发起组件有多个发起节点则有信息，如果无多个发起节点则为空值）\n    * @params title 为当前路由配置项名称\n    * convertData 用于输出数据 \n    **/\n\n    try {\n      // 自定义处理方法\n      var convertData = data\n      return convertData;\n    } catch (error) {\n      // 脚本错误提示，勿动!!!\n      antd.message.error(&apos;(&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;);\n      console.log(&apos;%c (&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;,&apos;font-size: 16px;font-weight: 600;color: red;&apos;);\n      console.log(error);\n    }\n      ","replyStatus":false,"reply":[]}],"targetNode":[]}],"style":"left: 0px; top: 0px; width: 150px; height: 150px; text-align: left; font-size: 14px; font-weight: 400; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); line-height: 24px; letter-spacing: 0px; opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写text文本组件中需要显示的文字","paramList":[],"componentName":"q-router-config","_id":"18130714","origin":"http://192.168.21.92:6086","events":{}}'
+      data-component="true"
+      id="drag-1si947z9k0np"
+      data-parent-id="inner-dropzone"
+      data-x="0"
+      data-y="0"
+    ></q-router-config>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
