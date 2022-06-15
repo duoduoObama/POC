@@ -75,7 +75,7 @@ const eventBusReply = ({
   if (type !== "reply" || !Array.isArray(reply)) return;
   console.log(`事件总线接收回流消息:`, data);
   reply.forEach((current) => {
-    const { source, event, script = "return data" } = current;
+    let { source, event, script = "return data" } = current;
     if (!script.length) {
       script = "return data";
     }
@@ -104,13 +104,13 @@ const eventBusReply = ({
  * 总线订阅
  * @param {*} treeData
  */
-const eventBusSubscribe = (treeData = []) => { 
+const eventBusSubscribe = (treeData = []) => {
   obEvents.currentSelectedPoint("eventBus").subscribe((data) => {
     Reflect.deleteProperty(data, "header");
     const router = [...document.querySelectorAll("q-router-config")].map(
       (current) => JSON.parse(current.dataset.data).options
     );
-    router.forEach((route) => { 
+    router.forEach((route) => {
       eventBusProcess({ ...data, staticRoute: route, data });
     });
     eventBusReply({ ...data, data });

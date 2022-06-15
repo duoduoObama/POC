@@ -1,0 +1,210 @@
+[
+  {
+    "id": "61096508",
+    "text": "tabs",
+    "group": "tab",
+    "width": 150,
+    "height": 150,
+    "x": "0",
+    "y": "0",
+    "create_time": "2020-11-05 14:04:28",
+    "image": "",
+    "elementType": "jz-tab-panel",
+    "datatype": 1,
+    "options": [
+      {
+        "title": "Tabs 1",
+        "id": "drag-gr8nct0lu64u"
+      },
+      {
+        "title": "Tabs 2",
+        "id": "drag-i6k1fc68bjyj"
+      }
+    ],
+    "style": "left: 0px;top: 0px;width: 150px;height: 150px;font-size: 14px;font-weight: 400;background-color: rgb(255,255,255);color: rgb(0,0,0);letter-spacing: 0px;opacity: 1;z-index: 1;position: absolute;overflow: hidden;",
+    "description": "拖入设计区->右侧功能区->属性->options->填写菜单组件中需要显示的菜单名称",
+    "dynamicForm": {
+      "options": [
+        {
+          "key": "title",
+          "title": "tabs标签文本数据",
+          "default": "Tabs 标签",
+          "visible": true,
+          "element": "input",
+          "eleType": "textarea",
+          "disabled": false
+        }
+      ],
+      "info": [
+        {
+          "key": "id",
+          "title": "组件id",
+          "default": "",
+          "visible": true,
+          "element": "input",
+          "eleType": "textarea",
+          "disabled": true
+        },
+        {
+          "key": "text",
+          "title": "组件名称",
+          "default": "tabs",
+          "visible": true,
+          "element": "input",
+          "eleType": "textarea",
+          "disabled": true
+        },
+        {
+          "key": "group",
+          "title": "组件类型",
+          "default": "tab",
+          "visible": true,
+          "element": "input",
+          "eleType": "textarea",
+          "disabled": true
+        }
+      ],
+      "style": [
+        {
+          "key": "left",
+          "title": "x轴坐标",
+          "default": 0,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "top",
+          "title": "y轴坐标",
+          "default": 0,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "width",
+          "title": "宽度",
+          "default": 150,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "height",
+          "title": "高度",
+          "default": 150,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "fontSize",
+          "title": "字体大小",
+          "default": 14,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "fontWeight",
+          "title": "字体粗细",
+          "default": 400,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "backgroundColor",
+          "title": "背景颜色",
+          "default": "rgb(255,255,255)",
+          "visible": true,
+          "element": "input",
+          "eleType": "text",
+          "disabled": false
+        },
+        {
+          "key": "color",
+          "title": "字体颜色",
+          "default": "rgb(0,0,0)",
+          "visible": true,
+          "element": "input",
+          "eleType": "text",
+          "disabled": false
+        },
+        {
+          "key": "letterSpacing",
+          "title": "字符间距",
+          "default": 0,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "opacity",
+          "title": "透明度",
+          "default": 1,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        },
+        {
+          "key": "zIndex",
+          "title": "组件层级",
+          "default": 1,
+          "visible": true,
+          "element": "input",
+          "eleType": "number",
+          "disabled": false
+        }
+      ]
+    },
+    "routerConfig": {
+      "trigger": [
+        { "title": "鼠标单击", "value": "click" },
+        { "title": "鼠标双击", "value": "dblclick" }
+      ],
+      "componentEvents": [
+        {
+          "title": "更改组件数据",
+          "value": "changeOptions",
+          "paramExplain": "请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"
+        },
+        {
+          "title": "切换tab标签",
+          "value": "clickTitle",
+          "paramExplain": "该方法参数为整数数值，第一个tab标签从1起始"
+        },
+        {
+          "title": "增加tab标签",
+          "value": "addOptions",
+          "paramExplain": "该方法无参数，请填写任意字符或空字符串占位，不可不填!"
+        },
+        {
+          "title": "在某个tab标签后增加标签",
+          "value": "addTabs",
+          "paramExplain": "该方法参数为整数数值，填写需要从第几个tab标签后增加标签，第一个tab标签从1起始"
+        },
+        {
+          "title": "复制tab标签",
+          "value": "copyTabs",
+          "paramExplain": "该方法参数为整数数值，填写需要复制第几个tab标签，第一个tab标签从1起始"
+        },
+        {
+          "title": "删除tab标签",
+          "value": "deleteTabs",
+          "paramExplain": "该方法参数为整数数值，填写需要删除第几个tab标签，第一个tab标签从1起始"
+        }
+      ]
+    },
+    "paramList": [],
+    "componentName": "q-tabs"
+  }
+]

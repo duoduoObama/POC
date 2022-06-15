@@ -1,5 +1,5 @@
 import { createApp, nextTick } from "vue";
-import antd from "ant-design-vue/dist/antd";
+import { Table, Tag, Avatar, Popconfirm, Divider } from "ant-design-vue";
 import styles from "ant-design-vue/dist/antd.css";
 import Ajv from "ajv";
 import { obEvents } from "../../util/rx";
@@ -73,6 +73,9 @@ export class QTable extends HTMLElement {
    */
   disconnectedCallback() {
     console.log("Custom square element removed from page.");
+    if (this.componentInstance) {
+      this.componentInstance.unmount();
+    }
   }
 
   /**
@@ -102,7 +105,7 @@ export class QTable extends HTMLElement {
     const selfComponent = this;
     const component = {
       template: ` 
-          <div class="container">
+          <div class="container"> 
             <a-table :columns="columns" :data-source="data.options" :scroll="{ x: 1500, y: 600 }">
               <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'tags'">
@@ -265,7 +268,7 @@ export class QTable extends HTMLElement {
     };
 
     const app = createApp(component);
-    app.use(antd);
+    app.use(Table).use(Tag).use(Avatar).use(Popconfirm).use(Divider);
     app.mount(root);
     this.#componentInstance = app;
   }
@@ -297,3 +300,4 @@ export class QTable extends HTMLElement {
  * 注册组件
  */
 customElements.define("q-table", QTable);
+console.log(22222);

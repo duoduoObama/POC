@@ -7,107 +7,20 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app">
-      <q-router2
-        data-data='{
-        "data": {},
-        "options": {
-          "whetherToShowTab":false,
-          "path": [
-            { "url": "/table", "keepAlive": true, "isIframe": false ,"slotName":"table" },
-            { "url": "/add", "keepAlive": true, "isIframe": false ,"slotName":"content" },
-            { "url": "/edit", "keepAlive": true, "isIframe": false ,"slotName":"content" }
-          ]
-        }
-      }'
-      >
-        <div slot="content">
-          <a-steps
-            v-model:current="current"
-            @change="changeStepsHash"
-            type="navigation"
-          >
-            <a-step title="新增用户"></a-step>
-            <a-step title="编辑用户"></a-step>
-          </a-steps>
-          <div>
-            <q-router2
-              data-data='{
-            "data": {},
-            "options": {
-              "whetherToShowTab":false,
-              "path": [
-                { "url": "/add", "keepAlive": true, "isIframe": false ,"slotName":"add" },
-                { "url": "/edit", "keepAlive": true, "isIframe": false ,"slotName":"edit" }
-              ]
-            }
-          }'
-            >
-              <div slot="add">
-                <div class="content-from">
-                  <a-form
-                    :model="formState"
-                    v-bind="layout"
-                    name="nest-messages"
-                    :validate-messages="validateMessages"
-                    @finish="onFinish"
-                  >
-                    <a-form-item
-                      :name="['user', 'name']"
-                      label="Name"
-                      :rules="[{ required: true }]"
-                    >
-                      <a-input v-model:value="formState.user.name" />
-                    </a-form-item>
-                    <a-form-item
-                      :name="['user', 'email']"
-                      label="Email"
-                      :rules="[{ type: 'email',required: true }]"
-                    >
-                      <a-input v-model:value="formState.user.email" />
-                    </a-form-item>
-                    <a-form-item
-                      :name="['user', 'age']"
-                      label="Age"
-                      :rules="[{ type: 'number', min: 0, max: 99 ,required: true}]"
-                    >
-                      <a-input-number v-model:value="formState.user.age" />
-                    </a-form-item>
-                    <a-form-item :name="['user', 'website']" label="Website">
-                      <a-input v-model:value="formState.user.website" />
-                    </a-form-item>
-                    <a-form-item :name="['user', 'address']" label="address">
-                      <a-textarea v-model:value="formState.user.address" />
-                    </a-form-item>
-                    <a-form-item
-                      :wrapper-col="{ ...layout.wrapperCol, offset: 8 }"
-                    >
-                      <a-button type="primary" html-type="submit"
-                        >提交</a-button
-                      >
-                    </a-form-item>
-                  </a-form>
-                </div>
-              </div>
-              <div slot="edit">
-                <q-table :user="addUser"></q-table>
-              </div>
-            </q-router2>
-          </div>
-        </div>
-        <div slot="table">
-          <q-table :user="addUser"></q-table>
-        </div>
-      </q-router2>
+    poc-demo2
+    <div id="poc-demo2"> 
+      <div style="height: 220px"> 
+        <q-table
+          data-data='{"id":"drag-30r9wx1pmdtl","text":"按钮","group":"文本","width":450,"height":150,"x":"256","y":"144","create_time":"2020-11-05 14:04:29","image":"","datatype":1,"options":[{"key":"39812a23-d2ef-466d-b226-990e4916d93f","username":"123","pass":"123","checkPass":"123","age":123,"province":"河北省","admin":true,"group":"运营","tags":["购物类型","品牌偏好","购买力","教育程度"],"rate":5,"avatar":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAZCAYAAAC/zUevAAAABHNCSVQICAgIfAhkiAAAAPFJREFUSEtjZEADXNMfrGPiEQxEF6cG///vnze+MopaMiQyfkA2jxGZA3LAvwfXbX8sbXtHDUvRzeCIrhJiVjd+g+4QuCNo7QCYg7A5BOwIejkAl0MY6e0AbA5h5Fn88f+XSp9btEgDhMzkKpsryiQoGTSwjsibys8kqRgx6giu0ZCAptjRkIBl3dGQGA0JjLbLaDkxqMqJ0tmiTELSQYxc0x6s//fgmu2PZe1vCVW91JTniKoUZtYwATX1LCAtKzo7BNkBoEYvoo1JJ4egOwAUCKitbRo7BJsDMBwBixomXsEAasY/zCxgv+MmKA2g9zsA5VretI8BVeQAAAAASUVORK5CYII="}],"style":"left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址","dynamicForm":{"options":[{"key":"url","title":"图片url地址","default":"","visible":true,"element":"input","eleType":"textarea","disabled":false},{"key":"displayMode","title":"显示模式","default":"自适应","visible":true,"element":"radio","eleParam":["自适应","拉伸填充"],"disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"静态图片","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"媒体","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":150,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"routerConfig":{"trigger":[{"title":"鼠标单击","value":"click"},{"title":"鼠标双击","value":"dblclick"},{"title":"鼠标移入","value":"mouseenter"},{"title":"鼠标移出","value":"mouseleave"}],"componentEvents":[{"title":"更改组件数据","value":"changeOptions","paramExplain":"请根据发起组件和接收组件数据结构自行使用脚本转换，请严格遵守接收组件数据规范!"}]},"paramList":[],"componentName":"q-button","_id":"17739645","origin":"http://192.168.21.92:6086","events":{}}'
+          data-component="true"
+          id="drag-30r9wx1pmdtl"
+          data-parent-id="inner-dropzone"
+          data-x="256"
+          data-y="144"
+        ></q-table>
+      </div>  
+      <q-table :user="addUser" v-for="item in randomNumber"></q-table>
     </div>
-    <q-router-config
-      data-data='{"id":"drag-1si947z9k0np","text":"路由配置表","group":"数据源","width":150,"height":150,"x":"0","y":"0","create_time":"2020-11-12 10:54:06","image":"","datatype":1,"options":[{"title":"text->text","target":"form","trigger":["click"],"receive":[{"source":"table","event":["changeOptions"],"script":"\n    /**\n    * @params data 为发起组件绑定数据\n    * @params eventData 触发节点信息\n    * @params node 为发起组件的发起节点信息（如果发起组件有多个发起节点则有信息，如果无多个发起节点则为空值）\n    * @params title 为当前路由配置项名称\n    * convertData 用于输出数据 \n    **/\n\n    try {\n      // 自定义处理方法\n      var convertData = data\n      return convertData;\n    } catch (error) {\n      // 脚本错误提示，勿动!!!\n      antd.message.error(&apos;(&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;);\n      console.log(&apos;%c (&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;,&apos;font-size: 16px;font-weight: 600;color: red;&apos;);\n      console.log(error);\n    }\n      ","replyStatus":false,"reply":[]}],"targetNode":[]}],"style":"left: 0px; top: 0px; width: 150px; height: 150px; text-align: left; font-size: 14px; font-weight: 400; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); line-height: 24px; letter-spacing: 0px; opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写text文本组件中需要显示的文字","paramList":[],"componentName":"q-router-config","_id":"18130714","origin":"http://192.168.21.92:6086","events":{}}'
-      data-component="true"
-      id="drag-1si947z9k0np"
-      data-parent-id="inner-dropzone"
-      data-x="0"
-      data-y="0"
-    ></q-router-config>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

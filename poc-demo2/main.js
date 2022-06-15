@@ -13,11 +13,14 @@ import {
   defineProps,
   watch,
   toRefs,
+  defineCustomElement,
 } from "vue";
 import { QRouter2 } from "./src/components/q-router/q-router2";
 import { QRouterConfig } from "./src/components/q-router-config/q-router-config";
 import { obEvents } from "./src/util/rx";
 import { eventBusSubscribe } from "./src/util/eventbus";
+import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons-vue";
+import "./public-path.js";
 
 const component = defineComponent({
   template: `
@@ -206,6 +209,7 @@ const component = defineComponent({
 const QTable = {
   install(app) {
     app.component("q-table", component);
+    customElements.define("q-table", defineCustomElement(component));
   },
 };
 
@@ -213,6 +217,8 @@ const comonpent2 = defineComponent({
   components: {
     CheckOutlined,
     EditOutlined,
+    LeftCircleOutlined,
+    RightCircleOutlined,
   },
   setup() {
     const layout = {
@@ -289,8 +295,8 @@ const comonpent2 = defineComponent({
       sendMessage({ type: "info" });
       current.value = 1;
       location.hash = "#/edit";
-      addUser = formState;
       formState.user = {};
+      console.log(formState.user);
     };
 
     const changeStepsHash = (values) => {
@@ -321,6 +327,12 @@ const comonpent2 = defineComponent({
       eventBusSubscribe([{ id: "from" }, { id: "table" }]);
     });
 
+    const randomNumber = ref(10);
+
+    setInterval(() => {
+      // randomNumber.value = Math.ceil(Math.random() * 10);
+    }, 1000);
+
     return {
       addUser,
       current,
@@ -329,13 +341,49 @@ const comonpent2 = defineComponent({
       layout,
       validateMessages,
       changeStepsHash,
+      randomNumber,
     };
   },
 });
 
-const app = createApp(comonpent2);
-app.use(antd);
-app.use(QTable);
-app.mount("#app");
+function render(props = {}) {
+  const { container } = props;
+  const app = createApp(comonpent2);
+  app.use(antd);
+  app.use(QTable);
 
-export default app;
+  app.mount("#poc-demo2");
+  console.log(app);
+}
+
+// import {
+//   renderWithQiankun,
+//   qiankunWindow,
+// } from "vite-plugin-qiankun/dist/helper";
+
+// renderWithQiankun({
+//   mount(props) {
+//     console.log("viteapp mount");
+//     render(props);
+//   },
+//   bootstrap() {
+//     console.log("bootstrap");
+//   },
+//   unmount(props) {
+//     console.log("viteapp unmount");
+//     const { container } = props;
+//     const mountRoot = container?.querySelector("#root");
+//     ReactDOM.unmountComponentAtNode(
+//       mountRoot || document.querySelector("#root")
+//     );
+//   },
+//   update(props) {
+//     console.log("viteapp update");
+//     console.log(props);
+//   },
+// });
+
+// if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
+//   render({});
+// }
+render({});

@@ -222,4 +222,4 @@ export class QRouter2 extends HTMLElement {
 /**
  * 注册组件
  */
-customElements.define("q-router2", QRouter2);
+// customElements.define("q-router2", QRouter2);

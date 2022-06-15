@@ -1,0 +1,29 @@
+{
+  "name": "poc2",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "duoduoouba <1162256166@qq.com>",
+  "homepage": "https://github.com/duoduoObama/POC#readme",
+  "license": "ISC",
+  "main": "lib/poc2.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmmirror.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duoduoObama/POC.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/duoduoObama/POC/issues"
+  }
+}

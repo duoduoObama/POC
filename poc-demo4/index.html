@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <!-- <div style="height: 220px">
+      <q-tabs
+        data-data='{
+          "id": "drag-30r9wx1pmdtl",
+          "text": "按钮",
+          "group": "文本",
+          "width": 450,
+          "height": 150,
+          "x": "256",
+          "y": "144",
+          "create_time": "2020-11-05 14:04:29",
+          "image": "",
+          "datatype": 1,
+          "options": [
+              {
+                  "key": "39812a23-d2ef-466d-b226-990e4916d93f",
+                  "title": "功能一",
+                  "id": "test"
+              },
+              {
+                "key": "39812a23-d2ef-466d-b226-990e4916d93f2",
+                "title": "功能二",
+                "id": "test2"
+            }
+          ],
+          "style": "left: 256px; top: 144px; width: 493px; height: 335px; background-color: rgb(255, 255, 255); opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;",
+          "description": "拖入设计区->右侧功能区->属性->options->填写静态图片组件中需要显示的图片地址",
+          "paramList": [],
+          "componentName": "q-button",
+          "_id": "17739645",
+          "origin": "http://192.168.21.92:6086",
+          "events": {}
+      }'
+        data-component="true"
+        id="drag-30r9wx1pmdt2"
+        data-parent-id="inner-dropzone"
+        data-x="256"
+        data-y="144"
+      ></q-tabs>
+    </div> -->
+    <div><a href="/poc1">微应用1</a></div>
+    <div><a href="/poc2">微应用2</a></div>
+    <div class="content">
+      <div id="poc1"></div>
+      <div id="poc2"></div>
+    </div>
+    <!-- <micro-app
+      name="DI1"
+      url="http://192.168.21.92:6063/appSite"
+      baseroute="/di-app"
+    >
+    </micro-app> -->
+    <micro-app name="poc1" url="http://192.168.21.92:3001/" baseroute="/di-app">
+    </micro-app>
+    <micro-app
+      name="poc2"
+      url="http://192.168.21.92:3002/poc-demo2/"
+      baseroute="/di-app"
+      inline
+      disableSandbox
+    >
+    </micro-app>
+    <!-- <micro-app
+    name="poc2"
+    url="http://192.168.21.92:3002/"
+    baseroute="/di-app"
+  >
+  </micro-app> -->
+
+    <!-- 一组 -->
+    <!-- <micro-app name="DI2" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI3" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI4" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI5" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI6" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI7" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI8" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI9" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI10" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI11" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>  
+
+    <micro-app name="DI20" url="http://192.168.21.92:6063/appSite" baseroute="/di-app"></micro-app>
+    
+    <micro-app name="DI30" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI40" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI50" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI60" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI70" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI80" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI90" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI100" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI110" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app> -->
+
+    <!-- <micro-app name="DI21" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI31" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI41" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI51" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI61" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI71" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI81" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI91" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI101" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI111" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app> -->
+
+    <!-- <micro-app name="DI22" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI32" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI42" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI52" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI62" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI72" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI82" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI92" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI102" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI112" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI23" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI33" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI43" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI53" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI63" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI73" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI83" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI93" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI103" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI113" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI24" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI34" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI44" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI54" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI64" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI74" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI84" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI94" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI104" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI114" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI25" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI35" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI45" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI55" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI65" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI75" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI85" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI95" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI105" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI115" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI26" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI36" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI46" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI56" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI66" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI76" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI86" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI96" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI106" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI116" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI27" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI37" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI47" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI57" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI67" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI77" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI87" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI97" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI107" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI117" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI28" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI38" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI48" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI58" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI68" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI78" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI88" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI98" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI108" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI118" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+     
+    <micro-app name="DI29" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI39" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI49" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI59" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI69" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI79" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI89" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI99" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI109" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI119" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app -->
+
+    <!-- <micro-app name="DI2" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app> -->
+    <!-- <micro-app name="DI3" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI4" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI5" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI6" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app>
+    <micro-app name="DI7" url="http://192.168.21.92:6063/appSite" baseroute="/di-app">
+    </micro-app> -->
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

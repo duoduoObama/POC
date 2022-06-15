@@ -1,0 +1,24 @@
+{
+  "name": "poc-demo5",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --host",
+    "start": "npm-run-all --parallel start:*",
+    "start:main": "yarn dev",
+    "start:child1": "cd ./packages/poc-demo1 && yarn dev",
+    "start:child2": "cd ./packages/poc-demo1 copy/ && yarn dev",
+    "start:child3": "cd ./packages/poc-demo1 copy 2/ && yarn dev",
+    "start:child4": "cd ./packages/poc-demo1 copy 3/ && yarn dev",
+    "start:child5": "cd ./packages/poc-react/ && yarn dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "qiankun": "^2.7.0"
+  }
+}

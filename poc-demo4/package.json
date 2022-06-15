@@ -1,0 +1,24 @@
+{
+  "name": "poc-demo4",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --host",
+    "start": "npm-run-all --parallel start:*",
+    "start:main": "yarn dev",
+    "start:child": "cd ../poc-demo1 && yarn dev",
+    "start:vue": "cd ../poc-demo2 && yarn dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.5"
+  },
+  "dependencies": {
+    "@micro-zoe/micro-app": "^0.8.5",
+    "lodash-es": "^4.17.21",
+    "qiankun": "^2.7.0",
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.15"
+  }
+}
