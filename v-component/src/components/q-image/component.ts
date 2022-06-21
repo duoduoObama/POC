@@ -1,10 +1,29 @@
-import { IComponent } from "../../types/IComponent";
+import { IQImage } from "./IQImage";
 
-export interface IQTabs extends IComponent {
-    options: IQTabsOptions,
+export const component: IQImage = {
+    id: "",
+    componentName: "q-image",
+    type: "媒体",
+    text: "图片",
+    group: ["媒体"],
+    createTime: new Date(),
+    image: "",
+    initStyle: "",
+    description: "",
+    eventSpecification: {
+        inputEvent: [
+            { text: "更改组件数据", eventType: "changeInfo", messageSchema: "", messageDemo: "" }
+        ],
+        outputEvent: [
+            { text: "编辑", eventType: "edit", messageSchema: "", messageDemo: "" },
+            { text: "删除", eventType: "delete", messageSchema: "", messageDemo: "" }
+        ]
+    },
+    options: {
+        src: "",
+        imageType: "fill",
+    },
     optionsView: {
-        //利用动态表单机制描述的options的设置设定
-        // 动态表单
         list: [
             {
                 type: "input",
@@ -24,8 +43,8 @@ export interface IQTabs extends IComponent {
                     dynamicHide: false,
                     dynamicHideValue: "",
                 },
-                model: "title",
-                key: "title",
+                model: "input_1645156477415",
+                key: "src",
                 rules: [
                     {
                         required: false,
@@ -50,8 +69,8 @@ export interface IQTabs extends IComponent {
                     dynamicHide: false,
                     dynamicHideValue: "",
                 },
-                model: "id",
-                key: "id",
+                model: "textarea_1645156477415",
+                key: "imageType",
                 rules: [
                     {
                         required: false,
@@ -59,16 +78,7 @@ export interface IQTabs extends IComponent {
                         trigger: ["blur"],
                     },
                 ],
-            }
+            },
         ]
-    },
-}
-
-export interface IQTabsOptions {
-    tabs: IQTabsTab[],
-}
-
-interface IQTabsTab {
-    title: string,
-    id: string,
+    }
 }

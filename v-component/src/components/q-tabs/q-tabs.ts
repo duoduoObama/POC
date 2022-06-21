@@ -1,5 +1,6 @@
-import { html, css, LitElement, PropertyDeclaration, PropertyValueMap } from 'lit'
+import { html, LitElement } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
+import { EVENTBUS_NAME } from '../constent'
 import { IQTabsOptions } from './IQTabs'
 import { styles } from './styles'
 
@@ -36,7 +37,7 @@ export class QTabs extends LitElement {
             const { title } = item;
             return html`
                 <li>
-                    <a href="#" @click="${(e: MouseEvent) => { this.clickTitle(index, e, {}) }}">
+                    <a href="javascript:void(0);" @click="${() => { this.clickTitle(index) }}">
                     ${title}
                     </a>
                 </li>`})
@@ -64,7 +65,10 @@ export class QTabs extends LitElement {
         tabsDIV.style.display = "block";
     }
 
-    clickTitle(index: number, e: Event, node: object) {
+    clickTitle(index: number) {
+        const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: { index } });
+        window.dispatchEvent(customEvent);
+
         const { tabs = [] } = this.data;
         if (!tabs[index]) return;
         const clickTab =
@@ -88,10 +92,16 @@ export class QTabs extends LitElement {
         clickTab.id = "current";
     }
 
+    receiveInfo() {
+        const { id, data } = this;
+        window.addEventListener(id, (message) => {
+            console.log(message);
+        });
+    }
+
     protected updated(): void {
-
+        this.receiveInfo();
         this.menuStart(this.root);
-
     }
 
 }

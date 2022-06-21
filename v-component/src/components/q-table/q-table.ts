@@ -1,6 +1,6 @@
-import { html, css, LitElement, unsafeCSS } from 'lit'
+import { css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
-import { IQTableOptions } from './IQTable'
+import { IPagination, IQTableOptions } from './IQTable'
 import { createApp, defineComponent, reactive, ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import Table from 'ant-design-vue/lib/table'
@@ -10,14 +10,7 @@ import Popconfirm from 'ant-design-vue/lib/popconfirm'
 import Input from 'ant-design-vue/lib/input'
 import ConfigProvider from 'ant-design-vue/lib/config-provider'
 import antdCss from 'ant-design-vue/dist/antd.min.css'
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-
-interface DataItem {
-    key: number;
-    name: string;
-    age: number;
-    address: string;
-}
+import zhCN from 'ant-design-vue/es/locale/zh_CN'; 
 
 /**
  * An example element.
@@ -58,17 +51,29 @@ export class QTable extends LitElement {
      */
     componentInstance: any = null
 
+    /**
+     * 组件历史实例
+     */
+    componentOldInstance: any = null
+
     render() {
-        return html`<div id="container"></div>`;
+        const div = document.createElement("div");
+        div.id = "container";
+
+        return div;
     }
 
     createVueComponent = () => {
-        const { columns = [], dataSource: data = [], operation } = this.data;
+        const { columns = [], dataSource: data = [], operation = [], pagination: page = {} } = this.data;
+        if (!Object.keys(page).length && this.componentInstance?._instance) {
+            const { pagination } = this.componentInstance._instance.proxy;
+            Object.assign(page, pagination);
+        }
 
         const component = defineComponent({
             template: `
             <a-config-provider :locale="zhCN">
-                <a-table :columns="columns" :data-source="dataSource" bordered>
+                <a-table :columns="columns" :data-source="dataSource" :pagination="pagination" @change="tableChange" bordered>
                 <template #bodyCell="{ column, text, record }">
                 <template v-if="['name', 'age', 'address'].includes(column.dataIndex)">
                     <div>
@@ -92,10 +97,10 @@ export class QTable extends LitElement {
                         </a-popconfirm>
                     </span>
                     <span v-else>
-                        <a @click="edit(record.key)">编辑</a>
+                        <a @click="edit(record.key)">{{operation[0]?.title || '编辑'}}</a>
                             <a-divider type="vertical" />
                         <a-popconfirm title="是否删除?" @confirm="remove(record.key)">
-                            <a>删除</a>
+                            <a>{{operation[1]?.title || '删除'}}</a>
                         </a-popconfirm> 
                     </span>
                     </div>
@@ -106,26 +111,39 @@ export class QTable extends LitElement {
             `,
             setup() {
 
-                const eventHandler = (eventName: string, record: any, index: number) => {
-                    const event = new CustomEvent(eventName, { detail: { record: cloneDeep(record), index } });
-                    window.dispatchEvent(event);
-                }
-
                 const tempData = data.map((item: any, index) => ({ ...item, key: index }));
                 const dataSource = ref(tempData);
                 const editableData: { [key: string]: any } = reactive({});
+                const pagination = reactive(page);
+
+                const tableChange = (page: IPagination) => {
+                    Object.assign(pagination, page);
+                }
+
+                const eventHandler = (eventName: string, record: any, index: number | string) => {
+                    const event = new CustomEvent(eventName, { detail: { record: cloneDeep(record), index } });
+                    window.dispatchEvent(event);
+                }
 
                 const edit = (key: string) => {
                     editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
                 };
                 const save = (key: string) => {
                     Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
+
+                    const [edit = { eventName: "edit" }] = operation as any[];
+                    const { eventName } = edit;
+                    eventHandler(eventName, editableData[key], key);
                     delete editableData[key];
                 };
                 const cancel = (key: string) => {
                     delete editableData[key];
                 };
                 const remove = (key: string) => {
+                    const [, target = { eventName: "delete" }] = operation as any[];
+                    const { eventName } = target;
+                    eventHandler(eventName, dataSource.value.find(item => key === item.key), key);
+
                     dataSource.value = dataSource.value.filter(item => key !== item.key);
                 }
 
@@ -135,10 +153,13 @@ export class QTable extends LitElement {
                     columns,
                     editingKey: '',
                     editableData,
+                    operation,
+                    pagination,
                     edit,
                     save,
                     cancel,
-                    remove
+                    remove,
+                    tableChange
                 };
             },
         })
@@ -154,12 +175,11 @@ export class QTable extends LitElement {
     }
 
     disconnectedCallback(): void {
-        this.componentInstance.destroy();
+        this.componentInstance.unmount();
     }
 
     protected updated(): void {
         this.createVueComponent();
-
     }
 }
 

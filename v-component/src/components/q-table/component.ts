@@ -1,10 +1,41 @@
-import { IComponent } from "../../types/IComponent";
+import { IQTable } from "./IQTable";
 
-export interface IQTable extends IComponent {
-    options: IQTableOptions,
+export const component: IQTable = {
+    id: "",
+    componentName: "q-table",
+    type: "表格",
+    text: "table",
+    group: ["容器"],
+    createTime: new Date(),
+    image: "",
+    initStyle: "",
+    description: "",
+    eventSpecification: {
+        inputEvent: [
+            { text: "更改组件数据", eventType: "changeInfo", messageSchema: "", messageDemo: "" }
+        ],
+        outputEvent: [
+            { text: "编辑", eventType: "edit", messageSchema: "", messageDemo: "" },
+            { text: "删除", eventType: "delete", messageSchema: "", messageDemo: "" }
+        ]
+    },
+    options: {
+        columns: [
+            { title: "列名1", dataIndex: "address", key: "1", width: 150 },
+            {
+                title: "操作",
+                key: "operation",
+                dataIndex: "operation",
+                fixed: "right",
+                width: 200,
+                name: "编辑",
+            },
+        ],
+        dataSource: [
+            { key: 0, name: "表格1", age: 1, address: "表格1" },
+        ],
+    },
     optionsView: {
-        // 利用动态表单机制描述的options的设置设定
-        // 动态表单
         list: [
             {
                 type: "input",
@@ -139,32 +170,5 @@ export interface IQTable extends IComponent {
                 ],
             },
         ]
-    },
-    eventSpecification: {
-        inputEvent: [
-            { text: "更改组件数据", eventType: "changeInfo", messageSchema: "", messageDemo: "" }
-        ],
-        outputEvent: [
-            { text: "编辑", eventType: "edit", messageSchema: "", messageDemo: "" },
-            { text: "删除", eventType: "delete", messageSchema: "", messageDemo: "" }
-        ]
     }
-}
-
-export interface IQTableOptions {
-    columns: Array<{ [key: string]: any }>,
-    dataSource: Array<{ [key: string]: any }>,
-    operation?: { [key: string]: any },
-    pagination?: IPagination,
-    scroll?: {
-        x: number,
-        y: number
-    }
-}
-
-export interface IPagination {
-    current: number,
-    pageSize: number,
-    total: number,
-    [key: string]: number | string
 }

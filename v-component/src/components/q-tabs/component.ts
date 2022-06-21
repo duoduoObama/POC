@@ -1,10 +1,29 @@
-import { IComponent } from "../../types/IComponent";
+import { IQTabs } from "./IQTabs";
 
-export interface IQTabs extends IComponent {
-    options: IQTabsOptions,
+export const component: IQTabs = {
+    id: "",
+    componentName: "q-table",
+    type: "容器",
+    text: "选项卡",
+    group: ["容器"],
+    createTime: new Date(),
+    image: "",
+    initStyle: "",
+    description: "",
+    eventSpecification: {
+        inputEvent: [
+            { text: "更改组件数据", eventType: "changeInfo", messageSchema: "", messageDemo: "" }
+        ],
+        outputEvent: [
+            { text: "切换选项卡", eventType: "switchTAB", messageSchema: "", messageDemo: "" },
+        ]
+    },
+    options: {
+        tabs: [
+            { title: "功能一", id: "tab1" }
+        ]
+    },
     optionsView: {
-        //利用动态表单机制描述的options的设置设定
-        // 动态表单
         list: [
             {
                 type: "input",
@@ -59,16 +78,7 @@ export interface IQTabs extends IComponent {
                         trigger: ["blur"],
                     },
                 ],
-            }
+            },
         ]
-    },
-}
-
-export interface IQTabsOptions {
-    tabs: IQTabsTab[],
-}
-
-interface IQTabsTab {
-    title: string,
-    id: string,
+    }
 }

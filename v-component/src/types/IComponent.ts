@@ -7,24 +7,18 @@ export interface IComponent {
     createTime: Date,
     image: string,
     initStyle: string,
-    description: string, 
+    description: string,
     eventSpecification: {
-        inputEvent: [
-            {
-                text: string,
-                eventType: string,
-                messageSchema: string,
-                messageDemo: string,
-            }
-        ],
-        outputEvent: [{
-            text: string,
-            eventType: string
-            messageSchema: string,
-            messageDemo: string,
-
-        }]
+        inputEvent: IEventSpecificationEvent[],
+        outputEvent: IEventSpecificationEvent[]
     }
+}
+
+export interface IEventSpecificationEvent {
+    text: string,
+    eventType: string,
+    messageSchema: string,
+    messageDemo: string,
 }
 
 export interface IMessage {

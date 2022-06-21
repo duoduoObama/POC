@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit'
+import { html, css, LitElement, PropertyValueMap } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 import * as echarts from 'echarts';
 // import "https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js" 
@@ -35,6 +35,8 @@ export class QEchartsGl extends LitElement {
   @query("#chart-container")
   chartContainer!: HTMLDivElement;
 
+  myChart!: echarts.ECharts;
+
   render() {
     const { text } = this.data;
     return html`
@@ -48,14 +50,14 @@ export class QEchartsGl extends LitElement {
     const ROOT_PATH =
       'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
 
-    var myChart = echarts.init(dom);
+    this.myChart = echarts.init(dom);
     var option;
 
     var uploadedDataURL = ROOT_PATH + '/data/asset/data/life-expectancy-table.json';
-    myChart.showLoading();
+    this.myChart.showLoading();
     const data = await fetch(uploadedDataURL).then(res => res.json());
 
-    myChart.hideLoading();
+    this.myChart.hideLoading();
     var sizeValue = '57%';
     var symbolSize = 2.5;
     option = {
@@ -163,19 +165,23 @@ export class QEchartsGl extends LitElement {
         }
       ]
     };
-    myChart.setOption(option);
+    this.myChart.setOption(option);
 
-    option && myChart.setOption(option);
+    option && this.myChart.setOption(option);
     window.addEventListener("resize", () => {
-      myChart.resize();
+      this.myChart.resize();
+    })
+
+    this.myChart.resize();
+    navigation.addEventListener("navigate", () => {
+      setTimeout(() => {
+        this.myChart.resize();
+      })
     })
   }
 
-  protected updated(): void {
-
-    console.log(this.chartContainer);
+  protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.initCharts()
-
   }
 }
 
@@ -184,3 +190,5 @@ declare global {
     'q-echarts-gl': QEchartsGl
   }
 }
+
+declare const navigation: any;

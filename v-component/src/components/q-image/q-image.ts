@@ -38,9 +38,9 @@ export class QImage extends LitElement {
   count = 0
 
   render() {
-    const { src } = this.data;
+    const { src ,imageType} = this.data;
     return html`
-      <img src="${src}">
+      <img src="${src}" style="object-fit:${imageType}">
     `
   }
 }

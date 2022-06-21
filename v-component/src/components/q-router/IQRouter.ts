@@ -1,7 +1,7 @@
 import { IComponent } from "../../types/IComponent";
 
-export interface IQImage extends IComponent {
-    options: IQImageOptions,
+export interface IQRouter extends IComponent {
+    options: IQRouterOptions,
     optionsView: {
         //利用动态表单机制描述的options的设置设定
         // 动态表单
@@ -25,7 +25,7 @@ export interface IQImage extends IComponent {
                     "dynamicHideValue": ""
                 },
                 "model": "input_1645156477415",
-                "key": "src",
+                "key": "input_1645156477415",
                 "rules": [
                     {
                         "required": false,
@@ -51,7 +51,7 @@ export interface IQImage extends IComponent {
                     "dynamicHideValue": ""
                 },
                 "model": "textarea_1645156477415",
-                "key": "imageType",
+                "key": "textarea_1645156477415",
                 "rules": [
                     {
                         "required": false,
@@ -64,7 +64,7 @@ export interface IQImage extends IComponent {
     },
 }
 
-export interface IQImageOptions {
-    src: string,
-    imageType: 'contain' | 'cover' | 'fill',
+export interface IQRouterOptions {
+    path: string[],
+    whetherToShowTab?: boolean,
 }

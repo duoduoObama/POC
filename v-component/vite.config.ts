@@ -5,7 +5,7 @@ import { resolve } from 'path'
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/my-element.ts',
+      entry: 'src/main.ts',
       formats: ['es']
     },
     rollupOptions: {

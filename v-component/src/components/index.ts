@@ -6,3 +6,4 @@ export * from './q-image/q-image';
 export * from './q-marquee-text/q-marquee-text';
 export * from './q-echarts-gl/q-echarts-gl';
 export * from './q-table/q-table';
+export * from './q-router/q-router';
