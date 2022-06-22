@@ -81,12 +81,10 @@ export class QRouterConfig extends LitElement {
   render() {
     const div = document.createElement("div");
     div.id = "container";
-
     return div;
   }
 
   createVueComponent = () => {
-    console.log(this.componentInstance);
     const { router: data = [] } = this.data;
     const _this = this; 
     const component = defineComponent({
@@ -177,7 +175,7 @@ export class QRouterConfig extends LitElement {
                       <div style="width: 100px; text-align: right; margin-top: 4px">发起方式: </div>
                       <div style="width: 350px; margin-left: 10px">
                         <div v-for="(trigger,triggerIndex) in tempDataInfo.trigger" style="display: flex; align-items: center; margin-bottom: 10px">
-                          <a-input v-model:value="trigger.trigger" placeholder="发起方式" style="width: 350px" />
+                          <a-input v-model:value="tempDataInfo.trigger[triggerIndex]" placeholder="发起方式" style="width: 350px" />
                           <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteTrigger(triggerIndex)" />
                         </div>
                         <a-button @click="addTrigger">
@@ -201,7 +199,7 @@ export class QRouterConfig extends LitElement {
                               <div style="width: 100px; text-align: right; margin-top: 4px">接收方式: </div>
                               <div style="width: 350px; margin-left: 10px">
                                 <div v-for="(event,eventIndex) in receive.event" style="display: flex; align-items: center; margin-bottom: 10px">
-                                  <a-input v-model:value="event.event" placeholder="接收方式" style="width: 350px" />
+                                  <a-input v-model:value="receive.event[eventIndex]" placeholder="接收方式" style="width: 350px" />
                                   <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteReceiveEvent(receiveIndex,eventIndex)" />
                                 </div>
                                 <a-button @click="addReceiveEvent(receiveIndex)">
@@ -226,7 +224,7 @@ export class QRouterConfig extends LitElement {
                               <div style="width: 100px; text-align: right; margin-top: 4px">回流点: </div>
                               <div style="width: 350px; margin-left: 10px">
                                 <div v-for="(reply, replyIndex) in receive.reply" style="display: flex; align-items: center; margin-bottom: 10px">
-                                  <a-input v-model:value="reply.reply" placeholder="回流点" style="width: 350px" />
+                                  <a-input v-model:value="receive.reply[replyIndex]" placeholder="回流点" style="width: 350px" />
                                   <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteReply(receiveIndex,replyIndex)" />
                                 </div>
                                 <a-button @click="addReply(receiveIndex)">
@@ -332,7 +330,7 @@ export class QRouterConfig extends LitElement {
         };
 
         const addTrigger = () => {
-          tempDataInfo.value.trigger.push({ trigger: "" });
+          tempDataInfo.value.trigger.push("");
         };
         const deleteTrigger = (index: number) => {
           tempDataInfo.value.trigger.splice(index, 1);
@@ -349,7 +347,7 @@ export class QRouterConfig extends LitElement {
         };
 
         const addReceiveEvent = (receiveIndex: number) => {
-          tempDataInfo.value.receive[receiveIndex].event.push({ event: "" });
+          tempDataInfo.value.receive[receiveIndex].event.push("");
         };
         const deleteReceiveEvent = (
           receiveIndex: number,
@@ -359,7 +357,7 @@ export class QRouterConfig extends LitElement {
         };
 
         const addReply = (receiveIndex: number) => {
-          tempDataInfo.value.receive[receiveIndex].reply.push({ reply: "" });
+          tempDataInfo.value.receive[receiveIndex].reply.push("");
         };
         const deleteReply = (receiveIndex: number, eventIndex: number) => {
           tempDataInfo.value.receive[receiveIndex].reply.splice(eventIndex, 1);
