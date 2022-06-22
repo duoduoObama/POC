@@ -1,6 +1,38 @@
-import { html, css, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
-import { IQrouterConfigOptions } from './IQrouterConfig'
+import { html, css, LitElement, unsafeCSS } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
+import { IQRouterConfigOptions } from "./IQrouterConfig";
+import { createApp, defineComponent, ref } from "vue";
+import { cloneDeep } from "lodash-es";
+import Divider from "ant-design-vue/lib/divider";
+import {
+  Input,
+  Select,
+  Dropdown,
+  Menu,
+  Button,
+  Tooltip,
+  Switch,
+  InputNumber,
+  Textarea,
+  message,
+  Modal,
+} from "ant-design-vue";
+import {
+  DownOutlined,
+  EyeOutlined,
+  CopyOutlined,
+  FormOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons-vue";
+import TypographyLink from "ant-design-vue/lib/typography";
+import Popconfirm from "ant-design-vue/lib/popconfirm";
+import ConfigProvider from "ant-design-vue/lib/config-provider";
+import antdCss from "ant-design-vue/dist/antd.min.css";
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+import axios from "axios";
+import fetchJsonp from "fetch-jsonp";
 
 /**
  * An example element.
@@ -8,30 +40,506 @@ import { IQrouterConfigOptions } from './IQrouterConfig'
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement('q-router-config')
-export class QrouterConfig extends LitElement {
-    static styles = css`
-    :host {
-      display: block; 
-    } 
-    `
+@customElement("q-router-config")
+export class QRouterConfig extends LitElement {
+  static styles = [
+    css`
+      :host {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    `,
+    css`
+      ${unsafeCSS(antdCss)}
+    `,
+  ];
 
-    /**
-     * The name to say "Hello" to.
-     */
-    @property({ type: Object, attribute: "data-data" })
-    data: IQrouterConfigOptions = { router: [] }
+  /**
+   * The name to say "Hello" to.
+   */
+  @property({ type: Object, attribute: "data-data" })
+  data: IQRouterConfigOptions = {
+    router: [],
+  };
 
-    render() {
-        const { router = [] } = this.data;
-        return html`
-      <p>${router}</p> 
-    `
-    }
+  /**
+   * The number of times the button has been clicked.
+   */
+  @query("#container")
+  container!: HTMLElement;
+
+  /**
+   * 组件实例
+   */
+  componentInstance: any = null;
+
+  render() {
+    return html`<div id="container"></div>`;
+  }
+
+  createVueComponent = () => {
+    console.log(this.componentInstance);
+    const { router: data = [] } = this.data;
+    const _this = this;
+    const component = defineComponent({
+      template: `
+            <a-config-provider :locale="zhCN">
+              <div style="width: 400px; margin: 20px 0 0 20px; border: 1px solid #E1E4E8; padding: 20px; position: relative">
+                <div style="font-size: 16px; font-weight: 600">路由配置</div>
+                <div style="display: flex; align-items: center; margin-top: 6px">
+                  <a-input-search
+                    v-model:value="searchText"
+                    placeholder="请输入查询关键字"
+                    enter-button
+                    @search="onSearch"
+                  />
+                </div>
+                <div style="display: flex; align-items: center; margin-top: 10px">
+                  <a-button style="width : 90px" @click="openRouterDrawer('new')">
+                    新建
+                    <plus-outlined />
+                  </a-button>
+                  <div style="cursor: pointer; margin-left: 20px" @click="importExport('import')">导入</div>
+                  <div style="cursor: pointer; margin-left: 10px" @click="importExport('export')">导出</div>
+                </div>
+                <div v-for="(item, index) in tempRouterConfig" style="display: flex; align-items: center; margin-top: 10px; padding: 10px; border: 1px solid #E1E4E8; border-radius: 4px">
+                  <div>
+                    <div style="font-weight: 600; color: #666666">{{ item.title }}</div>
+                    <div style="padding: 0 6px; margin-top: 4px; border-radius: 2px; background-color: #EAEBEF">{{ item.target }}</div>
+                  </div>
+                  <a-tooltip placement="bottom">
+                    <template #title>
+                    <span>查看</span>
+                    </template>
+                    <eye-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: 'auto' }" @click="openRouterDrawer('see',item.title)" />
+                  </a-tooltip>
+                  <a-tooltip placement="bottom">
+                    <template #title>
+                    <span>编辑</span>
+                    </template>
+                    <form-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('edit',item.title)" />
+                  </a-tooltip>
+                  <a-tooltip placement="bottom">
+                    <template #title>
+                    <span>删除</span>
+                    </template>
+                    <delete-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('delete',item.title)" />
+                  </a-tooltip>
+                  <a-tooltip placement="bottom">
+                    <template #title>
+                    <span>复制</span>
+                    </template>
+                    <copy-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('copy',item.title)" />
+                  </a-tooltip>
+                </div>
+                <div v-show="schemaVisible" style="width: 600px; position: absolute; border: 1px solid #DEDEDE; right: -600px; top: -1px">
+                  <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #DEDEDE">
+                    <div style="font-size: 15px; font-weight: 600; color: #666666">{{ schemaTitle }}</div>
+                    <div v-if="schemaType === 'import'" style="margin-left: auto; color: #4274F8; cursor: pointer" @click="importData">确定</div>
+                    <div v-if="schemaType === 'import' || drawerType === 'edit' || drawerType === 'copy'" style="margin-left: 10px; cursor: pointer" @click="schemaVisible = false">取消</div>
+                    <div v-if="schemaType === 'export'" style="margin-left: auto; cursor: pointer" @click="schemaVisible = false">关闭</div>
+                  </div>
+                  <div style="width: 100%; padding: 10px">
+                    <a-textarea v-model:value="dataSchema" style="width: 100%; height: 400px" />
+                  </div>
+                </div>
+                <div v-show="drawerVisible" style="width: 700px; position: absolute; border: 1px solid #DEDEDE; right: -700px; top: -1px">
+                  <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #DEDEDE">
+                    <div style="font-size: 15px; font-weight: 600; color: #666666">{{ drawerTitle }}</div>
+                    <div v-if="drawerType === 'add'" style="margin-left: auto; color: #4274F8; cursor: pointer" @click="handleDataInfo('add')">创建</div>
+                    <div v-if="drawerType === 'edit'" style="margin-left: auto; color: #4274F8; cursor: pointer" @click="handleDataInfo('edit')">确定</div>
+                    <div v-if="drawerType === 'copy'" style="margin-left: auto; color: #4274F8; cursor: pointer" @click="handleDataInfo('copy')">确定</div>
+                    <div v-if="drawerType === 'add' || drawerType === 'edit' || drawerType === 'copy'" style="margin-left: 10px; cursor: pointer" @click="drawerVisible = false">取消</div>
+                    <div v-if="drawerType === 'see'" style="margin-left: auto; cursor: pointer" @click="drawerVisible = false">关闭</div>
+                  </div>
+                  <div style="max-height: 800px; overflow: auto">
+                    <div style="display: flex; align-items: center; margin-top: 20px">
+                      <div style="width: 100px; text-align: right"><span style="color: red">*</span>配置项名称: </div>
+                      <div style="width: 350px; margin-left: 10px">
+                        <a-input v-model:value="tempDataInfo.title" placeholder="请输入名称" />
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-top: 20px">
+                      <div style="width: 100px; text-align: right"><span style="color: red">*</span>发起源: </div>
+                      <div style="width: 350px; margin-left: 10px">
+                        <a-input v-model:value="tempDataInfo.target" placeholder="请输入发起源" />
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: top; margin-top: 20px">
+                      <div style="width: 100px; text-align: right; margin-top: 4px">发起方式: </div>
+                      <div style="width: 350px; margin-left: 10px">
+                        <div v-for="(trigger,triggerIndex) in tempDataInfo.trigger" style="display: flex; align-items: center; margin-bottom: 10px">
+                          <a-input v-model:value="trigger.trigger" placeholder="发起方式" style="width: 350px" />
+                          <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteTrigger(triggerIndex)" />
+                        </div>
+                        <a-button @click="addTrigger">
+                          <template #icon><plus-outlined /></template>
+                          添加
+                        </a-button>
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: top; margin: 20px 0">
+                      <div style="width: 100px; min-width: 100px; text-align: right; margin-top: 4px">接收源: </div>
+                      <div style="width: 550px; margin-left: 10px">
+                        <div v-for="(receive, receiveIndex) in tempDataInfo.receive" style="display: flex; align-items: center;">
+                          <div style="width: 500px; padding: 10px; border: 1px solid #E1E4E8; border-radius: 4px; margin-bottom: 10px">
+                            <div style="display: flex; align-items: center; margin-top: 20px">
+                              <div style="width: 100px; text-align: right"><span style="color: red">*</span>接收点: </div>
+                              <div style="width: 350px; margin-left: 10px">
+                                <a-input v-model:value="receive.source" placeholder="请输入名称" />
+                              </div>
+                            </div>
+                            <div style="display: flex; align-items: top; margin-top: 20px">
+                              <div style="width: 100px; text-align: right; margin-top: 4px">接收方式: </div>
+                              <div style="width: 350px; margin-left: 10px">
+                                <div v-for="(event,eventIndex) in receive.event" style="display: flex; align-items: center; margin-bottom: 10px">
+                                  <a-input v-model:value="event.event" placeholder="接收方式" style="width: 350px" />
+                                  <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteReceiveEvent(receiveIndex,eventIndex)" />
+                                </div>
+                                <a-button @click="addReceiveEvent(receiveIndex)">
+                                  <template #icon><plus-outlined /></template>
+                                  添加
+                                </a-button>
+                              </div>
+                            </div>
+                            <div style="display: flex; align-items: top; margin-top: 20px">
+                              <div style="width: 100px; text-align: right; margin-top: 4px">数据处理函数: </div>
+                              <div style="width: 350px; margin-left: 10px">
+                                <a-textarea v-model:value="receive.script" style="width: 350px; min-width: 350px; height: 150px" />
+                              </div>
+                            </div>
+                            <div style="display: flex; align-items: top; margin-top: 20px">
+                              <div style="width: 100px; text-align: right; margin-top: 4px">是否开启回流: </div>
+                              <div style="width: 350px; margin-left: 10px">
+                                <a-switch v-model:checked="receive.replyStatus" />
+                              </div>
+                            </div>
+                            <div v-if="receive.replyStatus" style="display: flex; align-items: top; margin: 20px 0">
+                              <div style="width: 100px; text-align: right; margin-top: 4px">回流点: </div>
+                              <div style="width: 350px; margin-left: 10px">
+                                <div v-for="(reply, replyIndex) in receive.reply" style="display: flex; align-items: center; margin-bottom: 10px">
+                                  <a-input v-model:value="reply.reply" placeholder="回流点" style="width: 350px" />
+                                  <delete-outlined :style="{ fontSize: '16px', color: '#8F9BB3', marginLeft: '8px' }" @click="deleteReply(receiveIndex,replyIndex)" />
+                                </div>
+                                <a-button @click="addReply(receiveIndex)">
+                                  <template #icon><plus-outlined /></template>
+                                  添加
+                                </a-button>
+                              </div>
+                            </div>
+                          </div>
+                          <close-circle-outlined :style="{ fontSize: '16px', marginLeft: '10px', cursor: 'pointer' }" @click="deleteReceive(receiveIndex)" />
+                        </div>
+                        <a-button @click="addReceive">
+                          <template #icon><plus-outlined /></template>
+                          添加
+                        </a-button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a-config-provider>
+            `,
+      setup() {
+        const leftBrackets = "{{";
+        const rightBrackets = "}}";
+
+        const defaultInfo = {
+          title: "",
+          target: "",
+          trigger: <any>[],
+          receive: <any>[],
+        };
+        let tempDataInfo = ref(cloneDeep(defaultInfo));
+
+        const searchText = ref("");
+        let tempRouterConfig = ref(cloneDeep(data));
+        const onSearch = (value: string) => {
+          console.log(data);
+          tempRouterConfig.value = data.filter((item) =>
+            item.title.includes(value)
+          );
+        };
+
+        const drawerVisible = ref(false);
+        const drawerType = ref("");
+        const drawerTitle = ref("");
+        const handleRouterIndex = ref(0);
+        const openRouterDrawer = (e: any, title: string) => {
+          const type = e.key || e;
+          handleRouterIndex.value = data.findIndex(
+            (item) => item.title === title
+          );
+          switch (type) {
+            case "new":
+              tempDataInfo.value = cloneDeep(defaultInfo);
+              drawerType.value = "add";
+              drawerTitle.value = "创建路由配置项";
+              drawerVisible.value = true;
+              schemaVisible.value = false;
+              break;
+            case "see":
+              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              drawerType.value = "see";
+              drawerTitle.value = "查看路由配置项 " + tempDataInfo.value.title;
+              drawerVisible.value = true;
+              schemaVisible.value = false;
+              break;
+            case "edit":
+              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              drawerType.value = "edit";
+              drawerTitle.value = "编辑路由配置项 " + tempDataInfo.value.title;
+              drawerVisible.value = true;
+              schemaVisible.value = false;
+              break;
+            case "delete":
+              Modal.confirm({
+                title: "确定要删除吗?",
+                okText: "确定",
+                cancelText: "取消",
+                onOk() {
+                  if (
+                    data[handleRouterIndex.value].title ===
+                    tempDataInfo.value.title
+                  ) {
+                    drawerVisible.value = false;
+                  }
+                  if (handleRouterIndex.value !== -1) {
+                    data.splice(handleRouterIndex.value, 1);
+                  }
+                  onSearch(searchText.value);
+                  changeElementData();
+                },
+              });
+              break;
+            case "copy":
+              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              drawerType.value = "copy";
+              drawerTitle.value = "复制路由配置项 " + tempDataInfo.value.title;
+              drawerVisible.value = true;
+              schemaVisible.value = false;
+              break;
+          }
+        };
+
+        const addTrigger = () => {
+          tempDataInfo.value.trigger.push({ trigger: "" });
+        };
+        const deleteTrigger = (index: number) => {
+          tempDataInfo.value.trigger.splice(index, 1);
+        };
+
+        const addReceive = () => {
+          tempDataInfo.value.receive.push({
+            source: "",
+            event: <any>[],
+            script: "function() { return data; }",
+            replyStatus: false,
+            reply: <any>[],
+          });
+        };
+
+        const addReceiveEvent = (receiveIndex: number) => {
+          tempDataInfo.value.receive[receiveIndex].event.push({ event: "" });
+        };
+        const deleteReceiveEvent = (
+          receiveIndex: number,
+          eventIndex: number
+        ) => {
+          tempDataInfo.value.receive[receiveIndex].event.splice(eventIndex, 1);
+        };
+
+        const addReply = (receiveIndex: number) => {
+          tempDataInfo.value.receive[receiveIndex].reply.push({ reply: "" });
+        };
+        const deleteReply = (receiveIndex: number, eventIndex: number) => {
+          tempDataInfo.value.receive[receiveIndex].reply.splice(eventIndex, 1);
+        };
+
+        const deleteReceive = (receiveIndex: number) => {
+          tempDataInfo.value.receive.splice(receiveIndex, 1);
+        };
+
+        const handleDataInfo = (type: string) => {
+          let paramErr = false;
+          tempDataInfo.value.receive.forEach((item: any) => {
+            if (item.source === "") paramErr = true;
+          });
+          if (
+            tempDataInfo.value.title === "" ||
+            tempDataInfo.value.target === "" ||
+            paramErr
+          ) {
+            message.error("缺少必填参数");
+            return;
+          }
+          let repeatId = false;
+          switch (type) {
+            case "add":
+            case "copy":
+              repeatId = false;
+              data.forEach((item) => {
+                if (item.title === tempDataInfo.value.title) repeatId = true;
+              });
+              if (repeatId) {
+                message.error("配置项名称重复");
+                return;
+              }
+              data.push(tempDataInfo.value);
+              onSearch(searchText.value);
+              drawerVisible.value = false;
+              break;
+            case "edit":
+              repeatId = false;
+              const tempDataList = cloneDeep(data);
+              tempDataList.splice(handleRouterIndex.value, 1);
+              tempDataList.forEach((item) => {
+                if (item.title === tempDataInfo.value.title) repeatId = true;
+              });
+              if (repeatId) {
+                message.error("配置项名称重复");
+                return;
+              }
+              data[handleRouterIndex.value] = tempDataInfo.value;
+              onSearch(searchText.value);
+              drawerVisible.value = false;
+              break;
+          }
+          changeElementData();
+        };
+
+        const schemaType = ref("");
+        const schemaVisible = ref(false);
+        const schemaTitle = ref("");
+        const dataSchema = ref("");
+        const importExport = (type: string) => {
+          if (type === "import") {
+            schemaTitle.value = "导入";
+            dataSchema.value = "[ ]";
+          } else {
+            schemaTitle.value = "导出";
+            dataSchema.value = JSON.stringify(cloneDeep(data));
+          }
+          schemaType.value = type;
+          schemaVisible.value = true;
+          drawerVisible.value = false;
+        };
+        const importData = () => {
+          try {
+            const tempData = JSON.parse(dataSchema.value);
+            if (Array.isArray(tempData)) {
+              data.push.apply(data, tempData);
+              onSearch(searchText.value);
+              schemaVisible.value = false;
+              changeElementData();
+            } else {
+              message.error("schema信息有误");
+            }
+          } catch (error) {
+            message.error("schema信息有误");
+          }
+        };
+
+        const changeElementData = () => {
+          const elementData = JSON.parse(<any>_this.dataset.data);
+          elementData.router = cloneDeep(data);
+          _this.dataset.data = JSON.stringify(elementData);
+        };
+
+        // const eventHandler = (
+        //   eventName: string,
+        //   dataInfo: any,
+        //   result: any
+        // ) => {
+        //   const event = new CustomEvent(eventName, {
+        //     detail: { record: cloneDeep(dataInfo), result: cloneDeep(result) },
+        //   });
+        //   window.dispatchEvent(event);
+        // };
+
+        // onMounted(() => {
+        //   httpRequest();
+        // });
+
+        return {
+          searchText,
+          tempRouterConfig,
+          drawerVisible,
+          drawerType,
+          drawerTitle,
+          tempDataInfo,
+          leftBrackets,
+          rightBrackets,
+          schemaType,
+          schemaVisible,
+          schemaTitle,
+          dataSchema,
+          zhCN,
+          onSearch,
+          openRouterDrawer,
+          addTrigger,
+          deleteTrigger,
+          addReceive,
+          addReceiveEvent,
+          deleteReceiveEvent,
+          addReply,
+          deleteReply,
+          deleteReceive,
+          handleDataInfo,
+          importExport,
+          importData,
+        };
+      },
+    });
+
+    this.componentInstance = createApp(component);
+    this.componentInstance.use(ConfigProvider);
+    this.componentInstance.use(Select);
+    this.componentInstance.use(Divider);
+    this.componentInstance.use(TypographyLink);
+    this.componentInstance.use(Popconfirm);
+    this.componentInstance.use(Input);
+    this.componentInstance.use(Dropdown);
+    this.componentInstance.use(Menu);
+    this.componentInstance.use(Button);
+    this.componentInstance.use(Tooltip);
+    this.componentInstance.use(Switch);
+    this.componentInstance.use(InputNumber);
+    this.componentInstance.use(Textarea);
+    this.componentInstance.use(Modal);
+    this.componentInstance.use(message);
+    this.componentInstance.use("axios", axios);
+    this.componentInstance.use("fetchJsonp", fetchJsonp);
+    this.componentInstance.component("DownOutlined", DownOutlined);
+    this.componentInstance.component("EyeOutlined", EyeOutlined);
+    this.componentInstance.component("CopyOutlined", CopyOutlined);
+    this.componentInstance.component("FormOutlined", FormOutlined);
+    this.componentInstance.component("DeleteOutlined", DeleteOutlined);
+    this.componentInstance.component("PlusOutlined", PlusOutlined);
+    this.componentInstance.component(
+      "CloseCircleOutlined",
+      CloseCircleOutlined
+    );
+    this.componentInstance.mount(this.container);
+  };
+
+  disconnectedCallback(): void {
+    this.componentInstance.destroy();
+  }
+
+  protected updated(): void {
+    this.createVueComponent();
+  }
 }
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'q-router-config': QrouterConfig
-    }
+  interface HTMLElementTagNameMap {
+    "q-router-config": QRouterConfig;
+  }
 }
