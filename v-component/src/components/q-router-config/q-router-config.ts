@@ -79,13 +79,16 @@ export class QRouterConfig extends LitElement {
   componentInstance: any = null;
 
   render() {
-    return html`<div id="container"></div>`;
+    const div = document.createElement("div");
+    div.id = "container";
+
+    return div;
   }
 
   createVueComponent = () => {
     console.log(this.componentInstance);
     const { router: data = [] } = this.data;
-    const _this = this;
+    const _this = this; 
     const component = defineComponent({
       template: `
             <a-config-provider :locale="zhCN">
@@ -157,7 +160,7 @@ export class QRouterConfig extends LitElement {
                     <div v-if="drawerType === 'add' || drawerType === 'edit' || drawerType === 'copy'" style="margin-left: 10px; cursor: pointer" @click="drawerVisible = false">取消</div>
                     <div v-if="drawerType === 'see'" style="margin-left: auto; cursor: pointer" @click="drawerVisible = false">关闭</div>
                   </div>
-                  <div style="max-height: 800px; overflow: auto">
+                  <div style="max-height: 800px; overflow: auto;background: white;">
                     <div style="display: flex; align-items: center; margin-top: 20px">
                       <div style="width: 100px; text-align: right"><span style="color: red">*</span>配置项名称: </div>
                       <div style="width: 350px; margin-left: 10px">
@@ -450,6 +453,7 @@ export class QRouterConfig extends LitElement {
           const elementData = JSON.parse(<any>_this.dataset.data);
           elementData.router = cloneDeep(data);
           _this.dataset.data = JSON.stringify(elementData);
+          console.log(_this)
         };
 
         // const eventHandler = (

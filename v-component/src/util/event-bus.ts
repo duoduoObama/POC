@@ -87,7 +87,7 @@ export const eventBusSubscribe = () => {
     window.addEventListener(EVENTBUS_NAME, (data: any) => {
 
         const router = [...document.querySelectorAll("q-router-config")].map(
-            (current: any) => JSON.parse(current.dataset.data).options
+            (current: any) => JSON.parse(current.dataset.data).router
         );
 
         router.forEach((route) => {
