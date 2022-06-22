@@ -10,7 +10,9 @@ import Popconfirm from 'ant-design-vue/lib/popconfirm'
 import Input from 'ant-design-vue/lib/input'
 import ConfigProvider from 'ant-design-vue/lib/config-provider'
 import antdCss from 'ant-design-vue/dist/antd.min.css'
-import zhCN from 'ant-design-vue/es/locale/zh_CN'; 
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import { IMessage } from '../../types/IComponent'
+import { EVENTBUS_NAME } from '../constent'
 
 /**
  * An example element.
@@ -64,6 +66,7 @@ export class QTable extends LitElement {
     }
 
     createVueComponent = () => {
+        const self = this;
         const { columns = [], dataSource: data = [], operation = [], pagination: page = {} } = this.data;
         if (!Object.keys(page).length && this.componentInstance?._instance) {
             const { pagination } = this.componentInstance._instance.proxy;
@@ -120,29 +123,20 @@ export class QTable extends LitElement {
                     Object.assign(pagination, page);
                 }
 
-                const eventHandler = (eventName: string, record: any, index: number | string) => {
-                    const event = new CustomEvent(eventName, { detail: { record: cloneDeep(record), index } });
-                    window.dispatchEvent(event);
-                }
-
                 const edit = (key: string) => {
                     editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
                 };
                 const save = (key: string) => {
-                    Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
+                    self.sendMessage({ type: 'edit' } as any, editableData[key], key)
 
-                    const [edit = { eventName: "edit" }] = operation as any[];
-                    const { eventName } = edit;
-                    eventHandler(eventName, editableData[key], key);
-                    delete editableData[key];
+                    Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
+                    delete editableData[key]; 
                 };
                 const cancel = (key: string) => {
                     delete editableData[key];
                 };
                 const remove = (key: string) => {
-                    const [, target = { eventName: "delete" }] = operation as any[];
-                    const { eventName } = target;
-                    eventHandler(eventName, dataSource.value.find(item => key === item.key), key);
+                    self.sendMessage({ type: 'delete' } as any, dataSource.value.find(item => key === item.key), key)
 
                     dataSource.value = dataSource.value.filter(item => key !== item.key);
                 }
@@ -176,6 +170,33 @@ export class QTable extends LitElement {
 
     disconnectedCallback(): void {
         this.componentInstance.unmount();
+    }
+
+
+
+    receiveInfo() {
+        const { id, data } = this;
+        window.addEventListener(id, (message) => {
+            console.log(message);
+        });
+    }
+
+    sendMessage(e: Event, node: any, index: number | string) {
+        const message: IMessage = {
+            header: {
+                src: this.id,
+                dst: EVENTBUS_NAME,
+                srcType: e.type,
+                dstType: "object",
+            },
+            body: {
+                ...e,
+                ...node,
+                index
+            },
+        };
+        const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: message });
+        window.dispatchEvent(customEvent); 
     }
 
     protected updated(): void {

@@ -1,14 +1,14 @@
 import { html, LitElement } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
+import { IMessage } from '../../types/IComponent'
 import { EVENTBUS_NAME } from '../constent'
 import { IQTabsOptions } from './IQTabs'
 import { styles } from './styles'
 
 /**
- * An example element.
+ * 选项卡组件.
  *
- * @slot - This element has a slot
- * @csspart button - The button
+ * @slot - slot 为选项卡提供内容 
  */
 @customElement('q-tabs')
 export class QTabs extends LitElement {
@@ -37,7 +37,7 @@ export class QTabs extends LitElement {
             const { title } = item;
             return html`
                 <li>
-                    <a href="javascript:void(0);" @click="${() => { this.clickTitle(index) }}">
+                    <a href="javascript:void(0);" @click="${(e: Event) => { this.clickTitle(e, index) }}">
                     ${title}
                     </a>
                 </li>`})
@@ -65,10 +65,7 @@ export class QTabs extends LitElement {
         tabsDIV.style.display = "block";
     }
 
-    clickTitle(index: number) {
-        const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: { index } });
-        window.dispatchEvent(customEvent);
-
+    clickTitle(e: Event, index: number) {
         const { tabs = [] } = this.data;
         if (!tabs[index]) return;
         const clickTab =
@@ -90,13 +87,32 @@ export class QTabs extends LitElement {
         }
 
         clickTab.id = "current";
+        this.sendMessage(e, tabs[index], index);
     }
 
     receiveInfo() {
         const { id, data } = this;
         window.addEventListener(id, (message) => {
-            console.log(message);
+            console.log(message);  
         });
+    }
+
+    sendMessage(e: Event, node: any, index: number) {
+        const message: IMessage = {
+            header: {
+                src: this.id,
+                dst: EVENTBUS_NAME,
+                srcType: "object",
+                dstType: "object",
+            },
+            body: {
+                ...e,
+                ...node,
+                index
+            },
+        };
+        const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: message });
+        window.dispatchEvent(customEvent); 
     }
 
     protected updated(): void {

@@ -21,6 +21,8 @@
   </style>
   <body style="height: 100vh; overflow: hidden">
     <q-router
+      id="router"
+      data-component="true"
       data-data='{
         "whetherToShowTab":false,
         "path": [
@@ -30,7 +32,22 @@
         ]
   }'
     >
-      <q-table id="table" slot="table"></q-table>
+      <div style="position: absolute; top: 0; width: 100%" slot="table">
+        <q-text
+          id="drag-741zj09acbdc"
+          data-component="true"
+          data-data='{"text":"数据可视化显示系统"}'
+          style="
+            text-align: center;
+            font-size: 30px; 
+            line-height: 66px;
+          "
+        ></q-text>
+      </div>
+      <div style="position: absolute; top: 70px; width: 100%" slot="table">
+        <q-table id="drag-741zj09sxe2c" data-component="true"></q-table>
+      </div>
+
       <div slot="content" style="height: 100vh; overflow: hidden; width: 100vw">
         <div
           style="
@@ -218,6 +235,15 @@
         </div>
       </div>
     </q-router>
+    <q-router-config
+      data-data='{"id":"drag-v6vxvmr9d29f","text":"路由配置表","group":"数据源","width":150,"height":150,"x":"0","y":"0","create_time":"2020-11-12 10:54:06","image":"","datatype":1,"options":[{"title":"table-text","target":"drag-741zj09sxe2c","trigger":["delete","edit"],"receive":[{"source":"drag-741zj09acbdc","event":["changeData"],"script":"\n    /**\n    * @params data 为发起组件绑定数据\n    * @params eventData 触发节点信息\n    * @params node 为发起组件的发起节点信息（如果发起组件有多个发起节点则有信息，如果无多个发起节点则为空值）\n    * @params title 为当前路由配置项名称\n    * convertData 用于输出数据 \n    **/\n\n    try {\n      // 自定义处理方法\n      var convertData = data\n      return convertData.name;\n    } catch (error) {\n      // 脚本错误提示，勿动!!!\n      alert(&apos;(&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;);\n      console.log(&apos;%c (&apos; + title + &apos;):路由数据脚本出错，请检查脚本~~~&apos;,&apos;font-size: 16px;font-weight: 600;color: red;&apos;);\n      console.log(error);\n    }\n      ","replyStatus":false,"reply":[]}],"targetNode":[]}],"style":"left: 0px; top: 0px; width: 150px; height: 150px; text-align: left; font-size: 14px; font-weight: 400; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); line-height: 24px; letter-spacing: 0px; opacity: 1; z-index: 1; position: absolute; overflow: hidden; cursor: move;","description":"拖入设计区->右侧功能区->属性->options->填写text文本组件中需要显示的文字","dynamicForm":{"options":[{"visible":true,"element":"custom","eleType":"q-router-config-set","disabled":false}],"info":[{"key":"id","title":"组件id","default":"","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"text","title":"组件名称","default":"菜单导航","visible":true,"element":"input","eleType":"textarea","disabled":true},{"key":"group","title":"组件类型","default":"导航","visible":true,"element":"input","eleType":"textarea","disabled":true}],"style":[{"key":"left","title":"x轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"top","title":"y轴坐标","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"width","title":"宽度","default":450,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"height","title":"高度","default":50,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"fontSize","title":"字体大小","default":14,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"fontWeight","title":"字体粗细","default":400,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"backgroundColor","title":"背景颜色","default":"rgb(255,255,255)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"color","title":"字体颜色","default":"rgb(0,0,0)","visible":true,"element":"input","eleType":"text","disabled":false},{"key":"lineHeight","title":"行高","default":24,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"letterSpacing","title":"字符间距","default":0,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"opacity","title":"透明度","default":1,"visible":true,"element":"input","eleType":"number","disabled":false},{"key":"zIndex","title":"组件层级","default":1,"visible":true,"element":"input","eleType":"number","disabled":false}]},"paramList":[],"componentName":"q-router-config","_id":"18130714","origin":"http://192.168.21.92:6086","events":{}}'
+      data-component="true"
+      id="drag-v6vxvmr9d29f"
+      title="undefined"
+      data-parent-id="inner-dropzone"
+      data-x="0"
+      data-y="0"
+    ></q-router-config>
   </body>
   <script>
     /**
@@ -245,7 +271,7 @@
         event: (e) => {
           console.log(`数据:`, e);
           const { detail } = e;
-          const table = document.querySelector("#table");
+          const table = document.querySelector("#drag-741zj09sxe2c");
           if (!table) return;
           table.dataset.data = JSON.stringify(detail);
         },
@@ -309,5 +335,11 @@
       dataProvider.getTableInfo();
     }
     pageInit();
+  </script>
+  <script type="module">
+    import { getElementTree } from "/src/util/utils.ts";
+    import { eventBusSubscribe } from "/src/util/event-bus";
+
+    eventBusSubscribe();
   </script>
 </html>

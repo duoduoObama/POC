@@ -27,7 +27,7 @@ export interface IMessage {
         srcType: string,
         dst: string,
         dstType: string,
-        fn: (messagebody: IMessage) => any
+        fn?: (messagebody: IMessage) => any
     },
     body: object
 }

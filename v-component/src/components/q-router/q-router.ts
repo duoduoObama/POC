@@ -85,9 +85,7 @@ export class QRouter extends LitElement {
             `,
             setup() {
                 const isShow = ref(whetherToShowTab);
-                const pathArr = reactive(path);
-                console.log(pathArr, isShow);
-
+                const pathArr = reactive(path); 
 
                 return {
                     whetherToShowTab: isShow,
