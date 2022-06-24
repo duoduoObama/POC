@@ -92,8 +92,8 @@ export class QTabs extends LitElement {
 
     receiveInfo() {
         const { id, data } = this;
-        window.addEventListener(id, (message) => {
-            console.log(message);  
+        this.addEventListener(id, (message) => {
+            console.log(message);
         });
     }
 
@@ -101,9 +101,9 @@ export class QTabs extends LitElement {
         const message: IMessage = {
             header: {
                 src: this.id,
-                dst: EVENTBUS_NAME,
+                dst: '',
                 srcType: "object",
-                dstType: "object",
+                dstType: '',
             },
             body: {
                 ...e,
@@ -112,7 +112,7 @@ export class QTabs extends LitElement {
             },
         };
         const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: message });
-        window.dispatchEvent(customEvent); 
+        window.dispatchEvent(customEvent);
     }
 
     protected updated(): void {

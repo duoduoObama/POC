@@ -93,3 +93,106 @@ var tableInfo = {
     { key: 58, name: "Edrward 58", age: 59, address: "London Park no. 58" },
   ],
 };
+
+var config = {
+  componentsArray: [
+    {
+      id: "drag-741zj09acbdc",
+      componentName: "q-text",
+      type: "文本",
+      text: "文本",
+      group: ["文本"],
+      createTime: "2022-06-20T07:49:43.975Z",
+      image: "",
+      initStyle:
+        "position: absolute; top: 0; width: 100%;text-align: center; font-size: 30px; line-height: 66px;",
+      options: { text: "数据可视化显示系统1" },
+    },
+    {
+      id: "drag-741zj0966666",
+      componentName: "q-text",
+      type: "文本",
+      text: "文本",
+      group: ["文本"],
+      createTime: "2022-06-20T07:49:43.975Z",
+      image: "",
+      initStyle:
+        "position: absolute; top: 70px; width: 100%;text-align: center; font-size: 30px; line-height: 66px;color:red;",
+      options: { text: "数据可视化显示系统2" },
+    },
+    {
+      id: "drag-741zj0977777",
+      componentName: "q-image",
+      type: "媒体",
+      text: "图片",
+      group: ["媒体"],
+      createTime: "2022-06-20T07:49:43.975Z",
+      image: "",
+      initStyle:
+        "position: absolute;right:0; top: 140px; width: 30%;height:30%;text-align: center; font-size: 30px;",
+      options: {
+        src: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjE0MzAxODM0Mzk5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR 0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI3MjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMCAxMDI0VjBoMTAyNHYxMDI0SDB6TTkzMy42NDcwNTkgOTAuMzUyOTQxSDkwLjM1Mjk0MXY3NjguNTIyMDM5TDM1MS4zNzI1NDkgNDcxLjg0MzEzN2wyMjAuODYyNzQ1IDI2MS4wMTk2MDggMTQwLjU0OTAyLTExMC40MzEzNzIgMjIwLjg2Mjc0NSAyMjkuMDQ0NzA1VjkwLjM1Mjk0MXpNNjcyLjYyNzQ1MSAzMzEuMjk0MTE4YTkwLjM1Mjk0MSA5MC4zNTI5NDEgMCAxIDEgOTAuMzUyOTQxIDkwLjM1Mjk0MSA5MC4zNTI5NDEgOTAuMzUyOTQxIDAgMCAxLTkwLjM1Mjk0MS05MC4zNTI5NDF6IiBwLWlkPSIyNzI3IiBmaWxsPSIjYmZiZmJmIj48L3BhdGg+PC9zdmc+",
+      },
+    },
+    {
+      id: "drag-741zj09abdcs",
+      componentName: "q-router-config",
+      type: "数据源",
+      text: "路由配置",
+      group: ["数据源"],
+      createTime: "2022-06-20T07:49:43.975Z",
+      image: "",
+      initStyle:
+        "position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
+      options: {
+        router: [
+          {
+            title: "table-text",
+            target: "drag-741zj09sxe2c",
+            trigger: ["delete", "edit"],
+            receive: [
+              {
+                source: "drag-741zj09acbdc",
+                event: ["changeInfo"],
+                script: "function (data,context){return data.name;}",
+                replyStatus: false,
+                reply: [],
+              },
+            ],
+            targetNode: [],
+          },
+          {
+            title: "text-text",
+            target: "drag-741zj09acbdc",
+            trigger: ["click"],
+            receive: [
+              {
+                source: "drag-741zj0966666",
+                event: ["changeInfo"],
+                script:
+                  'function (data,context){\nconst {header}=context;\nconst {reply}=header;\nconst {resolve}=reply;\nresolve("消息回归")\nreturn "sdfasdfsadfasdf";}',
+                replyStatus: false,
+                reply: [],
+              },
+            ],
+            targetNode: [],
+          },
+          {
+            title: "text2->text1",
+            target: "drag-741zj0966666",
+            trigger: ["click"],
+            receive: [
+              {
+                source: "drag-741zj09acbdc",
+                event: ["changeInfo"],
+                script: "function(data) { return 66666 }",
+                replyStatus: false,
+                reply: [],
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+};

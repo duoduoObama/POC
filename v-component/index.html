@@ -20,7 +20,7 @@
     }
   </style>
   <body style="height: 100vh; overflow: hidden">
-    <q-router
+    <!-- <q-router
       id="router"
       data-component="true"
       data-data='{
@@ -40,13 +40,24 @@
           style="text-align: center; font-size: 30px; line-height: 66px"
         ></q-text>
       </div>
-      <div style="position: absolute; top: 70px; width: 100%" slot="table">
-        <q-table id="drag-741zj09sxe2c" data-component="true"></q-table>
+      <div
+        style="position: absolute; top: 70px; width: 100%; color: red"
+        slot="table"
+      >
+        <q-text
+          id="drag-741zj0966666"
+          data-component="true"
+          data-data='{"text":"数据可视化显示系统"}'
+          style="text-align: center; font-size: 30px; line-height: 66px"
+        ></q-text>
+      </div>
+      <div style="position: absolute; top: 140px; width: 100%" slot="table">
+        <q-table id="drag-teststet" data-component="true"></q-table>
       </div>
       <div
         style="
           position: absolute;
-          top: 70px;
+          top: 170px;
           width: 100%;
           z-index: 2;
           background-color: white;
@@ -54,10 +65,9 @@
         slot="table"
       >
         <q-router-config
-          data-data='{"test":123,"router":[{"title":"table-text","target":"drag-741zj09sxe2c","trigger":["delete","edit"],"receive":[{"source":"drag-741zj09acbdc","event":["changeData"],"script":"function() { return data; }","replyStatus":false,"reply":[]}],"targetNode":[]}]}'
+          data-data='{"router":[{"title":"table-text","target":"drag-741zj09sxe2c","trigger":["delete","edit"],"receive":[{"source":"drag-741zj09acbdc","event":["changeInfo"],"script":"function (data,context){return data.name;}","replyStatus":false,"reply":[]}],"targetNode":[]},{"title":"text-text","target":"drag-741zj09acbdc","trigger":["click"],"receive":[{"source":"drag-741zj0966666","event":["changeInfo"],"script":"function (data,context){\nconst {header}=context;\nconst {reply}=header;\nconst {resolve}=reply;\nresolve(\"消息回归\")\nreturn \"sdfasdfsadfasdf\";}","replyStatus":false,"reply":[]}],"targetNode":[]},{"title":"text2->text1","target":"drag-741zj0966666","trigger":["click"],"receive":[{"source":"drag-741zj09acbdc","event":["changeInfo"],"script":"function(data) { return 66666 }","replyStatus":false,"reply":[]}]}]}'
           data-component="true"
           id="drag-v6vxvmr9d29f"
-          title="undefined"
           data-parent-id="inner-dropzone"
           data-x="0"
           data-y="0"
@@ -250,7 +260,7 @@
           <q-echarts-gl></q-echarts-gl>
         </div>
       </div>
-    </q-router>
+    </q-router> -->
   </body>
   <!-- <body style="height: 100vh; overflow: hidden">
     <q-data-source
@@ -264,22 +274,6 @@
      * 路由信息表
      */
     const eventRouter = [
-      {
-        eventName: "edit1",
-        event: (e) => {
-          console.log(`编辑:`, e);
-          const results = dataProvider.updateTableInfo(e.detail.record);
-          dataProvider.getTableInfo();
-        },
-      },
-      {
-        eventName: "delete1",
-        event: (e) => {
-          console.log(`删除:`, e);
-          const results = dataProvider.deleteTableInfo(e.detail.record);
-          dataProvider.getTableInfo();
-        },
-      },
       {
         eventName: "getTableInfo",
         event: (e) => {
@@ -353,6 +347,11 @@
   <script type="module">
     import { getElementTree } from "/src/util/utils.ts";
     import { eventBusSubscribe } from "/src/util/event-bus";
+    import bootstrap from "/src/types/BootStrap";
+
+    // console.log(new bootstrap);
+
+    bootstrap.bootStrap(config);
 
     eventBusSubscribe();
   </script>

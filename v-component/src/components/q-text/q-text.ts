@@ -1,20 +1,21 @@
-import { html, css, LitElement, PropertyValueMap } from 'lit'
+import { html, css } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { IMessage } from '../../types/IComponent'
-import { EVENTBUS_NAME } from '../constent'
-import { IQtextOptions } from './IQText'
+import { isString } from 'lodash-es'
+import { Component } from '../../types/Component'
+import { IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
+import { IQtextOptions } from './IQText' 
 
 /**
  * 文本组件
  * 
  */
 @customElement('q-text')
-export class QText extends LitElement {
+export class QText extends Component {
   static styles = css`
     :host {
       display: block; 
     }
-    p{
+    p {
         margin:0;
     }
   `
@@ -23,9 +24,44 @@ export class QText extends LitElement {
    * 绑定data数据
    */
   @property({ type: Object, attribute: "data-data" })
-  data: IQtextOptions = { text: "文本数据1" }
+  data: IQtextOptions = { text: "文本数据1" };
 
+  model: ISchema & { [key: string]: any } = {
+    _eventSpecification: {
+      inputEvent: [{
+        text: "更改组件数据",
+        eventType: "changeInfo",
+        messageSchema: "",
+        messageDemo: "",
+      }],
+      outputEvent: [{
+        text: "组件点击数据",
+        eventType: "click",
+        messageSchema: "",
+        messageDemo: "文本数据1"
+      }],
+    },
 
+    get eventSpecification() {
+      return this._eventSpecification;
+    },
+
+    set eventSpecification(value) {
+      this._eventSpecification = value;
+      this.receiveInfo(value);
+    },
+    get mdata() {
+      return this.data;
+    },
+    set mdata(value) {
+      this.data = value;
+    }
+  }
+
+  constructor() {
+    super();
+    this.receiveInfo(this.model.eventSpecification);
+  }
 
   render() {
     const { text } = this.data;
@@ -34,36 +70,32 @@ export class QText extends LitElement {
     `
   }
 
-  receiveInfo() {
-    const { id, data } = this;
-    window.addEventListener(id, (message) => {
-      const { detail } = message as never;
-      const { body, header } = detail as IMessage;
-      const { dstType } = header || {};
+  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
+    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
+      this.removeListener(item.eventType);
+      this.addListener(item.eventType, (listener: IMessage) => {
+        const { body } = listener;
 
-      console.log(dstType);
-
-      if (dstType === "changeData") {
-        if (typeof body === "object") {
-          this.data = { ...this.data, text: JSON.stringify(body) };
+        if (isString(body)) {
+          this.data = { ...this.data, text: body };
           return;
         }
-        this.data = { ...this.data, text: body as never as string };
-      }
-    });
+        this.data = { ...this.data, text: JSON.stringify(body) };
+      });
+    })
   }
 
   clickFont(e: Event) {
-    this.sendMessage(e, this.data, "text");
+    this.onSendMessage(e, this.data, "text");
   }
 
-  sendMessage(e: Event, node: any, index: number | string) {
+  onSendMessage(e: Event, node: any, index: number | string) {
     const message: IMessage = {
       header: {
         src: this.id,
-        dst: EVENTBUS_NAME,
+        dst: '',
         srcType: e.type,
-        dstType: "object",
+        dstType: '',
       },
       body: {
         ...e,
@@ -71,12 +103,7 @@ export class QText extends LitElement {
         index
       },
     };
-    const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: message });
-    window.dispatchEvent(customEvent);
-  }
-
-  protected updated(): void {
-    this.receiveInfo();
+    this.sendMessage(message);
   }
 }
 

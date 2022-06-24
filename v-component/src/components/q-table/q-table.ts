@@ -130,7 +130,7 @@ export class QTable extends LitElement {
                     self.sendMessage({ type: 'edit' } as any, editableData[key], key)
 
                     Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
-                    delete editableData[key]; 
+                    delete editableData[key];
                 };
                 const cancel = (key: string) => {
                     delete editableData[key];
@@ -176,7 +176,7 @@ export class QTable extends LitElement {
 
     receiveInfo() {
         const { id, data } = this;
-        window.addEventListener(id, (message) => {
+        this.addEventListener(id, (message) => {
             console.log(message);
         });
     }
@@ -185,9 +185,9 @@ export class QTable extends LitElement {
         const message: IMessage = {
             header: {
                 src: this.id,
-                dst: EVENTBUS_NAME,
+                dst: '',
                 srcType: e.type,
-                dstType: "object",
+                dstType: '',
             },
             body: {
                 ...e,
@@ -196,10 +196,11 @@ export class QTable extends LitElement {
             },
         };
         const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: message });
-        window.dispatchEvent(customEvent); 
+        window.dispatchEvent(customEvent);
     }
 
     protected updated(): void {
+        this.receiveInfo();
         this.createVueComponent();
     }
 }
