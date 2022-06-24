@@ -2,4 +2,10 @@ import "./components";
 
 const modules = import.meta.globEager("./components/*/component.json");
 
-console.log(modules);
+const components = Object.values(modules).reduce((pre, cur) => {
+    const { componentName } = cur;
+    pre[componentName] = cur;
+    return pre;
+}, {})
+
+console.log(components);
