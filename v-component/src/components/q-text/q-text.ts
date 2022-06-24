@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js'
 import { isString } from 'lodash-es'
 import { Component } from '../../types/Component'
 import { IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
-import { IQtextOptions } from './IQText' 
+import { IQtextOptions } from './IQText'
 
 /**
  * 文本组件
@@ -26,40 +26,11 @@ export class QText extends Component {
   @property({ type: Object, attribute: "data-data" })
   data: IQtextOptions = { text: "文本数据1" };
 
-  model: ISchema & { [key: string]: any } = {
-    _eventSpecification: {
-      inputEvent: [{
-        text: "更改组件数据",
-        eventType: "changeInfo",
-        messageSchema: "",
-        messageDemo: "",
-      }],
-      outputEvent: [{
-        text: "组件点击数据",
-        eventType: "click",
-        messageSchema: "",
-        messageDemo: "文本数据1"
-      }],
-    },
-
-    get eventSpecification() {
-      return this._eventSpecification;
-    },
-
-    set eventSpecification(value) {
-      this._eventSpecification = value;
-      this.receiveInfo(value);
-    },
-    get mdata() {
-      return this.data;
-    },
-    set mdata(value) {
-      this.data = value;
-    }
-  }
+  model: ISchema & { [key: string]: any } = {} as never;
 
   constructor() {
     super();
+    this.initModel();
     this.receiveInfo(this.model.eventSpecification);
   }
 
@@ -104,6 +75,48 @@ export class QText extends Component {
       },
     };
     this.sendMessage(message);
+  }
+
+  initModel(): void {
+    const self = this;
+
+    this.model = {
+      _eventSpecification: {
+        inputEvent: [{
+          text: "更改组件数据",
+          eventType: "changeInfo",
+          messageSchema: "",
+          messageDemo: "",
+        }],
+        inputCustomEvent: [{
+          text: "更改组件数据",
+          eventType: "changeInfo",
+          messageSchema: "",
+          messageDemo: "",
+        }],
+        outputEvent: [{
+          text: "组件点击数据",
+          eventType: "click",
+          messageSchema: "",
+          messageDemo: "文本数据1"
+        }],
+      },
+
+      get eventSpecification() {
+        return this._eventSpecification;
+      },
+
+      set eventSpecification(value) {
+        this._eventSpecification = value;
+        self.receiveInfo(value);
+      },
+      get mdata() {
+        return self.data;
+      },
+      set mdata(value) {
+        self.data = value;
+      }
+    };
   }
 }
 
