@@ -65,7 +65,7 @@
         slot="table"
       >
         <q-router-config
-          data-data='{"router":[{"title":"table-text","target":"drag-741zj09sxe2c","trigger":["delete","edit"],"receive":[{"source":"drag-741zj09acbdc","event":["changeInfo"],"script":"function (data,context){return data.name;}","replyStatus":false,"reply":[]}],"targetNode":[]},{"title":"text-text","target":"drag-741zj09acbdc","trigger":["click"],"receive":[{"source":"drag-741zj0966666","event":["changeInfo"],"script":"function (data,context){\nconst {header}=context;\nconst {reply}=header;\nconst {resolve}=reply;\nresolve(\"消息回归\")\nreturn \"sdfasdfsadfasdf\";}","replyStatus":false,"reply":[]}],"targetNode":[]},{"title":"text2->text1","target":"drag-741zj0966666","trigger":["click"],"receive":[{"source":"drag-741zj09acbdc","event":["changeInfo"],"script":"function(data) { return 66666 }","replyStatus":false,"reply":[]}]}]}'
+          data-data='{"router":{"drag-741zj09sxe2c":{"title":"table-text","target":"drag-741zj09sxe2c","trigger":["delete","edit"],"receive":[{"source":"drag-741zj09acbdc","event":["changeData"],"script":"function() { return data; }","replyStatus":false,"reply":[]}],"targetNode":[]}}}'
           data-component="true"
           id="drag-v6vxvmr9d29f"
           data-parent-id="inner-dropzone"
@@ -269,6 +269,42 @@
       }'
     ></q-data-source>
   </body> -->
+  <!-- <body style="height: 100vh; overflow: hidden">
+    <q-page-model
+      data-data='{
+        "pageModel":[]
+      }'
+    ></q-page-model>
+  </body> -->
+  <!-- <body>
+    <div style="width: 80%; position: absolute; left: 6%; top: 2%">
+      <q-moveable-demo
+        id="tabs1"
+        data-data='{"tabs":[{"title":"tabs-1","id":"test1"}]}'
+      >
+        <div
+          id="drag-1af241gga121"
+          slot="test1"
+          style="
+            width: 150px;
+            height: 150px;
+            transform: translate(0px, 0px);
+            border: 2px solid #033d37;
+            overflow: hidden;
+          "
+        >
+          <q-image
+            data-data='{"src":"./src/assets/1655104783919.jpg"}'
+          ></q-image>
+        </div>
+        <div slot="test2" style="height: 100%; border: 2px solid #033d37">
+          <q-image
+            data-data='{"src":"./src/assets/1654853215692.png"}'
+          ></q-image>
+        </div>
+      </q-moveable-demo>
+    </div>
+  </body> -->
   <script>
     /**
      * 路由信息表
@@ -355,4 +391,6 @@
 
     eventBusSubscribe();
   </script>
+  <script src="./src/components/moveable.ts" type="module"></script>
+  <!-- <script src="./src/util/rxjs.ts" type="module"></script> -->
 </html>

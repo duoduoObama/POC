@@ -31,7 +31,7 @@ export interface IQrouterConfig extends IComponent {
 }
 
 export interface IQRouterConfigOptions {
-  router: IConfig[];
+  router: { [key: string]: any };
 }
 
 interface IConfig {

@@ -12,6 +12,8 @@ specifiers:
   fetch-jsonp: ^1.2.1
   lit: ^2.0.2
   lodash-es: ^4.17.21
+  moveable: ^0.30.0
+  rxjs: ^7.5.5
   sass: ^1.52.3
   telejson: ^6.0.8
   typescript: ^4.5.4
@@ -32,6 +34,8 @@ dependencies:
   lit: 2.2.5
   lodash-es: 4.17.21
   telejson: 6.0.8
+  moveable: 0.30.0
+  rxjs: 7.5.5
   vue: 3.2.37
   vue-router: 4.0.16_vue@3.2.37
   vuex: 4.0.2_vue@3.2.37
@@ -97,8 +101,49 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /@daybrush/utils/1.6.0:
+    resolution: {integrity: sha512-9MjMoOLl1U+l8lXByN3BbLZXf+mktoLyeb6t78Jz2WZ7LRldK0FNg8oW//9giO2hHCUyxS7LX6jS1hToGIfRWA==}
+    dev: false
+
+  /@daybrush/utils/1.7.1:
+    resolution: {integrity: sha512-ruVDIfXeVAF4s0RxJoNx5hTjxlIRMnKoJ7N5e2m9eDyluIXB12EvhMPQdoq4a/ohJ+cPgj2MiWS5Lvmpsrx8Gg==}
+    dev: false
+
+  /@egjs/agent/2.4.2:
+    resolution: {integrity: sha512-UZQzdpPl0g0M1wDAiq4EY2vUzUI6P5SKGOAPkf0yxSnlcwrU8/zuoyUWbYj11ROFeHV8iW0IetGsmia83z1Hbw==}
+    dev: false
+
+  /@egjs/children-differ/1.0.1:
+    resolution: {integrity: sha512-DRvyqMf+CPCOzAopQKHtW+X8iN6Hy6SFol+/7zCUiE5y4P/OB8JP8FtU4NxtZwtafvSL4faD5KoQYPj3JHzPFQ==}
+    dependencies:
+      '@egjs/list-differ': 1.0.0
+    dev: false
+
+  /@egjs/list-differ/1.0.0:
+    resolution: {integrity: sha512-HsbMKc0ZAQH+EUeCmI/2PvTYSybmkaWwakU8QGDYYgMVIg9BQ5sM0A0Nnombjxo2+JzXHxmH+jw//yGX+y6GYw==}
+    dev: false
+
   /@lit/reactive-element/1.3.2:
     resolution: {integrity: sha512-A2e18XzPMrIh35nhIdE4uoqRzoIpEU5vZYuQN4S3Ee1zkGdYC27DP12pewbw/RLgPHzaE4kx/YqxMzebOpm0dA==}
+    dev: false
+
+  /@scena/dragscroll/1.1.1:
+    resolution: {integrity: sha512-RnoGpQC0aJ5Z+glLzQAAAf1jmRac1yRuil4zi4HQ8GhzoxTqlgplAOGkFF/IRnUMK1uc5S6R/MEEybfyDGlEcQ==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      '@scena/event-emitter': 1.0.5
+    dev: false
+
+  /@scena/event-emitter/1.0.5:
+    resolution: {integrity: sha512-AzY4OTb0+7ynefmWFQ6hxDdk0CySAq/D4efljfhtRHCOP7MBF9zUfhKG3TJiroVjASqVgkRJFdenS8ArZo6Olg==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+    dev: false
+
+  /@scena/matrix/1.1.1:
+    resolution: {integrity: sha512-JVKBhN0tm2Srl+Yt+Ywqu0oLgLcdemDQlD1OxmN9jaCTwaFPZ7tY8n6dhVgMEaR9qcR7r+kAlMXnSfNyYdE+Vg==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
     dev: false
 
   /@simonwep/pickr/1.8.2:
@@ -337,6 +382,20 @@ packages:
   /core-js/3.23.0:
     resolution: {integrity: sha512-v2/hZoRcRrvQiBoGsHwmRdr+S4oICKcjA6xb2qjVurin6TpcDC1X2CIDa8rdu/d5n8RT/Sdoos2IlnpQ1rXs5A==}
     requiresBuild: true
+    dev: false
+
+  /css-styled/1.0.0:
+    resolution: {integrity: sha512-lDdPvM2/djv+La110zVY3RGQ7X4OOlzLS+IEjRcn8UlUmJd1+GNcGfDFmsKWwnLBupsY1w0QM1gRgV4RdcCjfw==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      string-hash: 1.1.3
+    dev: false
+
+  /css-to-mat/1.0.3:
+    resolution: {integrity: sha512-HADRhVqPc8wFqEp6ClK+uuPYg+FMBinNo2ReLyI/KQCncmHPJ60o5zldyJG7NjsTqXWbdfGJO51jnoxfMvWJiA==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      '@scena/matrix': 1.1.1
     dev: false
 
   /csstype/2.6.20:
@@ -623,6 +682,10 @@ packages:
       mime-types: 2.1.35
     dev: false
 
+  /framework-utils/1.1.0:
+    resolution: {integrity: sha512-KAfqli5PwpFJ8o3psRNs8svpMGyCSAe8nmGcjQ0zZBWN2H6dZDnq+ABp3N3hdUmFeMrLtjOCTXD4yplUJIWceg==}
+    dev: false
+
   /fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -640,6 +703,13 @@ packages:
       function-bind: 1.1.1
       has: 1.0.3
       has-symbols: 1.0.3
+    dev: false
+
+  /gesto/1.9.0:
+    resolution: {integrity: sha512-WxzswA0zAHK+hM5WyR8G6PdIMt2d/TEY1lFfkfhC8YHHLO5pM5k8AyGu8lhwyBnrPntomWgLy3xl+iBzLHelew==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      '@scena/event-emitter': 1.0.5
     dev: false
 
   /glob-parent/5.1.2:
@@ -805,10 +875,20 @@ packages:
       mime-db: 1.52.0
     dev: false
 
+<<<<<<< Updated upstream
   /min-document/2.19.0:
     resolution: {integrity: sha512-9Wy1B3m3f66bPPmU5hdA4DR4PB2OfDU/+GS3yAB7IQozE3tqXaVv2zOjgla7MEGSRv95+ILmOuvhLkOK6wJtCQ==}
     dependencies:
       dom-walk: 0.1.2
+=======
+  /moveable/0.30.0:
+    resolution: {integrity: sha512-WkIccP2vs7oi7Vtf7c8xmduyF7Kb6+lkJwxSOp+Yx3gFFHUdVTQDO8UhJWwuIrlX5eLymk99bIRi+RPttAK2Yg==}
+    dependencies:
+      '@scena/event-emitter': 1.0.5
+      react-compat-moveable: 0.18.0
+      react-moveable: 0.33.0
+      react-simple-compat: 1.2.2
+>>>>>>> Stashed changes
     dev: false
 
   /nanoid/3.3.4:
@@ -824,6 +904,12 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /overlap-area/1.1.0:
+    resolution: {integrity: sha512-3dlJgJCaVeXH0/eZjYVJvQiLVVrPO4U1ZGqlATtx6QGO3b5eNM6+JgUKa7oStBTdYuGTk7gVoABCW6Tp+dhRdw==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+    dev: false
 
   /path-parse/1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
@@ -845,9 +931,66 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
+<<<<<<< Updated upstream
   /process/0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
+=======
+  /react-compat-css-styled/1.0.8:
+    resolution: {integrity: sha512-CG0kVbpKjiLMQc85pP50+Z0R9PGp7NIkkGqO88QTjEsSMOGKYlCXIAnXdKR2ZII23NJmA4XrJry03jkXOxTUkg==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      css-styled: 1.0.0
+      framework-utils: 1.1.0
+      react-css-styled: 1.0.3
+    dev: false
+
+  /react-compat-moveable/0.18.0:
+    resolution: {integrity: sha512-ACEFE/GKtyqzJBSQ1cosZtD6cD2uuwFBsyNF/zIeM/JvF4zGae3cUUVchOpfHBjPBnjqiHjKMAaucMXPOTDosQ==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      '@egjs/agent': 2.4.2
+      '@egjs/children-differ': 1.0.1
+      '@scena/dragscroll': 1.1.1
+      '@scena/matrix': 1.1.1
+      css-to-mat: 1.0.3
+      framework-utils: 1.1.0
+      gesto: 1.9.0
+      overlap-area: 1.1.0
+      react-compat-css-styled: 1.0.8
+      react-css-styled: 1.0.3
+      react-moveable: 0.33.0
+    dev: false
+
+  /react-css-styled/1.0.3:
+    resolution: {integrity: sha512-6H3aZPO66PYmYg9wx12WzOJpPlBEdA7O5JefCh+4SldlihVKBCxA6mityfWSGWL5ldOkJdHJWGwHR6nGPcVm+A==}
+    dependencies:
+      css-styled: 1.0.0
+      framework-utils: 1.1.0
+    dev: false
+
+  /react-moveable/0.33.0:
+    resolution: {integrity: sha512-ro8dojnbyxHFpfpDCvYwZFF050bHoaVOKTKk3Kvc1Pz863dF7Ejrd3zjdg4ix4xNbZfNsfRKdz0BHgeZzyyzOg==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      '@egjs/agent': 2.4.2
+      '@egjs/children-differ': 1.0.1
+      '@scena/dragscroll': 1.1.1
+      '@scena/event-emitter': 1.0.5
+      '@scena/matrix': 1.1.1
+      css-to-mat: 1.0.3
+      framework-utils: 1.1.0
+      gesto: 1.9.0
+      overlap-area: 1.1.0
+      react-css-styled: 1.0.3
+    dev: false
+
+  /react-simple-compat/1.2.2:
+    resolution: {integrity: sha512-DYa9MHplwzjL/9xDKmTvM70umky8R162aZsKsWC2XRD7d+mIXyr8IQmAoRMlH2uwl4yGGgZbg7bj20qlCMhIYA==}
+    dependencies:
+      '@daybrush/utils': 1.7.1
+      '@egjs/list-differ': 1.0.0
+>>>>>>> Stashed changes
     dev: false
 
   /readdirp/3.6.0:
@@ -882,6 +1025,12 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /rxjs/7.5.5:
+    resolution: {integrity: sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
+
   /sass/1.52.3:
     resolution: {integrity: sha512-LNNPJ9lafx+j1ArtA7GyEJm9eawXN8KlA1+5dF6IZyoONg1Tyo/g+muOsENWJH/2Q1FHbbV4UwliU0cXMa/VIA==}
     engines: {node: '>=12.0.0'}
@@ -913,6 +1062,10 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    dev: false
+
+  /string-hash/1.1.3:
+    resolution: {integrity: sha512-kJUvRUFK49aub+a7T1nNE66EJbZBMnBgoC1UbCZ5n6bsZKBRga4KgBRTMn/pFkeCZSYtNeSyMxPDM0AXWELk2A==}
     dev: false
 
   /supports-preserve-symlinks-flag/1.0.0:

@@ -1,4 +1,4 @@
-import { html, css, LitElement, unsafeCSS } from "lit";
+import { css, LitElement, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQRouterConfigOptions } from "./IQrouterConfig";
 import { createApp, defineComponent, ref } from "vue";
@@ -64,7 +64,7 @@ export class QRouterConfig extends LitElement {
    */
   @property({ type: Object, attribute: "data-data" })
   data: IQRouterConfigOptions = {
-    router: [],
+    router: {},
   };
 
   /**
@@ -85,8 +85,8 @@ export class QRouterConfig extends LitElement {
   }
 
   createVueComponent = () => {
-    const { router: data = [] } = this.data;
-    const _this = this; 
+    const { router: data = {} } = this.data;
+    const _this = this;
     const component = defineComponent({
       template: `
             <a-config-provider :locale="zhCN">
@@ -108,34 +108,34 @@ export class QRouterConfig extends LitElement {
                   <div style="cursor: pointer; margin-left: 20px" @click="importExport('import')">导入</div>
                   <div style="cursor: pointer; margin-left: 10px" @click="importExport('export')">导出</div>
                 </div>
-                <div v-for="(item, index) in tempRouterConfig" style="display: flex; align-items: center; margin-top: 10px; padding: 10px; border: 1px solid #E1E4E8; border-radius: 4px">
+                <div v-for="(item, index) in Object.keys(tempRouterConfig)" style="display: flex; align-items: center; margin-top: 10px; padding: 10px; border: 1px solid #E1E4E8; border-radius: 4px">
                   <div>
-                    <div style="font-weight: 600; color: #666666">{{ item.title }}</div>
-                    <div style="padding: 0 6px; margin-top: 4px; border-radius: 2px; background-color: #EAEBEF">{{ item.target }}</div>
+                    <div style="font-weight: 600; color: #666666">{{ tempRouterConfig[item].title }}</div>
+                    <div style="padding: 0 6px; margin-top: 4px; border-radius: 2px; background-color: #EAEBEF">{{ tempRouterConfig[item].target }}</div>
                   </div>
                   <a-tooltip placement="bottom">
                     <template #title>
                     <span>查看</span>
                     </template>
-                    <eye-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: 'auto' }" @click="openRouterDrawer('see',item.title)" />
+                    <eye-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: 'auto' }" @click="openRouterDrawer('see',tempRouterConfig[item].target)" />
                   </a-tooltip>
                   <a-tooltip placement="bottom">
                     <template #title>
                     <span>编辑</span>
                     </template>
-                    <form-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('edit',item.title)" />
+                    <form-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('edit',tempRouterConfig[item].target)" />
                   </a-tooltip>
                   <a-tooltip placement="bottom">
                     <template #title>
                     <span>删除</span>
                     </template>
-                    <delete-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('delete',item.title)" />
+                    <delete-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('delete',tempRouterConfig[item].target)" />
                   </a-tooltip>
                   <a-tooltip placement="bottom">
                     <template #title>
                     <span>复制</span>
                     </template>
-                    <copy-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('copy',item.title)" />
+                    <copy-outlined :style="{ fontSize: '18px', color: '#8F9BB3', marginLeft: '6px' }" @click="openRouterDrawer('copy',tempRouterConfig[item].target)" />
                   </a-tooltip>
                 </div>
                 <div v-show="schemaVisible" style="width: 600px; position: absolute; border: 1px solid #DEDEDE; right: -600px; top: -1px">
@@ -263,20 +263,21 @@ export class QRouterConfig extends LitElement {
         let tempRouterConfig = ref(cloneDeep(data));
         const onSearch = (value: string) => {
           console.log(data);
-          tempRouterConfig.value = data.filter((item) =>
-            item.title.includes(value)
-          );
+          tempRouterConfig.value = {};
+          Object.keys(data).forEach((key) => {
+            if (data[key].title.includes(value)) {
+              tempRouterConfig.value[key] = data[key];
+            }
+          });
         };
 
         const drawerVisible = ref(false);
         const drawerType = ref("");
         const drawerTitle = ref("");
-        const handleRouterIndex = ref(0);
-        const openRouterDrawer = (e: any, title: string) => {
+        const handleRouterKey = ref("");
+        const openRouterDrawer = (e: any, target: string) => {
           const type = e.key || e;
-          handleRouterIndex.value = data.findIndex(
-            (item) => item.title === title
-          );
+          handleRouterKey.value = target;
           switch (type) {
             case "new":
               tempDataInfo.value = cloneDeep(defaultInfo);
@@ -286,14 +287,14 @@ export class QRouterConfig extends LitElement {
               schemaVisible.value = false;
               break;
             case "see":
-              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              tempDataInfo.value = cloneDeep(data[handleRouterKey.value]);
               drawerType.value = "see";
               drawerTitle.value = "查看路由配置项 " + tempDataInfo.value.title;
               drawerVisible.value = true;
               schemaVisible.value = false;
               break;
             case "edit":
-              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              tempDataInfo.value = cloneDeep(data[handleRouterKey.value]);
               drawerType.value = "edit";
               drawerTitle.value = "编辑路由配置项 " + tempDataInfo.value.title;
               drawerVisible.value = true;
@@ -306,13 +307,13 @@ export class QRouterConfig extends LitElement {
                 cancelText: "取消",
                 onOk() {
                   if (
-                    data[handleRouterIndex.value].title ===
+                    data[handleRouterKey.value].title ===
                     tempDataInfo.value.title
                   ) {
                     drawerVisible.value = false;
                   }
-                  if (handleRouterIndex.value !== -1) {
-                    data.splice(handleRouterIndex.value, 1);
+                  if (handleRouterKey.value !== "") {
+                    Reflect.deleteProperty(data, handleRouterKey.value);
                   }
                   onSearch(searchText.value);
                   changeElementData();
@@ -320,7 +321,7 @@ export class QRouterConfig extends LitElement {
               });
               break;
             case "copy":
-              tempDataInfo.value = cloneDeep(data[handleRouterIndex.value]);
+              tempDataInfo.value = cloneDeep(data[handleRouterKey.value]);
               drawerType.value = "copy";
               drawerTitle.value = "复制路由配置项 " + tempDataInfo.value.title;
               drawerVisible.value = true;
@@ -380,34 +381,55 @@ export class QRouterConfig extends LitElement {
             message.error("缺少必填参数");
             return;
           }
-          let repeatId = false;
+          let repeatTitle = false;
+          let repeatKey = false;
           switch (type) {
             case "add":
             case "copy":
-              repeatId = false;
-              data.forEach((item) => {
-                if (item.title === tempDataInfo.value.title) repeatId = true;
+              repeatTitle = false;
+              repeatKey = false;
+              Object.keys(data).forEach((key) => {
+                if (data[key].title === tempDataInfo.value.title)
+                  repeatTitle = true;
+                if (data[key].target === tempDataInfo.value.target)
+                  repeatKey = true;
               });
-              if (repeatId) {
+              if (repeatTitle) {
+                message.destroy();
                 message.error("配置项名称重复");
                 return;
               }
-              data.push(tempDataInfo.value);
+              if (repeatKey) {
+                message.destroy();
+                message.error("已存在该发起源");
+                return;
+              }
+              data[tempDataInfo.value.target] = tempDataInfo.value;
               onSearch(searchText.value);
               drawerVisible.value = false;
               break;
             case "edit":
-              repeatId = false;
+              repeatTitle = false;
+              repeatKey = false;
               const tempDataList = cloneDeep(data);
-              tempDataList.splice(handleRouterIndex.value, 1);
-              tempDataList.forEach((item) => {
-                if (item.title === tempDataInfo.value.title) repeatId = true;
+              Reflect.deleteProperty(tempDataList, handleRouterKey.value);
+              Object.keys(tempDataList).forEach((key) => {
+                if (tempDataList[key].title === tempDataInfo.value.title)
+                  repeatTitle = true;
+                if (tempDataList[key].target === tempDataInfo.value.target)
+                  repeatKey = true;
               });
-              if (repeatId) {
+              if (repeatTitle) {
+                message.destroy();
                 message.error("配置项名称重复");
                 return;
               }
-              data[handleRouterIndex.value] = tempDataInfo.value;
+              if (repeatKey) {
+                message.destroy();
+                message.error("已存在该发起源");
+                return;
+              }
+              data[handleRouterKey.value] = tempDataInfo.value;
               onSearch(searchText.value);
               drawerVisible.value = false;
               break;
@@ -425,7 +447,11 @@ export class QRouterConfig extends LitElement {
             dataSchema.value = "[ ]";
           } else {
             schemaTitle.value = "导出";
-            dataSchema.value = JSON.stringify(cloneDeep(data));
+            const tempDataSchema = <any>[];
+            Object.keys(data).forEach((key) => {
+              tempDataSchema.push(data[key]);
+            });
+            dataSchema.value = JSON.stringify(tempDataSchema);
           }
           schemaType.value = type;
           schemaVisible.value = true;
@@ -435,14 +461,36 @@ export class QRouterConfig extends LitElement {
           try {
             const tempData = JSON.parse(dataSchema.value);
             if (Array.isArray(tempData)) {
-              data.push.apply(data, tempData);
+              let repeatTitle = false;
+              let repeatKey = false;
+              tempData.forEach((item) => {
+                Object.keys(data).forEach((key) => {
+                  if (item.title === data[key].title) repeatTitle = true;
+                  if (item.target === data[key].target) repeatKey = true;
+                });
+              });
+              if (repeatTitle) {
+                message.destroy();
+                message.error("配置项名称(title)重复");
+                return;
+              }
+              if (repeatKey) {
+                message.destroy();
+                message.error("已存在该发起源(target)");
+                return;
+              }
+              tempData.forEach((item: any) => {
+                data[item.target] = item;
+              });
               onSearch(searchText.value);
               schemaVisible.value = false;
               changeElementData();
             } else {
+              message.destroy();
               message.error("schema信息有误");
             }
           } catch (error) {
+            message.destroy();
             message.error("schema信息有误");
           }
         };
@@ -451,7 +499,6 @@ export class QRouterConfig extends LitElement {
           const elementData = JSON.parse(<any>_this.dataset.data);
           elementData.router = cloneDeep(data);
           _this.dataset.data = JSON.stringify(elementData);
-          console.log(_this)
         };
 
         // const eventHandler = (
