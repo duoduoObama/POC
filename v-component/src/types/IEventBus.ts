@@ -11,6 +11,7 @@ export interface IconfigData {
 
     },
     componentsArray: IComponent[],
+    dynamicHTML: string,
 }
 
 

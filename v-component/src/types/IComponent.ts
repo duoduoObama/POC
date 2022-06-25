@@ -11,6 +11,7 @@ export interface IComponent {
     options?: any,
     readonly shema?: ISchema,
     model?: ISchema,
+    [key: string]: any,
     addListener?(eventName: string, listener: Function): void,
     removeListener?(eventName: string, listener: Function): void,
     getListener?(): { [key: string]: Function },

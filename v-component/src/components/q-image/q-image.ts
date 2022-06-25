@@ -1,5 +1,8 @@
-import { html, css, LitElement } from 'lit'
+import { html, css } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
+import { isString } from 'lodash-es'
+import { Component } from '../../types/Component'
+import { IComponent, IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
 import { IQImageOptions } from './IQImage'
 
 /**
@@ -9,7 +12,7 @@ import { IQImageOptions } from './IQImage'
  * @csspart button - The button
  */
 @customElement('q-image')
-export class QImage extends LitElement {
+export class QImage extends Component {
   static styles = [css`
     :host {
       display: block;
@@ -32,16 +35,187 @@ export class QImage extends LitElement {
   }
 
   /**
-   * The number of times the button has been clicked.
+   * 数据模型
    */
-  @property({ type: Number })
-  count = 0
+  model: Record<keyof IComponent, any> & ISchema = {} as never;
+
+  constructor() {
+    super();
+    this.initModel();
+    this.receiveInfo(this.model.eventSpecification);
+  }
 
   render() {
-    const { src ,imageType} = this.data;
+    const { src, imageType } = this.data;
     return html`
-      <img src="${src}" style="object-fit:${imageType}">
+      <img src="${src}" @click=${this.clickImage} style="object-fit:${imageType}">
     `
+  }
+
+  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
+    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
+      const allListener = this.getListener();
+      Object.keys(allListener).forEach((eventName: string) => {
+        if (allListener[item.eventType]) {
+          this.removeListener(item.eventType);
+        }
+      });
+
+      this.removeListener(item.eventType);
+      this.addListener(item.eventType, (listener: IMessage) => {
+        const { body } = listener;
+
+        if (isString(body)) {
+          this.data = { ...this.data, src: body };
+          return;
+        }
+        this.data = { ...this.data, src: JSON.stringify(body) };
+      });
+    })
+  }
+
+  clickImage(e: Event) {
+    this.onSendMessage(e, this.data, "image");
+  }
+
+  onSendMessage(e: Event, node: any, index: number | string) {
+    const message: IMessage = {
+      header: {
+        src: this.id,
+        dst: '',
+        srcType: e.type,
+        dstType: '',
+      },
+      body: {
+        ...e,
+        node,
+        index
+      },
+    };
+    this.sendMessage(message);
+  }
+
+  initModel(): void {
+    const self = this;
+
+    this.model = {
+      get id() {
+        return self.id
+      },
+      get componentName() {
+        return "q-image"
+      },
+      get type() {
+        return "媒体"
+      },
+      get text() {
+        return "图片"
+      },
+      get group() {
+        return ["媒体"]
+      },
+      get createTime() {
+        return new Date()
+      },
+      get image() {
+        return ""
+      },
+      _initStyle: "",
+      get initStyle() {
+        return this._initStyle;
+      },
+      set initStyle(value) {
+        this.initStyle = value;
+      },
+      get description() {
+        return "图片组件,可以显示图片信息"
+      },
+      get options() {
+        return this.data;
+      },
+      get schema() {
+        return {
+          eventSpecification: {
+            inputEvent: [
+              {
+                text: "更改组件数据",
+                eventType: "changeInfo",
+                messageSchema: "",
+                messageDemo: "",
+              },
+            ],
+            outputEvent: [
+              {
+                text: "组件点击数据",
+                eventType: "click",
+                messageSchema: "",
+                messageDemo: "图片数据1",
+              },
+            ],
+          },
+          optionsView: {
+            list: [
+              {
+                type: "input",
+                label: "输入框",
+                options: {
+                  type: "text",
+                  width: "100%",
+                  defaultValue: "",
+                  placeholder: "请输入",
+                  clearable: false,
+                  maxLength: 0,
+                  prepend: "",
+                  append: "",
+                  tooptip: "",
+                  hidden: false,
+                  disabled: false,
+                  dynamicHide: false,
+                  dynamicHideValue: "",
+                },
+                model: "text",
+                key: "text",
+                rules: [{ required: false, message: "必填项", trigger: ["blur"] }],
+              },
+            ],
+          }
+        }
+      },
+      _eventSpecification: {
+        inputEvent: [{
+          text: "更改组件数据",
+          eventType: "changeInfo",
+          messageSchema: "",
+          messageDemo: "",
+        }],
+        inputCustomEvent: [{
+          text: "更改组件数据",
+          eventType: "changeInfo",
+          messageSchema: "",
+          messageDemo: "",
+        }],
+        outputEvent: [{
+          text: "组件点击数据",
+          eventType: "click",
+          messageSchema: "",
+          messageDemo: "图片数据1"
+        }],
+      },
+
+      get eventSpecification() {
+        return this._eventSpecification;
+      },
+      set eventSpecification(value) {
+        this._eventSpecification = value;
+        self.receiveInfo(value);
+      },
+      get data() {
+        return self.data;
+      },
+      set data(value) {
+        self.data = value;
+      }
+    };
   }
 }
 

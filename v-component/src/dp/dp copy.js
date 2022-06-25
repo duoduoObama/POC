@@ -97,49 +97,6 @@ var tableInfo = {
 var config = {
   componentsArray: [
     {
-      id: "drag-741zj09abdcs",
-      componentName: "q-router-config",
-      type: "数据源",
-      text: "路由配置",
-      group: ["数据源"],
-      createTime: "2022-06-20T07:49:43.975Z",
-      image: "",
-      initStyle:
-        "position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
-      options: {
-        router: {
-          "drag-ka5ue9mx5qd7": {
-            title: "text1-text2",
-            target: "drag-ka5ue9mx5qd7",
-            trigger: ["click"],
-            receive: [
-              {
-                source: "drag-dvoly35smyer",
-                event: ["changeInfo"],
-                script: "function(data) { return data.node; }",
-                replyStatus: false,
-                reply: [],
-              },
-            ],
-          },
-          "drag-dvoly35smyer": {
-            title: "text1-text2",
-            target: "drag-dvoly35smyer",
-            trigger: ["click"],
-            receive: [
-              {
-                source: "drag-ka5ue9mx5qd7",
-                event: ["changeInfo"],
-                script: "function(data) { return data.node; }",
-                replyStatus: false,
-                reply: [],
-              },
-            ],
-          },
-        },
-      },
-    },
-    {
       initStyle:
         "position: absolute; z-index: -1; width: 100vw; height: 100vh; overflow: hidden;",
       options: {
@@ -1273,13 +1230,5 @@ var config = {
 >
   <q-echarts-gl id="drag-jx345jn55ug2"></q-echarts-gl>
 </div>
-<q-router-config
-data-data='{"router":{"drag-ka5ue9mx5qd7":{"title":"text1-text2","target":"drag-ka5ue9mx5qd7","trigger":["click"],"receive":[{"source":"drag-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }","replyStatus":false,"reply":[]}]},"drag-dvoly35smyer":{"title":"text1-text2","target":"drag-dvoly35smyer","trigger":["click"],"receive":[{"source":"drag-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return 456456456; }","replyStatus":false,"reply":[]}]}}}'
-data-component="true"
-id="drag-v6vxvmr9d29f"
-data-parent-id="inner-dropzone"
-data-x="0"
-data-y="0"
-></q-router-config>
   `,
 };
