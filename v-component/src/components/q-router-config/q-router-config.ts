@@ -40,7 +40,7 @@ import fetchJsonp from "fetch-jsonp";
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement("q-router-config")
+// @customElement("q-router-config")
 export class QRouterConfig extends LitElement {
   static styles = [
     css`
@@ -341,7 +341,7 @@ export class QRouterConfig extends LitElement {
           tempDataInfo.value.receive.push({
             source: "",
             event: <any>[],
-            script: "function() { return data; }",
+            script: "function(data) { return data; }",
             replyStatus: false,
             reply: <any>[],
           });

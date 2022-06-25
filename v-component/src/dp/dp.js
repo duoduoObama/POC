@@ -107,6 +107,35 @@ var config = {
       initStyle:
         "position: absolute; top: 0; width: 100%;text-align: center; font-size: 30px; line-height: 66px;",
       options: { text: "数据可视化显示系统1" },
+      model: {
+        eventSpecification: {
+          inputEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          inputCustomEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputEvent: [
+            {
+              text: "组件点击数据",
+              eventType: "click",
+              messageSchema: "",
+              messageDemo: "文本数据1",
+            },
+          ],
+        },
+        mdate: { text: "2020-06-20T07:49:43.975Z" },
+      },
     },
     {
       id: "drag-741zj0966666",
@@ -119,6 +148,34 @@ var config = {
       initStyle:
         "position: absolute; top: 70px; width: 100%;text-align: center; font-size: 30px; line-height: 66px;color:red;",
       options: { text: "数据可视化显示系统2" },
+      model: {
+        eventSpecification: {
+          inputEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          inputCustomEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputEvent: [
+            {
+              text: "组件点击数据",
+              eventType: "click",
+              messageSchema: "",
+              messageDemo: "文本数据1",
+            },
+          ],
+        },
+      },
     },
     {
       id: "drag-741zj0977777",
@@ -145,53 +202,22 @@ var config = {
       initStyle:
         "position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
       options: {
-        router: [
-          {
-            title: "table-text",
-            target: "drag-741zj09sxe2c",
-            trigger: ["delete", "edit"],
-            receive: [
-              {
-                source: "drag-741zj09acbdc",
-                event: ["changeInfo"],
-                script: "function (data,context){return data.name;}",
-                replyStatus: false,
-                reply: [],
-              },
-            ],
-            targetNode: [],
-          },
-          {
-            title: "text-text",
+        router: {
+          "drag-741zj09acbdc": {
+            title: "text1-text2",
             target: "drag-741zj09acbdc",
             trigger: ["click"],
             receive: [
               {
                 source: "drag-741zj0966666",
                 event: ["changeInfo"],
-                script:
-                  'function (data,context){\nconst {header}=context;\nconst {reply}=header;\nconst {resolve}=reply;\nresolve("消息回归")\nreturn "sdfasdfsadfasdf";}',
-                replyStatus: false,
-                reply: [],
-              },
-            ],
-            targetNode: [],
-          },
-          {
-            title: "text2->text1",
-            target: "drag-741zj0966666",
-            trigger: ["click"],
-            receive: [
-              {
-                source: "drag-741zj09acbdc",
-                event: ["changeInfo"],
-                script: "function(data) { return 66666 }",
+                script: "function(data) { return data.node; }",
                 replyStatus: false,
                 reply: [],
               },
             ],
           },
-        ],
+        },
       },
     },
   ],
