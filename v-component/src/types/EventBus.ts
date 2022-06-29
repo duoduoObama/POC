@@ -19,8 +19,7 @@ class EventBus implements IEventBus {
             const { header } = imessage;
             Object.assign(header, { reply: { resolve, reject } });
             const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: imessage });
-            this.setDispatchEvent(customEvent);
-            console.log(`发送完毕，等待回复`);
+            this.setDispatchEvent(customEvent); 
         });
 
         return reply;

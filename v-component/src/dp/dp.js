@@ -97,7 +97,7 @@ var tableInfo = {
 var config = {
   componentsArray: [
     {
-      id: "drag-741zj09abdcs",
+      id: "q-router-config-741zj09abdcs",
       componentName: "q-router-config",
       type: "数据源",
       text: "路由配置",
@@ -108,13 +108,13 @@ var config = {
         "position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
       options: {
         router: {
-          "drag-ka5ue9mx5qd7": {
+          "q-text-ka5ue9mx5qd7": {
             title: "text1-text2",
-            target: "drag-ka5ue9mx5qd7",
+            target: "q-text-ka5ue9mx5qd7",
             trigger: ["click"],
             receive: [
               {
-                source: "drag-dvoly35smyer",
+                source: "q-text-dvoly35smyer",
                 event: ["changeInfo"],
                 script: "function(data) { return data.node; }",
                 replyStatus: false,
@@ -122,13 +122,13 @@ var config = {
               },
             ],
           },
-          "drag-dvoly35smyer": {
+          "q-text-dvoly35smyer": {
             title: "text1-text2",
-            target: "drag-dvoly35smyer",
+            target: "q-text-dvoly35smyer",
             trigger: ["click"],
             receive: [
               {
-                source: "drag-ka5ue9mx5qd7",
+                source: "q-text-ka5ue9mx5qd7",
                 event: ["changeInfo"],
                 script: "function(data) { return data.node; }",
                 replyStatus: false,
@@ -155,7 +155,7 @@ var config = {
       default: null,
       description: "",
       group: ["文本"],
-      id: "drag-ka5ue9mx5qd7",
+      id: "q-text-ka5ue9mx5qd7",
       image: "",
       initStyle: "position: absolute; top: 0px; width: 100%;",
       options: {
@@ -274,7 +274,7 @@ var config = {
       default: null,
       description: "",
       group: ["文本"],
-      id: "drag-dvoly35smyer",
+      id: "q-text-dvoly35smyer",
       image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
@@ -404,7 +404,7 @@ var config = {
       default: null,
       description: "",
       group: ["文本"],
-      id: "drag-3wgumvizrx6r",
+      id: "q-text-3wgumvizrx6r",
       image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
@@ -534,7 +534,7 @@ var config = {
       default: null,
       description: "",
       group: ["文本"],
-      id: "drag-he2cuh2mchr0",
+      id: "q-text-he2cuh2mchr0",
       image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
@@ -674,7 +674,7 @@ var config = {
       default: null,
       description: "",
       group: ["容器"],
-      id: "drag-oq8hj6jg0w61",
+      id: "q-tabs-oq8hj6jg0w61",
       image: "",
       initStyle:
         "height: 84.8%; width: 22.8%; position: absolute; left: 22%; top: 10%;",
@@ -873,7 +873,7 @@ var config = {
       default: null,
       description: "",
       group: ["容器"],
-      id: "drag-vmid2ibz6k9r",
+      id: "q-tabs-vmid2ibz6k9r",
       image: "",
       initStyle:
         "height: 30%; width: 50%; position: absolute; right: 4.5%; top: 10%;",
@@ -1079,7 +1079,7 @@ var config = {
 >
   <q-image
     data-data='{"src":"./src/assets/bg.png"}'
-    id="drag-ouky34zcvhun"
+    id="q-image-ouky34zcvhun"
   ></q-image>
 </div>
 <div style="position: absolute; top: 0; width: 100%">
@@ -1091,7 +1091,7 @@ var config = {
       color: white;
       line-height: 66px;
     "
-    id="drag-ka5ue9mx5qd7"
+    id="q-text-ka5ue9mx5qd7"
   ></q-text>
 </div>
 <div
@@ -1107,7 +1107,7 @@ var config = {
 >
   <q-text
     data-data='{"text":"疫情曲线"}'
-    id="drag-dvoly35smyer"
+    id="q-text-dvoly35smyer"
   ></q-text>
 </div>
 <div
@@ -1123,7 +1123,7 @@ var config = {
 >
   <q-image
     data-data='{"src":"./src/assets/1654829140850.jpg"}'
-    id="drag-y3md2bby3y37"
+    id="q-image-y3md2bby3y37"
   ></q-image>
 </div>
 <div
@@ -1139,7 +1139,7 @@ var config = {
 >
   <q-text
     data-data='{"text":"图谱分析"}'
-    id="drag-3wgumvizrx6r"
+    id="q-text-3wgumvizrx6r"
   ></q-text>
 </div>
 <div
@@ -1155,7 +1155,7 @@ var config = {
 >
   <q-image
     data-data='{"src":"./src/assets/1654829578132.jpg"}'
-    id="drag-yfs1wndkejkl"
+    id="q-image-yfs1wndkejkl"
   ></q-image>
 </div>
 <div
@@ -1171,7 +1171,7 @@ var config = {
 >
   <q-text
     data-data='{"text":"离散分析"}'
-    id="drag-he2cuh2mchr0"
+    id="q-text-he2cuh2mchr0"
   ></q-text>
 </div>
 <div
@@ -1187,7 +1187,7 @@ var config = {
 >
   <q-image
     data-data='{"src":"./src/assets/1654829505010.jpg"}'
-    id="drag-pmku7p087gwi"
+    id="q-image-pmku7p087gwi"
   ></q-image>
 </div>
 <div
@@ -1203,7 +1203,7 @@ var config = {
 >
   <q-marquee-text
     data-data='{"text":"告警数据已更新,请注意查收!!!"}'
-    id="drag-hsrhgh7gcb6k"
+    id="q-marquee-text-hsrhgh7gcb6k"
   ></q-marquee-text>
 </div>
 <div
@@ -1216,7 +1216,7 @@ var config = {
   "
 >
   <q-tabs
-    id="drag-oq8hj6jg0w61"
+    id="q-tabs-oq8hj6jg0w61"
     data-data='{"tabs":[{"title":"正态分布","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
@@ -1243,20 +1243,20 @@ var config = {
   "
 >
   <q-tabs
-    id="drag-vmid2ibz6k9r"
+    id="q-tabs-vmid2ibz6k9r"
     data-data='{"tabs":[{"title":"桑基划分","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
       <q-image
         data-data='{"src":"./src/assets/1654840806851.jpg"}'
-        id="drag-kv0byj7aro7p"
+        id="q-image-kv0byj7aro7p"
       ></q-image>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
         slot="test2"
         data-data='{"src":"./src/assets/1654853215692.png"}'
-        id="drag-l209tsce62zm"
+        id="q-image-l209tsce62zm"
       ></q-image>
     </div>
   </q-tabs>
@@ -1271,10 +1271,10 @@ var config = {
     border: 2px solid #033d37;
   "
 >
-  <q-echarts-gl id="drag-jx345jn55ug2"></q-echarts-gl>
+  <q-echarts-gl id="q-echarts-gl-jx345jn55ug2"></q-echarts-gl>
 </div>
 <q-router-config
-data-data='{"router":{"drag-ka5ue9mx5qd7":{"title":"text1-text2","target":"drag-ka5ue9mx5qd7","trigger":["click"],"receive":[{"source":"drag-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }","replyStatus":false,"reply":[]}]},"drag-dvoly35smyer":{"title":"text1-text2","target":"drag-dvoly35smyer","trigger":["click"],"receive":[{"source":"drag-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return 456456456; }","replyStatus":false,"reply":[]}]}}}'
+data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","target":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"source":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }","replyStatus":false,"reply":[]}]},"q-text-dvoly35smyer":{"title":"text1-text2","target":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"source":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return 456456456; }","replyStatus":false,"reply":[]}]}}}'
 data-component="true"
 id="drag-v6vxvmr9d29f"
 data-parent-id="inner-dropzone"

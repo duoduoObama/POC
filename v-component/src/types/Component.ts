@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 import { EVENTBUS_NAME } from "../components/constent";
-import { IComponent, IMessage, ISchema } from "./IComponent";
+import { IComponent, IEventHandlersEventName, IMessage, ISchema } from "./IComponent";
 
 export class Component extends LitElement implements IComponent {
 
@@ -47,8 +47,20 @@ export class Component extends LitElement implements IComponent {
     onMessage(imessage: IMessage): void {
         const { header } = imessage;
         const { dstType } = header;
-        const customEvent = new CustomEvent(dstType, { detail: imessage });
-        this.dispatchEvent(customEvent);
+        const nativeEvents = `on${dstType}` as IEventHandlersEventName;
+        const DOMEvents = this as never;
+        const nativeEventsHandler = DOMEvents[nativeEvents] as Function;
+
+        this.model.onMessageMeta.forEach(current => {
+            const fn = current[dstType];
+
+            if (nativeEventsHandler) {
+                const customEvent = new CustomEvent(dstType, { detail: imessage });
+                this.dispatchEvent(customEvent);
+                return;
+            }
+            fn && fn.call(this, imessage);
+        });
     }
 
     /**
@@ -62,7 +74,6 @@ export class Component extends LitElement implements IComponent {
             Object.assign(header, { reply: { resolve, reject } });
             const customEvent = new CustomEvent(EVENTBUS_NAME, { detail: imessage });
             window.dispatchEvent(customEvent);
-            console.log(`发送完毕，等待回复`);
         });
 
         return reply;

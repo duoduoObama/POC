@@ -65,8 +65,9 @@ export const eventBusSubscribe = () => {
 
         router.forEach((target: { [key: string]: any }) => {
             const route = target[src];
+            if (!route) return;
             console.log(`事件总线接收消息:`, { staticRoute: route, data: data?.detail ?? {} });
             eventBusProcess({ staticRoute: route, data: data?.detail ?? {} });
-        }); 
+        });
     });
 };

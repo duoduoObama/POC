@@ -1,8 +1,9 @@
 import { html, css } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { isString } from 'lodash-es'
+import { isArray, isString } from 'lodash-es'
 import { Component } from '../../types/Component'
-import { IComponent, IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
+import { IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
+import { domAssemblyCustomEvents } from '../../util/base-method'
 import { IQtextOptions } from './IQText'
 
 /**
@@ -29,12 +30,13 @@ export class QText extends Component {
   /**
    * 数据模型
    */
-  model: Record<keyof IComponent, any> & ISchema = {} as never;
+  model!: ISchema;
 
   constructor() {
     super();
     this.initModel();
     this.receiveInfo(this.model.eventSpecification);
+    domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
   render() {
@@ -120,7 +122,7 @@ export class QText extends Component {
         this.initStyle = value;
       },
       get description() {
-        return "文本组件,可以编写文字信息"
+        return "文本组件,可以编写文字信息";
       },
       get options() {
         return this.data;
@@ -148,7 +150,7 @@ export class QText extends Component {
           optionsView: {
             list: [
               {
-                type: "input",
+                type: 'input',
                 label: "输入框",
                 options: {
                   type: "text",
@@ -200,6 +202,38 @@ export class QText extends Component {
       set eventSpecification(value) {
         this._eventSpecification = value;
         self.receiveInfo(value);
+      },
+      _onMessageMeta: [
+        {
+          'changeInfo': (e: IMessage) => {
+            console.log(this, e, 88888);
+          }
+        }
+      ],
+      _onDOMEvent: [{
+        'onclick': (e: Event) => {
+          console.log(e);
+        }
+      }],
+      get onMessageMeta() {
+        return this._onMessageMeta;
+      },
+      set onMessageMeta(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        this._onMessageMeta = value;
+      },
+      get onDOMEvent() {
+        return this._onDOMEvent;
+      },
+      set onDOMEvent(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        // , this._onDOMEvent
+        domAssemblyCustomEvents(self, value);
+        this._onDOMEvent = value;
       },
       get data() {
         return self.data;

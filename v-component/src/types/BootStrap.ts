@@ -3,7 +3,10 @@ import { IconfigData } from "./IEventBus";
 
 declare global {
     const config: IconfigData;
+    let pageModel: IconfigData;
 }
+
+var pageModel: IconfigData;
 
 class BootStrap implements IBootStrap {
 
@@ -11,29 +14,16 @@ class BootStrap implements IBootStrap {
         if (!config) {
             return;
         }
-        const { pageData = {}, componentsArray = [], dynamicHTML } = config;
+        const { dynamicHTML } = config;
 
-
-        // componentsArray.forEach(component => {
-        //     const { componentName, initStyle, options, id } = component;
-        //     const dragElement = document.createElement("div");
-        //     const componentElement = document.createElement(componentName as string);
-
-        //     dragElement.style.cssText = initStyle as string;
-        //     componentElement.id = id as string;
-        //     componentElement.dataset.data = JSON.stringify(options);
-        //     componentElement.dataset.component = "true";
-        //     dragElement.appendChild(componentElement);
-        //     document.body.appendChild(dragElement);
-        // });
         document.body.innerHTML = dynamicHTML;
-        this.pageModelBootStrap();
+        return this.pageModelBootStrap();
     }
 
     pageModelBootStrap() {
-        const pageModel = new Proxy(config, {}) as IconfigData;
+        const pageModelData = new Proxy(config, {}) as IconfigData;
 
-        pageModel.componentsArray.forEach((component) => {
+        pageModelData.componentsArray.forEach((component) => {
             const { id } = component;
             const componentElement = document.getElementById(id as string) as any;
             const dragElement = componentElement?.parentElement;
@@ -42,12 +32,14 @@ class BootStrap implements IBootStrap {
                 component.model = new Proxy(componentElement.model, {}) as any;
             }
             if (dragElement?.style) {
-                component.initStyle = new Proxy(dragElement.style, {}) as any;
+                component.initStyle = new Proxy(dragElement?.style, {}) as any;
             }
 
         })
 
-        window.pageModel = pageModel;
+        pageModel = pageModelData;
+        Object.assign(window, { pageModel });
+        return pageModel;
     }
 }
 

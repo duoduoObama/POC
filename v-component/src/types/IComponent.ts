@@ -1,29 +1,78 @@
 export interface IComponent {
-    id?: string,
-    componentName?: string,
-    type?: string,
-    text?: string,
-    group?: [string],
-    createTime?: Date,
-    image?: string,
-    initStyle?: string,
-    description?: string,
-    options?: any,
-    readonly shema?: ISchema,
     model?: ISchema,
+}
+export interface ISchema {
+    get id(): string;
+    get componentName(): string;
+    get type(): string;
+    get text(): string;
+    get group(): string[];
+    get createTime(): Date;
+    get image(): string;
+    get initStyle(): string;
+    set initStyle(value: string);
+    get description(): string;
+    get options(): any;
+    get schema(): ICustomSchema;
+    get onMessageMeta(): IMessageMeta[];
+    set onMessageMeta(value: IMessageMeta[]);
+    get onDOMEvent(): IDOMEventMeta[];
+    set onDOMEvent(value: IDOMEventMeta[]);
     [key: string]: any,
-    addListener?(eventName: string, listener: Function): void,
-    removeListener?(eventName: string, listener: Function): void,
-    getListener?(): { [key: string]: Function },
-    onMessage?(imessage: IMessage): void,
-    initModel?(): void
 }
 
-export interface ISchema {
+
+export type IMessageMeta = { [key: string]: (e: IMessage) => void };
+
+export type IEventHandlersEventName = `on${keyof GlobalEventHandlersEventMap}`;
+export type IDOMEventMeta = { [key in IEventHandlersEventName]: (e: Event) => void };
+
+
+
+// interface IDOMEventMeta {
+//     [key in IEventHandlersEventName]:string; 
+//     // get [`on${keyof GlobalEventHandlersEventMap}`]:()=>void;
+//     // set eventName(value: `on${keyof GlobalEventHandlersEventMap } `);
+//     // get eventFunction(): (e: Event) => void;
+//     // set eventFunction(value: (e: Event) => void);
+// }
+
+export interface ICustomSchema {
     eventSpecification: {
         inputEvent: IEventSpecificationEvent[],
         outputEvent: IEventSpecificationEvent[]
     }
+    optionsView: {
+        list: IOptionsView[],
+    }
+}
+export interface IOptionsViewRules {
+    required: boolean,
+    message: string,
+    trigger: string[]
+}
+
+export interface IOptionsView {
+    type: string,
+    label: string,
+    options: {
+        type: string,
+        width: string,
+        defaultValue: string,
+        placeholder: string,
+        clearable: boolean,
+        maxLength: number,
+        prepend: string,
+        append: string,
+        tooptip: string,
+        hidden: boolean,
+        disabled: boolean,
+        dynamicHide: boolean,
+        dynamicHideValue: string,
+    },
+    model: string,
+    key: string,
+    rules: IOptionsViewRules[],
 }
 
 export interface IEventSpecificationEvent {
