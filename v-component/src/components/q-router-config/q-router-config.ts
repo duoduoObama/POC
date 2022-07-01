@@ -1,8 +1,8 @@
-import { css, LitElement, unsafeCSS } from "lit";
+import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQRouterConfigOptions } from "./IQrouterConfig";
 import { createApp, defineComponent, ref } from "vue";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep, isString, isArray } from "lodash-es";
 import Divider from "ant-design-vue/lib/divider";
 import {
   Input,
@@ -32,16 +32,20 @@ import ConfigProvider from "ant-design-vue/lib/config-provider";
 import antdCss from "ant-design-vue/dist/antd.min.css";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import axios from "axios";
-import fetchJsonp from "fetch-jsonp";
+import { Component } from "../../types/Component";
+import {
+  IComponent,
+  IEventSpecificationEvent,
+  IMessage,
+  ISchema,
+} from "../../types/IComponent";
+import { domAssemblyCustomEvents } from "../../util/base-method";
 
 /**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
+ * 路由配置组件
  */
 // @customElement("q-router-config")
-export class QRouterConfig extends LitElement {
+export class QRouterConfig extends Component {
   static styles = [
     css`
       :host {
@@ -68,6 +72,18 @@ export class QRouterConfig extends LitElement {
   };
 
   /**
+   * 数据模型
+   */
+  model!: ISchema;
+
+  constructor() {
+    super();
+    this.initModel();
+    this.receiveInfo(this.model.eventSpecification);
+    domAssemblyCustomEvents(this, this.model.onDOMEvent);
+  }
+
+  /**
    * The number of times the button has been clicked.
    */
   @query("#container")
@@ -86,7 +102,7 @@ export class QRouterConfig extends LitElement {
 
   createVueComponent = () => {
     const { router: data = {} } = this.data;
-    const _this = this;
+    const self = this;
     const component = defineComponent({
       template: `
             <a-config-provider :locale="zhCN">
@@ -307,8 +323,9 @@ export class QRouterConfig extends LitElement {
                 cancelText: "取消",
                 onOk() {
                   if (
+                    tempDataInfo.value.title &&
                     data[handleRouterKey.value].title ===
-                    tempDataInfo.value.title
+                      tempDataInfo.value.title
                   ) {
                     drawerVisible.value = false;
                   }
@@ -496,25 +513,10 @@ export class QRouterConfig extends LitElement {
         };
 
         const changeElementData = () => {
-          const elementData = JSON.parse(<any>_this.dataset.data);
+          const elementData = JSON.parse(<any>self.dataset.data);
           elementData.router = cloneDeep(data);
-          _this.dataset.data = JSON.stringify(elementData);
+          self.dataset.data = JSON.stringify(elementData);
         };
-
-        // const eventHandler = (
-        //   eventName: string,
-        //   dataInfo: any,
-        //   result: any
-        // ) => {
-        //   const event = new CustomEvent(eventName, {
-        //     detail: { record: cloneDeep(dataInfo), result: cloneDeep(result) },
-        //   });
-        //   window.dispatchEvent(event);
-        // };
-
-        // onMounted(() => {
-        //   httpRequest();
-        // });
 
         return {
           searchText,
@@ -564,7 +566,6 @@ export class QRouterConfig extends LitElement {
     this.componentInstance.use(Modal);
     this.componentInstance.use(message);
     this.componentInstance.use("axios", axios);
-    this.componentInstance.use("fetchJsonp", fetchJsonp);
     this.componentInstance.component("DownOutlined", DownOutlined);
     this.componentInstance.component("EyeOutlined", EyeOutlined);
     this.componentInstance.component("CopyOutlined", CopyOutlined);
@@ -579,11 +580,170 @@ export class QRouterConfig extends LitElement {
   };
 
   disconnectedCallback(): void {
-    this.componentInstance.destroy();
+    this.componentInstance.unmount();
   }
 
   protected updated(): void {
     this.createVueComponent();
+  }
+
+  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
+    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
+      const allListener = this.getListener();
+      Object.keys(allListener).forEach((eventName: string) => {
+        if (allListener[item.eventType]) {
+          this.removeListener(item.eventType);
+        }
+      });
+
+      this.removeListener(item.eventType);
+      this.addListener(item.eventType, (listener: IMessage) => {
+        const { body } = listener;
+
+        if (isString(body)) {
+          this.data = { ...this.data, router: JSON.parse(body) };
+          return;
+        }
+        this.data = { ...this.data, router: body };
+      });
+    });
+  }
+
+  onSendMessage(e: Event, node: any, index: number | string) {
+    const message: IMessage = {
+      header: {
+        src: this.id,
+        dst: "",
+        srcType: e.type,
+        dstType: "",
+      },
+      body: {
+        ...e,
+        node,
+        index,
+      },
+    };
+    this.sendMessage(message);
+  }
+
+  initModel(): void {
+    const self = this;
+
+    this.model = {
+      get id() {
+        return cloneDeep(self.id);
+      },
+      get componentName() {
+        return "q-router-config";
+      },
+      get type() {
+        return "数据源";
+      },
+      get text() {
+        return "路由配置";
+      },
+      get group() {
+        return ["数据源"];
+      },
+      get createTime() {
+        return new Date();
+      },
+      get image() {
+        return "";
+      },
+      _initStyle: "",
+      get initStyle() {
+        return cloneDeep(this._initStyle);
+      },
+      set initStyle(value) {
+        this.initStyle = value;
+      },
+      get description() {
+        return "路由配置组件,可以配置组件之间的定向流动";
+      },
+      get options() {
+        return cloneDeep(self.data);
+      },
+      get schema() {
+        return {
+          eventSpecification: {
+            inputEvent: [
+              {
+                text: "更改组件数据",
+                eventType: "changeInfo",
+                messageSchema: "",
+                messageDemo: "",
+              },
+            ],
+            outputEvent: [],
+          },
+          optionsView: {
+            list: [],
+          },
+        };
+      },
+      _eventSpecification: {
+        inputEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        inputCustomEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        outputEvent: [],
+      },
+
+      get eventSpecification() {
+        return cloneDeep(this._eventSpecification);
+      },
+      set eventSpecification(value) {
+        this._eventSpecification = value;
+        self.receiveInfo(value);
+      },
+      _onMessageMeta: [
+        {
+          changeInfo: (e: IMessage) => {
+            console.log(e);
+          },
+        },
+      ],
+      _onDOMEvent: [],
+      get onMessageMeta() {
+        return cloneDeep(this._onMessageMeta);
+      },
+      set onMessageMeta(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        this._onMessageMeta = value;
+      },
+      get onDOMEvent() {
+        return cloneDeep(this._onDOMEvent);
+      },
+      set onDOMEvent(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        // , this._onDOMEvent
+        domAssemblyCustomEvents(self, value);
+        this._onDOMEvent = value;
+      },
+      get data() {
+        return cloneDeep(self.data);
+      },
+      set data(value) {
+        self.data = value;
+      },
+    };
   }
 }
 

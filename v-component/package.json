@@ -19,6 +19,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@surely-vue/table": "^2.4.0",
     "@types/lodash-es": "^4.17.6",
+    "@vitejs/plugin-vue": "^2.3.3",
     "ant-design-vue": "^3.2.7",
     "axios": "^0.27.2",
     "echarts": "5.3.2",
@@ -26,9 +27,9 @@
     "fetch-jsonp": "^1.2.1",
     "lit": "^2.0.2",
     "lodash-es": "^4.17.21",
-    "telejson": "^6.0.8",
     "moveable": "^0.30.0",
     "rxjs": "^7.5.5",
+    "telejson": "^6.0.8",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16",
     "vuex": "^4.0.2"

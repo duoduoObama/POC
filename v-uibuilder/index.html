@@ -7,7 +7,28 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div
+      style="
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+      "
+    >
+      这是主应用
+    </div>
+    <micro-app
+      name="v-component"
+      url="http://192.168.21.40:3000/v-component/"
+      inline
+      disableSandbox
+    ></micro-app>
   </body>
+  <script type="module" src="/src/main.ts"></script>
+  <script type="module">
+    console.log(window);
+    // _bootstrap.bootStrap(config);
+    // _eventBusSubscribe();
+  </script>
 </html>

@@ -1,9 +1,14 @@
-import { html, css, LitElement, PropertyValueMap } from 'lit'
-import { customElement, property, query } from 'lit/decorators.js'
-import { isString } from 'lodash-es'
-import { Component } from '../../types/Component'
-import { IComponent, IEventSpecificationEvent, IMessage, ISchema } from '../../types/IComponent'
-import { IQMarqueeTextOptions } from './IQMarqueeText'
+import { html, css, LitElement, PropertyValueMap } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
+import { cloneDeep, isString } from "lodash-es";
+import { Component } from "../../types/Component";
+import {
+  IComponent,
+  IEventSpecificationEvent,
+  IMessage,
+  ISchema,
+} from "../../types/IComponent";
+import { IQMarqueeTextOptions } from "./IQMarqueeText";
 
 /**
  * An example element.
@@ -11,28 +16,28 @@ import { IQMarqueeTextOptions } from './IQMarqueeText'
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement('q-marquee-text')
+@customElement("q-marquee-text")
 export class QMarqueeText extends Component {
   static styles = css`
     :host {
-      display: block; 
+      display: block;
     }
-    p{
-        margin:0;
+    p {
+      margin: 0;
     }
-  `
+  `;
 
   /**
    * The name to say "Hello" to.
    */
   @property({ type: Object, attribute: "data-data" })
-  data: IQMarqueeTextOptions = { text: "走马灯文本数据1" }
+  data: IQMarqueeTextOptions = { text: "走马灯文本数据1" };
 
   /**
    * The number of times the button has been clicked.
    */
   @query("marquee")
-  container!: HTMLMarqueeElement
+  container!: HTMLMarqueeElement;
 
   model: Record<keyof IComponent, any> & ISchema = {} as never;
 
@@ -43,22 +48,25 @@ export class QMarqueeText extends Component {
   }
 
   render() {
-    const { text = '' } = this.data;
+    const { text = "" } = this.data;
     return html`
-      <marquee>${text}
+      <marquee
+        >${text}
         <slot></slot>
-      </marquee> 
-    `
+      </marquee>
+    `;
   }
 
   runMarquee() {
     navigation.addEventListener("navigate", () => {
       this.container.stop();
       this.container.start();
-    })
+    });
   }
 
-  protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected firstUpdated(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
     this.runMarquee();
   }
 
@@ -81,7 +89,7 @@ export class QMarqueeText extends Component {
         }
         this.data = { ...this.data, text: JSON.stringify(body) };
       });
-    })
+    });
   }
 
   clickFont(e: Event) {
@@ -92,14 +100,14 @@ export class QMarqueeText extends Component {
     const message: IMessage = {
       header: {
         src: this.id,
-        dst: '',
+        dst: "",
         srcType: e.type,
-        dstType: '',
+        dstType: "",
       },
       body: {
         ...e,
         node,
-        index
+        index,
       },
     };
     this.sendMessage(message);
@@ -110,25 +118,25 @@ export class QMarqueeText extends Component {
 
     this.model = {
       get id() {
-        return self.id
+        return self.id;
       },
       get componentName() {
-        return "q-text"
+        return "q-marquee-text";
       },
       get type() {
-        return "文本"
+        return "文本";
       },
       get text() {
-        return "文本"
+        return "走马灯文字";
       },
       get group() {
-        return ["文本"]
+        return ["文本"];
       },
       get createTime() {
-        return new Date()
+        return new Date();
       },
       get image() {
-        return ""
+        return "";
       },
       _initStyle: "",
       get initStyle() {
@@ -138,10 +146,10 @@ export class QMarqueeText extends Component {
         this.initStyle = value;
       },
       get description() {
-        return "文本组件,可以编写文字信息"
+        return "文本组件,可以编写文字信息";
       },
       get options() {
-        return this.data;
+        return cloneDeep(self.data);
       },
       get schema() {
         return {
@@ -185,31 +193,39 @@ export class QMarqueeText extends Component {
                 },
                 model: "text",
                 key: "text",
-                rules: [{ required: false, message: "必填项", trigger: ["blur"] }],
+                rules: [
+                  { required: false, message: "必填项", trigger: ["blur"] },
+                ],
               },
             ],
-          }
-        }
+          },
+        };
       },
       _eventSpecification: {
-        inputEvent: [{
-          text: "更改组件数据",
-          eventType: "changeInfo",
-          messageSchema: "",
-          messageDemo: "",
-        }],
-        inputCustomEvent: [{
-          text: "更改组件数据",
-          eventType: "changeInfo",
-          messageSchema: "",
-          messageDemo: "",
-        }],
-        outputEvent: [{
-          text: "组件点击数据",
-          eventType: "click",
-          messageSchema: "",
-          messageDemo: "文本数据1"
-        }],
+        inputEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        inputCustomEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        outputEvent: [
+          {
+            text: "组件点击数据",
+            eventType: "click",
+            messageSchema: "",
+            messageDemo: "文本数据1",
+          },
+        ],
       },
 
       get eventSpecification() {
@@ -220,18 +236,18 @@ export class QMarqueeText extends Component {
         self.receiveInfo(value);
       },
       get data() {
-        return self.data;
+        return cloneDeep(self.data);
       },
       set data(value) {
         self.data = value;
-      }
+      },
     };
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'q-marquee-text': QMarqueeText
+    "q-marquee-text": QMarqueeText;
   }
 }
 

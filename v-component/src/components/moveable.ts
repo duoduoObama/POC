@@ -32,5 +32,3 @@ moveableDemo.on("drag", (e) => {
   const element = <any>document.querySelector("#drag-1af241gga121");
   element.style.transform = e.transform;
 });
-
-console.log(document.querySelector("#moveable-content"));

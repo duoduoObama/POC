@@ -1,0 +1,72 @@
+{
+  "id": "",
+  "componentName": "q-router",
+  "type": "导航",
+  "text": "路由",
+  "group": ["导航"],
+  "createTime": "2022-06-20T07:30:16.720Z",
+  "image": "",
+  "initStyle": "",
+  "description": "",
+  "options": {
+    "path": [
+      {
+        "url": "/table",
+        "keepAlive": true,
+        "isIframe": false,
+        "slotName": "table"
+      },
+      {
+        "url": "/visualization",
+        "keepAlive": true,
+        "isIframe": false,
+        "slotName": "content"
+      },
+      {
+        "url": "/edit",
+        "keepAlive": true,
+        "isIframe": false,
+        "slotName": "content"
+      }
+    ]
+  },
+  "schema": {
+    "eventSpecification": {
+      "inputEvent": [
+        {
+          "text": "更改组件数据",
+          "eventType": "changeInfo",
+          "messageSchema": "",
+          "messageDemo": ""
+        }
+      ],
+      "outputEvent": []
+    },
+    "optionsView": {
+      "list": [
+        {
+          "type": "textarea",
+          "label": "文本框",
+          "options": {
+            "width": "100%",
+            "maxLength": 0,
+            "defaultValue": "",
+            "rows": 4,
+            "clearable": false,
+            "tooptip": "",
+            "hidden": false,
+            "disabled": false,
+            "placeholder": "请输入",
+            "dynamicHide": false,
+            "dynamicHideValue": ""
+          },
+          "model": "path",
+          "key": "path",
+          "rules": [
+            { "required": false, "message": "必填项", "trigger": ["blur"] }
+          ]
+        }
+      ]
+    }
+  }
+}

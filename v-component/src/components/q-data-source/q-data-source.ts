@@ -1,8 +1,8 @@
-import { html, css, LitElement, unsafeCSS } from "lit";
+import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQDataSourceOptions } from "./IQDataSource";
 import { createApp, defineComponent, onMounted, ref } from "vue";
-import { cloneDeep, pullAllBy } from "lodash-es";
+import { cloneDeep, pullAllBy, isString } from "lodash-es";
 import Divider from "ant-design-vue/lib/divider";
 import {
   Input,
@@ -33,6 +33,13 @@ import antdCss from "ant-design-vue/dist/antd.min.css";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import axios from "axios";
 import fetchJsonp from "fetch-jsonp";
+import { Component } from "../../types/Component";
+import {
+  IComponent,
+  IEventSpecificationEvent,
+  IMessage,
+  ISchema,
+} from "../../types/IComponent";
 
 /**
  * An example element.
@@ -41,7 +48,7 @@ import fetchJsonp from "fetch-jsonp";
  * @csspart button - The button
  */
 @customElement("q-data-source")
-export class QDataSource extends LitElement {
+export class QDataSource extends Component {
   static styles = [
     css`
       :host {
@@ -68,6 +75,17 @@ export class QDataSource extends LitElement {
   };
 
   /**
+   * 数据模型
+   */
+  model: Record<keyof IComponent, any> & ISchema = {} as never;
+
+  constructor() {
+    super();
+    this.initModel();
+    this.receiveInfo(this.model.eventSpecification);
+  }
+
+  /**
    * The number of times the button has been clicked.
    */
   @query("#container")
@@ -79,11 +97,14 @@ export class QDataSource extends LitElement {
   componentInstance: any = null;
 
   render() {
-    return html`<div id="container"></div>`;
+    const div = document.createElement("div");
+    div.id = "container";
+    return div;
   }
 
   createVueComponent = () => {
     const { dataSource: data = [] } = this.data;
+    const self = this;
     const component = defineComponent({
       template: `
             <a-config-provider :locale="zhCN">
@@ -768,7 +789,7 @@ export class QDataSource extends LitElement {
         };
 
         const httpRequest = () => {
-          data.forEach((item) => {
+          data.forEach((item, index) => {
             const autoRequest =
               item.autoRequest.type === "default"
                 ? item.autoRequest.value
@@ -812,7 +833,7 @@ export class QDataSource extends LitElement {
               axios(config)
                 .then((res) => {
                   console.log(`${item.requestMethod.value} result`, res);
-                  eventHandler("httpRequest", item, res);
+                  self.onSendMessage({ type: "request" } as any, res, index);
                 })
                 .catch((err) => {
                   console.log(err);
@@ -826,24 +847,13 @@ export class QDataSource extends LitElement {
                 })
                 .then(function (json) {
                   console.log("jsonp result", json);
-                  eventHandler("httpRequest", item, json);
+                  self.onSendMessage({ type: "request" } as any, json, index);
                 })
                 .catch(function (ex) {
                   console.log("parsing failed", ex);
                 });
             }
           });
-        };
-
-        const eventHandler = (
-          eventName: string,
-          dataInfo: any,
-          result: any
-        ) => {
-          const event = new CustomEvent(eventName, {
-            detail: { record: cloneDeep(dataInfo), result: cloneDeep(result) },
-          });
-          window.dispatchEvent(event);
         };
 
         onMounted(() => {
@@ -924,11 +934,156 @@ export class QDataSource extends LitElement {
   };
 
   disconnectedCallback(): void {
-    this.componentInstance.destroy();
+    this.componentInstance.unmount();
   }
 
   protected updated(): void {
     this.createVueComponent();
+  }
+
+  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
+    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
+      const allListener = this.getListener();
+      Object.keys(allListener).forEach((eventName: string) => {
+        if (allListener[item.eventType]) {
+          this.removeListener(item.eventType);
+        }
+      });
+
+      this.removeListener(item.eventType);
+      this.addListener(item.eventType, (listener: IMessage) => {
+        const { body } = listener;
+
+        if (isString(body)) {
+          this.data = { ...this.data, dataSource: JSON.parse(body) };
+          return;
+        }
+        this.data = { ...this.data, dataSource: body as [] };
+      });
+    });
+  }
+
+  onSendMessage(e: Event, node: any, index: number | string) {
+    const message: IMessage = {
+      header: {
+        src: this.id,
+        dst: "",
+        srcType: e.type,
+        dstType: "",
+      },
+      body: {
+        ...e,
+        node,
+        index,
+      },
+    };
+    this.sendMessage(message);
+  }
+
+  initModel(): void {
+    const self = this;
+
+    this.model = {
+      get id() {
+        return self.id;
+      },
+      get componentName() {
+        return "q-data-source";
+      },
+      get type() {
+        return "数据源";
+      },
+      get text() {
+        return "dataSource";
+      },
+      get group() {
+        return ["数据源"];
+      },
+      get createTime() {
+        return new Date();
+      },
+      get image() {
+        return "";
+      },
+      _initStyle: "",
+      get initStyle() {
+        return this._initStyle;
+      },
+      set initStyle(value) {
+        this.initStyle = value;
+      },
+      get description() {
+        return "dataSource组件,可以配置页面数据请求";
+      },
+      get options() {
+        return cloneDeep(self.data);
+      },
+      get schema() {
+        return {
+          eventSpecification: {
+            inputEvent: [
+              {
+                text: "更改组件数据",
+                eventType: "changeInfo",
+                messageSchema: "",
+                messageDemo: "",
+              },
+            ],
+            outputEvent: [
+              {
+                text: "数据请求",
+                eventType: "request",
+                messageSchema: "",
+                messageDemo: "",
+              },
+            ],
+          },
+          optionsView: {
+            list: [],
+          },
+        };
+      },
+      _eventSpecification: {
+        inputEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        inputCustomEvent: [
+          {
+            text: "更改组件数据",
+            eventType: "changeInfo",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+        outputEvent: [
+          {
+            text: "数据请求",
+            eventType: "request",
+            messageSchema: "",
+            messageDemo: "",
+          },
+        ],
+      },
+
+      get eventSpecification() {
+        return this._eventSpecification;
+      },
+      set eventSpecification(value) {
+        this._eventSpecification = value;
+        self.receiveInfo(value);
+      },
+      get data() {
+        return cloneDeep(self.data);
+      },
+      set data(value) {
+        self.data = value;
+      },
+    };
   }
 }
 

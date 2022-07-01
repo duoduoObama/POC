@@ -9,18 +9,19 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     /> -->
     <title>v-component</title>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="./src/main.ts"></script>
     <script src="./src/dp/dp.js"></script>
   </head>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-  </style>
-  <body style="height: 100vh; overflow: hidden">
-    <!-- <q-router
+  <body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+    </style>
+    <!-- <body style="height: 100vh; overflow: hidden">
+    <q-router
       id="router"
       data-component="true"
       data-data='{
@@ -281,23 +282,32 @@
           <q-echarts-gl id="drag-jx345jn55ug2"></q-echarts-gl>
         </div>
       </div>
-    </q-router> -->
-  </body>
-  <!-- <body style="height: 100vh; overflow: hidden">
+    </q-router>
+  </body> -->
+    <!-- <body style="height: 100vh; overflow: hidden">
     <q-data-source
+      id="q-data-source"
       data-data='{
         "dataSource":[{"requestType":"fetch","sourceId":"GET","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"https://api.apiopen.top/api/getHaoKanVideo","type":"default"},"requestParam":{"value":[{"key":"page","value":"0","type":"default"},{"key":"size","value":"5","type":"default"}],"type":"default"},"requestMethod":{"value":"GET","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"},{"key":"handleSuccess","title":"请求成功对结果的处理函数","value":"function() { return true; }"}]},{"requestType":"fetch","sourceId":"POST","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"http://jsonplaceholder.typicode.com/posts","type":"default"},"requestParam":{"value":[],"type":"default"},"requestMethod":{"value":"POST","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"},{"key":"handleSuccess","title":"请求成功对结果的处理函数","value":"function() { return true; }"}]},{"requestType":"fetch","sourceId":"PUT","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"http://jsonplaceholder.typicode.com/posts/1","type":"default"},"requestParam":{"value":[],"type":"default"},"requestMethod":{"value":"PUT","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"},{"key":"handleSuccess","title":"请求成功对结果的处理函数","value":"function() { return true; }"}]},{"requestType":"fetch","sourceId":"PATCH","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"http://jsonplaceholder.typicode.com/posts/1","type":"default"},"requestParam":{"value":[],"type":"default"},"requestMethod":{"value":"PATCH","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"},{"key":"handleSuccess","title":"请求成功对结果的处理函数","value":"function() { return true; }"}]},{"requestType":"fetch","sourceId":"DELETE","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"http://jsonplaceholder.typicode.com/posts/1","type":"default"},"requestParam":{"value":[],"type":"default"},"requestMethod":{"value":"DELETE","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"},{"key":"handleSuccess","title":"请求成功对结果的处理函数","value":"function() { return true; }"}]},{"requestType":"jsonp","sourceId":"JSONP","autoRequest":{"value":true,"type":"default"},"requestUrl":{"value":"https://jsonplaceholder.typicode.com/todos/1","type":"default"},"requestParam":{"value":[{"key":"user","value":"username","type":"default"}],"type":"default"},"requestMethod":{"value":"GET","type":"default"},"crossDomain":{"value":"false","type":"js"},"timeout":{"value":5000,"type":"default"},"requestHeader":{"value":[{"key":"user","value":"username","type":"default"}],"type":"default"},"eventHandler":[{"key":"isRequest","title":"是否发起请求的计算函数","value":"function() { return true; }"}]}]
       }'
     ></q-data-source>
   </body> -->
-  <!-- <body style="height: 100vh; overflow: hidden">
-    <q-page-model
-      data-data='{
-        "pageModel":[]
-      }'
-    ></q-page-model>
+    <!-- <body style="height: 100vh; overflow: hidden">
+    <div
+      style="
+        height: 24%;
+        width: 16%;
+        position: absolute;
+        overflow: hidden;
+        border: 2px solid #033d37;
+        top: 10%;
+        left: 5%;
+      "
+    >
+      <q-list-text id="drag-y3md2bby3y37"></q-list-text>
+    </div>
   </body> -->
-  <!-- <body>
+    <!-- <body>
     <div style="width: 80%; position: absolute; left: 6%; top: 2%">
       <q-moveable-demo
         id="tabs1"
@@ -326,92 +336,93 @@
       </q-moveable-demo>
     </div>
   </body> -->
-  <script>
-    /**
-     * 路由信息表
-     */
-    const eventRouter = [
-      {
-        eventName: "getTableInfo",
-        event: (e) => {
-          console.log(`数据:`, e);
-          const { detail } = e;
-          const table = document.querySelector("#drag-741zj09sxe2c");
-          if (!table) return;
-          table.dataset.data = JSON.stringify(detail);
+    <script>
+      /**
+       * 路由信息表
+       */
+      const eventRouter = [
+        {
+          eventName: "getTableInfo",
+          event: (e) => {
+            console.log(`数据:`, e);
+            const { detail } = e;
+            const table = document.querySelector("#drag-741zj09sxe2c");
+            if (!table) return;
+            table.dataset.data = JSON.stringify(detail);
+          },
         },
-      },
-    ];
+      ];
 
-    eventRouter.forEach(({ eventName, event }) => {
-      window.addEventListener(eventName, event);
-    });
+      eventRouter.forEach(({ eventName, event }) => {
+        window.addEventListener(eventName, event);
+      });
 
-    /**
-     *  dataprovider(数据提供者)
-     */
-    const dataProvider = {
-      getTableInfo: (params) => {
-        // 网络请求数据,以及数据拼装
-        window.dispatchEvent(
-          new CustomEvent("getTableInfo", {
-            detail: tableInfo,
-          })
-        );
-        return tableInfo;
-      },
-      updateTableInfo: (params) => {
-        // 网络请求数据,以及数据拼装
-        const target = tableInfo.dataSource.find(
-          (item) => item.key === params.key
-        );
-        if (target) {
-          Object.assign(target, params);
-        }
-        window.dispatchEvent(
-          new CustomEvent("updateTableInfo", {
-            detail: tableInfo,
-          })
-        );
-        return tableInfo;
-      },
-      deleteTableInfo: (params) => {
-        console.log(`删除:`, params);
-        // 网络请求数据,以及数据拼装
-        const index = tableInfo.dataSource.findIndex(
-          (item) => item.key === params.key
-        );
-        if (index > -1) {
-          tableInfo.dataSource.splice(index, 1);
-        }
-        window.dispatchEvent(
-          new CustomEvent("deleteTableInfo", {
-            detail: tableInfo,
-          })
-        );
-        return tableInfo;
-      },
-    };
+      /**
+       *  dataprovider(数据提供者)
+       */
+      const dataProvider = {
+        getTableInfo: (params) => {
+          // 网络请求数据,以及数据拼装
+          window.dispatchEvent(
+            new CustomEvent("getTableInfo", {
+              detail: tableInfo,
+            })
+          );
+          return tableInfo;
+        },
+        updateTableInfo: (params) => {
+          // 网络请求数据,以及数据拼装
+          const target = tableInfo.dataSource.find(
+            (item) => item.key === params.key
+          );
+          if (target) {
+            Object.assign(target, params);
+          }
+          window.dispatchEvent(
+            new CustomEvent("updateTableInfo", {
+              detail: tableInfo,
+            })
+          );
+          return tableInfo;
+        },
+        deleteTableInfo: (params) => {
+          console.log(`删除:`, params);
+          // 网络请求数据,以及数据拼装
+          const index = tableInfo.dataSource.findIndex(
+            (item) => item.key === params.key
+          );
+          if (index > -1) {
+            tableInfo.dataSource.splice(index, 1);
+          }
+          window.dispatchEvent(
+            new CustomEvent("deleteTableInfo", {
+              detail: tableInfo,
+            })
+          );
+          return tableInfo;
+        },
+      };
 
-    /**
-     * 页面初始化
-     */
-    function pageInit() {
-      dataProvider.getTableInfo();
-    }
-    pageInit();
-  </script>
-  <script type="module">
-    import { getElementTree } from "/src/util/utils.ts";
-    import { eventBusSubscribe } from "/src/util/event-bus";
-    import bootstrap from "/src/types/BootStrap";
-
-    // console.log(new bootstrap);
-
-    bootstrap.bootStrap(config);
-
-    eventBusSubscribe();
-  </script>
-  <script src="./src/components/moveable.ts" type="module"></script>
-  <!-- <script src="./src/util/rxjs.ts" type="module"></script> -->
+      /**
+       * 页面初始化
+       */
+      function pageInit() {
+        dataProvider.getTableInfo();
+      }
+      pageInit();
+    </script>
+    <script type="module" src="./src/util/event-bus"></script>
+    <script type="module" src="./src/types/BootStrap"></script>
+    <script type="module">
+      // http://192.168.21.40:3000/v-component
+      // import { getElementTree } from "/src/util/utils.ts";
+      // import { eventBusSubscribe } from "./src/util/event-bus";
+      // import bootstrap from "./src/types/BootStrap";
+      // console.log(new bootstrap);
+      // bootstrap.bootStrap(config);
+      // eventBusSubscribe();
+    </script>
+    <!-- <script src="./src/components/moveable.ts" type="module"></script> -->
+    <!-- <script src="./src/util/rxjs.ts" type="module"></script> -->
+  </body>
 </html>
