@@ -44,15 +44,13 @@ class BootStrap implements IBootStrap {
             if (componentElement?.model) {
                 component.model = new Proxy(componentElement.model, {}) as any;
             }
-            if (dragElement?.style) {
-                console.log(dragElement.style);
+            if (dragElement?.style) { 
                 
                 component.initStyle = new Proxy(dragElement?.style, {}) as any;
             }
         });
 
-        pageModel = pageModelData;
-        console.log(pageModel);
+        pageModel = pageModelData; 
         
         Object.assign(window, { pageModel });
         return pageModel;
