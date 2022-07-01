@@ -143,7 +143,7 @@ var config = {
       initStyle:
         "position: absolute; z-index: -1; width: 100vw; height: 100vh; overflow: hidden;",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/bg.png",
+        src: "http://192.168.21.92:3000/v-component/src/assets/bg.png",
       },
       model: {},
       default: null,
@@ -392,7 +392,7 @@ var config = {
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%;",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654829140850.jpg",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg",
       },
       model: {},
       default: null,
@@ -522,7 +522,7 @@ var config = {
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%;",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654829578132.jpg",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg",
       },
       model: {},
       default: null,
@@ -652,7 +652,7 @@ var config = {
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%;",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654829505010.jpg",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg",
       },
       model: {},
       default: null,
@@ -852,7 +852,7 @@ var config = {
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1655104783919.jpg",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg",
       },
       model: {},
       default: null,
@@ -861,7 +861,7 @@ var config = {
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654853215692.png",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
       },
       model: {},
       default: null,
@@ -1051,7 +1051,7 @@ var config = {
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654840806851.jpg",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654840806851.jpg",
       },
       model: {},
       default: null,
@@ -1060,7 +1060,7 @@ var config = {
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.40:3000/v-component/src/assets/1654853215692.png",
+        src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
       },
       model: {},
       default: null,
@@ -1078,7 +1078,7 @@ var config = {
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/bg.png"}'
+    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/bg.png"}'
     id="q-image-ouky34zcvhun"
   ></q-image>
 </div>
@@ -1122,7 +1122,7 @@ var config = {
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654829140850.jpg"}'
+    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg"}'
     id="q-image-y3md2bby3y37"
   ></q-image>
 </div>
@@ -1154,7 +1154,7 @@ var config = {
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654829578132.jpg"}'
+    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg"}'
     id="q-image-yfs1wndkejkl"
   ></q-image>
 </div>
@@ -1186,7 +1186,7 @@ var config = {
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654829505010.jpg"}'
+    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg"}'
     id="q-image-pmku7p087gwi"
   ></q-image>
 </div>
@@ -1221,13 +1221,13 @@ var config = {
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
       <q-image
-        data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1655104783919.jpg"}'
+        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg"}'
         id="drag-hke0o1cj9liz"
       ></q-image>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
-        data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654853215692.png"}'
+        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
         id="drag-8e24nd8l8ap9"
       ></q-image>
     </div>
@@ -1248,14 +1248,14 @@ var config = {
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
       <q-image
-        data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654840806851.jpg"}'
+        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654840806851.jpg"}'
         id="q-image-kv0byj7aro7p"
       ></q-image>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
         slot="test2"
-        data-data='{"src":"http://192.168.21.40:3000/v-component/src/assets/1654853215692.png"}'
+        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
         id="q-image-l209tsce62zm"
       ></q-image>
     </div>

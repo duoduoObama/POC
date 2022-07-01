@@ -1,19 +1,19 @@
-import "http://192.168.21.40:3000/v-component/src/components/index";
+import "./components/index";
 
-const modules = import.meta.globEager(
-  "http://192.168.21.40:3000/v-component/src/components/*/component.json"
-);
+// const modules = import.meta.globEager(
+//   "./components/*/component.json"
+// );
 
-const components = Object.values(modules).reduce((pre, cur) => {
-  const { componentName } = cur;
-  pre[componentName] = cur;
-  return pre;
-}, {});
+// const components = Object.values(modules).reduce((pre, cur) => {
+//   const { componentName } = cur;
+//   pre[componentName] = cur;
+//   return pre;
+// }, {});
 
-console.log(components);
+// console.log(components);
 
-import { eventBusSubscribe } from "http://192.168.21.40:3000/v-component/src/util/event-bus";
-import bootstrap from "http://192.168.21.40:3000/v-component/src/types/BootStrap";
+import { eventBusSubscribe } from "./util/event-bus";
+import bootstrap from "./types/BootStrap";
 (window as any).v_component = {
   eventBusSubscribe,
   bootstrap,

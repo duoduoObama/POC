@@ -1,6 +1,6 @@
-import { EVENTBUS_NAME } from "http://192.168.21.40:3000/v-component/src/components/constent.ts";
-import { eventBus } from "http://192.168.21.40:3000/v-component/src/types/EventBus";
-import { IMessage } from "http://192.168.21.40:3000/v-component/src/types/IComponent";
+import { EVENTBUS_NAME } from "../components/constent";
+import { eventBus } from "../types/EventBus";
+import { IMessage } from "../types/IComponent";
 
 console.log(EVENTBUS_NAME);
 /**
