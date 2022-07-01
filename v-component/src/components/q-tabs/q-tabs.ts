@@ -53,6 +53,7 @@ export class QTabs extends Component {
             return html` <li>
               <a
                 href="javascript:void(0);"
+                id="${index === 0 ? "current" : ""}"
                 @click="${(e: Event) => {
                   this.clickTitle(e, index);
                 }}"
@@ -64,8 +65,12 @@ export class QTabs extends Component {
         </ul>
         <div id="content">
           ${tabs.map(
-            ({ id }) =>
-              html`<div class="content-panel" id="${id}">
+            ({ id }, index) =>
+              html`<div
+                class="content-panel"
+                id="${id}"
+                style="display: ${index === 0 ? "block" : "none"}"
+              >
                 <slot name="${id}"></slot>
               </div>`
           )}

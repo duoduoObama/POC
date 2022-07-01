@@ -11,3 +11,10 @@ const components = Object.values(modules).reduce((pre, cur) => {
 }, {});
 
 console.log(components);
+
+import { eventBusSubscribe } from "http://192.168.21.40:3000/v-component/src/util/event-bus";
+import bootstrap from "http://192.168.21.40:3000/v-component/src/types/BootStrap";
+(window as any).v_component = {
+  eventBusSubscribe,
+  bootstrap,
+};

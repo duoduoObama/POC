@@ -76,5 +76,3 @@ export const eventBusSubscribe = () => {
     });
   });
 };
-
-(window as any)._eventBusSubscribe = eventBusSubscribe;

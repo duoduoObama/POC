@@ -2,7 +2,7 @@ import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQDataSourceOptions } from "./IQDataSource";
 import { createApp, defineComponent, onMounted, ref } from "vue";
-import { cloneDeep, pullAllBy, isString } from "lodash-es";
+import { cloneDeep, pullAllBy, isString, isArray } from "lodash-es";
 import Divider from "ant-design-vue/lib/divider";
 import {
   Input,
@@ -40,6 +40,7 @@ import {
   IMessage,
   ISchema,
 } from "../../types/IComponent";
+import { domAssemblyCustomEvents } from "../../util/base-method";
 
 /**
  * An example element.
@@ -77,12 +78,13 @@ export class QDataSource extends Component {
   /**
    * 数据模型
    */
-  model: Record<keyof IComponent, any> & ISchema = {} as never;
+  model!: ISchema;
 
   constructor() {
     super();
     this.initModel();
     this.receiveInfo(this.model.eventSpecification);
+    domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
   /**
@@ -985,7 +987,7 @@ export class QDataSource extends Component {
 
     this.model = {
       get id() {
-        return self.id;
+        return cloneDeep(self.id);
       },
       get componentName() {
         return "q-data-source";
@@ -1007,7 +1009,7 @@ export class QDataSource extends Component {
       },
       _initStyle: "",
       get initStyle() {
-        return this._initStyle;
+        return cloneDeep(this._initStyle);
       },
       set initStyle(value) {
         this.initStyle = value;
@@ -1076,6 +1078,34 @@ export class QDataSource extends Component {
       set eventSpecification(value) {
         this._eventSpecification = value;
         self.receiveInfo(value);
+      },
+      _onMessageMeta: [
+        {
+          changeInfo: (e: IMessage) => {
+            console.log(e);
+          },
+        },
+      ],
+      _onDOMEvent: [],
+      get onMessageMeta() {
+        return cloneDeep(this._onMessageMeta);
+      },
+      set onMessageMeta(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        this._onMessageMeta = value;
+      },
+      get onDOMEvent() {
+        return cloneDeep(this._onDOMEvent);
+      },
+      set onDOMEvent(value) {
+        if (!isArray(value)) {
+          return;
+        }
+        // , this._onDOMEvent
+        domAssemblyCustomEvents(self, value);
+        this._onDOMEvent = value;
       },
       get data() {
         return cloneDeep(self.data);

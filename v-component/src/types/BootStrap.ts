@@ -76,7 +76,5 @@ class BootStrap implements IBootStrap {
 
 //   (window as any).pageModel = pageModel;
 // }
-console.log(document.body);
 const bootstrap = new BootStrap();
-(window as any)._bootstrap = bootstrap;
 export default bootstrap;
