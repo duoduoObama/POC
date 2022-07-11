@@ -54,9 +54,10 @@ export class Component extends LitElement implements IComponent {
         const nativeEvents = `on${dstType}` as IEventHandlersEventName;
         const DOMEvents = this as never;
         const nativeEventsHandler = DOMEvents[nativeEvents] as Function;
+        const customEventsHandler = this.model.onMessageMeta[dstType];
 
-        this.model.onMessageMeta.forEach((current) => {
-            const fn = current[dstType];
+        customEventsHandler && customEventsHandler.forEach((current) => {
+            const fn = current;
 
             if (nativeEventsHandler) {
                 const customEvent = new CustomEvent(dstType, { detail: imessage });
@@ -64,7 +65,7 @@ export class Component extends LitElement implements IComponent {
                 return;
             }
             if (fn) {
-                const cpFn = new Function(fn.toString());
+                const cpFn = new Function(`imessage`, `return (${fn.toString()}).call(this,imessage)`);
                 cpFn.call(this, imessage);
             }
         });

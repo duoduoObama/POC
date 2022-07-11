@@ -46,12 +46,10 @@ class BootStrap implements IBootStrap {
 
             if (componentElement?.model) {
                 for (const key in component.model) {
-                    console.log( cloneDeep(component.model[key]));
-                    componentElement.model[key] = component.model[key]; 
-                    console.log( componentElement.model[key]);
+                    componentElement.model[key] = component.model[key];
                 }
                 // componentElement.model = deepWatchSettingProxy(componentElement.model);
-                // component.model = new Proxy(componentElement.model, {}) as any;
+                component.model = new Proxy(componentElement.model, {}) as any;
             }
             if (dragElement?.style) {
 

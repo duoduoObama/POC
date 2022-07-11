@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { isArray, isString, cloneDeep, isObject } from "lodash-es";
 import { Component } from "../../types/Component";
 import {
+  IDOMEventMeta,
   IEventSpecificationEvent,
   IMessage,
   ISchema,
@@ -84,18 +85,12 @@ export class QText extends Component {
         srcType: e.type,
         dstType: "",
       },
-      body: {
-        ...e,
-        node,
-        index,
-      },
+      body: cloneDeep(this.data),
     };
-    console.log(message);
-    
     this.sendMessage(message);
   }
 
-  initModel(): void { 
+  initModel(): void {
     const self = this;
 
     this.model = deepWatchModelProxy({
@@ -217,14 +212,14 @@ export class QText extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [],
-      _onDOMEvent: [],
+      _onMessageMeta: {},
+      _onDOMEvent: {},
       _onWatchSetting: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -233,11 +228,10 @@ export class QText extends Component {
         return cloneDeep(this._onDOMEvent);
       },
       set onDOMEvent(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
-        // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
+        domAssemblyCustomEvents(self, value as IDOMEventMeta);
         this._onDOMEvent = value;
       },
       get onWatchSetting() {

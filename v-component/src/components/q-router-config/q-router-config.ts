@@ -2,7 +2,7 @@ import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQRouterConfigOptions } from "./IQrouterConfig";
 import { createApp, defineComponent, ref } from "vue";
-import { cloneDeep, isString, isArray } from "lodash-es";
+import { cloneDeep, isString, isArray, isObject } from "lodash-es";
 import Divider from "ant-design-vue/lib/divider";
 import {
   Input,
@@ -325,7 +325,7 @@ export class QRouterConfig extends Component {
                   if (
                     tempDataInfo.value.title &&
                     data[handleRouterKey.value].title ===
-                      tempDataInfo.value.title
+                    tempDataInfo.value.title
                   ) {
                     drawerVisible.value = false;
                   }
@@ -709,19 +709,17 @@ export class QRouterConfig extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [
-        {
-          changeInfo: (e: IMessage) => {
-            console.log(e);
-          },
-        },
-      ],
-      _onDOMEvent: [],
+      _onMessageMeta: {
+        changeInfo: [(e: IMessage) => {
+          console.log(e);
+        }],
+      },
+      _onDOMEvent: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -730,7 +728,7 @@ export class QRouterConfig extends Component {
         return cloneDeep(this._onDOMEvent);
       },
       set onDOMEvent(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         // , this._onDOMEvent

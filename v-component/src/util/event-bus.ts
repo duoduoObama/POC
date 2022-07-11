@@ -7,11 +7,11 @@ console.log(EVENTBUS_NAME);
  * 总线事件分发
  * @param {*} param0
  */
-const eventBusProcess = ({ staticRoute = {} as never, data = {} } = {}) => {
+const eventBusProcess = ({ staticRoute = {} as never, data: iMessage = {} } = {}) => {
   const {
     header: { src, srcType, reply },
     body,
-  } = data as IMessage;
+  } = iMessage as IMessage;
   const { src: targetSrc, trigger = [], receive = [] } = staticRoute;
 
   // 目标是否为当前组件,事件是否与触发器匹配
@@ -23,7 +23,7 @@ const eventBusProcess = ({ staticRoute = {} as never, data = {} } = {}) => {
       }
       try {
         const dataScript = new Function(`return ${script}`)();
-        const conventInfo = dataScript(body, data) || null;
+        const conventInfo = dataScript(body, iMessage) || null;
 
         const message = {
           header: {

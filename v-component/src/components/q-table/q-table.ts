@@ -2,7 +2,7 @@ import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IPagination, IQTableOptions } from "./IQTable";
 import { createApp, defineComponent, reactive, ref } from "vue";
-import { cloneDeep, isString, isArray } from "lodash-es";
+import { cloneDeep, isString, isArray, isObject } from "lodash-es";
 import Table from "ant-design-vue/lib/table";
 import Divider from "ant-design-vue/lib/divider";
 import TypographyLink from "ant-design-vue/lib/typography";
@@ -363,30 +363,24 @@ export class QTable extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [
-        {
-          changeInfo: (e: IMessage) => {
-            console.log(e);
-          },
-        },
-      ],
-      _onDOMEvent: [
-        {
-          onEdit: (e: any) => {
-            console.log(e);
-          },
-        },
-        {
-          onDelete: (e: any) => {
-            console.log(e);
-          },
-        },
-      ],
+      _onMessageMeta: {
+        changeInfo: [(e: IMessage) => {
+          console.log(e);
+        }],
+      },
+      _onDOMEvent: {
+        onEdit: [(e: any) => {
+          console.log(e);
+        }],
+        onDelete: [(e: any) => {
+          console.log(e);
+        }],
+      },
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -395,7 +389,7 @@ export class QTable extends Component {
         return cloneDeep(this._onDOMEvent);
       },
       set onDOMEvent(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         // , this._onDOMEvent

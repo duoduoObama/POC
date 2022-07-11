@@ -102,7 +102,7 @@ export function deepWatchModelProxy(obj: ISchema) {
     if (isObject(obj) && !isFunction(obj)) {
 
         for (let key of Object.keys(obj)) {
-            if (isObject(obj[key]) && !isFunction(obj)) {
+            if (isObject(obj[key]) && !isFunction(obj[key])) {
                 try {
                     obj[key] = deepWatchModelProxy(obj[key]) as any;
                 } catch (error) {

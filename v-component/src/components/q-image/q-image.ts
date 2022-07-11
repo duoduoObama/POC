@@ -1,6 +1,6 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { isString, cloneDeep, isArray } from "lodash-es";
+import { isString, cloneDeep, isArray, isObject } from "lodash-es";
 import { Component } from "../../types/Component";
 import {
   IComponent,
@@ -229,25 +229,21 @@ export class QImage extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [
-        {
-          changeInfo: (e: IMessage) => {
-            console.log(e);
-          },
-        },
-      ],
-      _onDOMEvent: [
-        {
-          onclick: (e: Event) => {
-            console.log(e);
-          },
-        },
-      ],
+      _onMessageMeta: {
+        changeInfo: [(e: IMessage) => {
+          console.log(e);
+        }],
+      },
+      _onDOMEvent: {
+        onclick: [(e: Event) => {
+          console.log(e);
+        }],
+      },
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -256,7 +252,7 @@ export class QImage extends Component {
         return cloneDeep(this._onDOMEvent);
       },
       set onDOMEvent(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         // , this._onDOMEvent

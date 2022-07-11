@@ -267,21 +267,21 @@ var config = {
             },
           ],
         },
-        onMessageMeta: [
-          {
-            changeInfo: (e) => {
+        onMessageMeta: {
+          changeInfo: [
+            function (e) {
               console.log(e, this);
               this.data = { text: String(e.body) };
             },
-          },
-        ],
-        onDOMEvent: [
-          {
-            onclick: (e) => {
+          ],
+        },
+        onDOMEvent: {
+          onclick: [
+            (e) => {
               console.log(e);
             },
-          },
-        ],
+          ],
+        },
         onWatchSetting: {
           data: [
             (newVal, oldVal, component) => {
@@ -414,28 +414,33 @@ var config = {
             },
           ],
         },
-        onMessageMeta: [
-          {
-            changeInfo: (e) => {
-              console.log(e);
+        onMessageMeta: {
+          changeInfo: [
+            function (e) {
+              console.log(e, this);
               this.data = { text: String(e.body) };
             },
-          },
-        ],
-        onDOMEvent: [
-          {
-            onclick: (e) => {
+          ],
+        },
+        onDOMEvent: {
+          onclick: [
+            (e) => {
               console.log(e);
             },
-          },
-        ],
-        onWatchSetting: [
-          {
-            data: (newVal, oldVal, component) => {
+          ],
+        },
+        onWatchSetting: {
+          data: [
+            (newVal, oldVal, component) => {
               console.log(newVal, oldVal, component);
             },
-          },
-        ],
+          ],
+          initStyle: [
+            (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
+            },
+          ],
+        },
       },
     },
     {
@@ -568,19 +573,21 @@ var config = {
         },
         onMessageMeta: [
           {
-            changeInfo: (e) => {
-              console.log(e);
-              this.data = { text: String(e.body) };
-            },
+            changeInfo: [
+              (e) => {
+                console.log(e);
+                this.data = { text: String(e.body) };
+              },
+            ],
           },
         ],
-        onDOMEvent: [
-          {
-            onclick: (e) => {
+        onDOMEvent: {
+          onclick: [
+            (e) => {
               console.log(e);
             },
-          },
-        ],
+          ],
+        },
         onWatchSetting: [
           {
             data: (newVal, oldVal, component) => {
@@ -720,19 +727,21 @@ var config = {
         },
         onMessageMeta: [
           {
-            changeInfo: (e) => {
-              console.log(e);
-              this.data = { text: String(e.body) };
-            },
+            changeInfo: [
+              (e) => {
+                console.log(e);
+                this.data = { text: String(e.body) };
+              },
+            ],
           },
         ],
-        onDOMEvent: [
-          {
-            onclick: (e) => {
+        onDOMEvent: {
+          onclick: [
+            (e) => {
               console.log(e);
             },
-          },
-        ],
+          ],
+        },
         onWatchSetting: [
           {
             data: (newVal, oldVal, component) => {
@@ -1371,7 +1380,7 @@ var config = {
 data-component="true"
 id="q-router-config-741zj09abdcs"
 data-parent-id="inner-dropzone" 
-data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","src":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"target":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }"}]},"q-text-dvoly35smyer":{"title":"text1-text2","src":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"target":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return String(new Date()); }"}]}}}'
+data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","src":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"target":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function (data) { return data.text; }"}]},"q-text-dvoly35smyer":{"title":"text1-text2","src":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"target":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function (data) {return data.text; }"}]}}}'
 ></q-router-config>
   `,
 };

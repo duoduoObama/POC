@@ -11,20 +11,20 @@ import {
 export const componentAssemblyCustomEvents = (
   imessage: IMessage,
   events: IMessageMeta[]
-) => {};
+) => { };
 
 /**
  * DOM事件装配
  */
 export const domAssemblyCustomEvents = (
   DOM: HTMLElement,
-  events: IDOMEventMeta[]
+  events: IDOMEventMeta
 ) => {
   // DOM[eventName] = fn;
   // eventName: IEventHandlersEventName, fn: () => void
-  events.forEach((current) => {
+  Object.keys(events).forEach((eventName) => {
     // 只取数组对象中第一个的值
-    const [[eventName, fn]] = Object.entries(current);
+    const [fn] = events[eventName as IEventHandlersEventName];
     Object.assign(DOM, { [eventName]: fn });
   });
 };

@@ -2,7 +2,7 @@ import { css, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { IQDataSourceOptions } from "./IQDataSource";
 import { createApp, defineComponent, onMounted, ref } from "vue";
-import { cloneDeep, pullAllBy, isString, isArray } from "lodash-es";
+import { cloneDeep, pullAllBy, isString, isArray, isObject } from "lodash-es";
 import Divider from "ant-design-vue/lib/divider";
 import {
   Input,
@@ -824,7 +824,7 @@ export class QDataSource extends Component {
                   ? item.requestMethod.value
                   : eval(item.requestMethod.value);
               item.requestMethod.value === "PUT" ||
-              item.requestMethod.value === "POST"
+                item.requestMethod.value === "POST"
                 ? (config.data = data)
                 : (config.params = data);
               config.timeout =
@@ -1079,19 +1079,17 @@ export class QDataSource extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [
-        {
-          changeInfo: (e: IMessage) => {
-            console.log(e);
-          },
-        },
-      ],
-      _onDOMEvent: [],
+      _onMessageMeta: {
+        changeInfo: [(e: IMessage) => {
+          console.log(e);
+        }],
+      },
+      _onDOMEvent: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -1100,7 +1098,7 @@ export class QDataSource extends Component {
         return cloneDeep(this._onDOMEvent);
       },
       set onDOMEvent(value) {
-        if (!isArray(value)) {
+        if (!isObject(value)) {
           return;
         }
         // , this._onDOMEvent
