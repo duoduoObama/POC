@@ -216,6 +216,7 @@ var config = {
       text: "文本",
       type: "文本",
       model: {
+        data: { text: "数据可视化显示系统" },
         eventSpecification: {
           inputEvent: [
             {
@@ -263,6 +264,33 @@ var config = {
                   trigger: ["blur"],
                 },
               ],
+            },
+          ],
+        },
+        onMessageMeta: [
+          {
+            changeInfo: (e) => {
+              console.log(e, this);
+              this.data = { text: String(e.body) };
+            },
+          },
+        ],
+        onDOMEvent: [
+          {
+            onclick: (e) => {
+              console.log(e);
+            },
+          },
+        ],
+        onWatchSetting: {
+          data: [
+            (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
+            },
+          ],
+          initStyle: [
+            (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
             },
           ],
         },
@@ -386,6 +414,28 @@ var config = {
             },
           ],
         },
+        onMessageMeta: [
+          {
+            changeInfo: (e) => {
+              console.log(e);
+              this.data = { text: String(e.body) };
+            },
+          },
+        ],
+        onDOMEvent: [
+          {
+            onclick: (e) => {
+              console.log(e);
+            },
+          },
+        ],
+        onWatchSetting: [
+          {
+            data: (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
+            },
+          },
+        ],
       },
     },
     {
@@ -516,6 +566,28 @@ var config = {
             },
           ],
         },
+        onMessageMeta: [
+          {
+            changeInfo: (e) => {
+              console.log(e);
+              this.data = { text: String(e.body) };
+            },
+          },
+        ],
+        onDOMEvent: [
+          {
+            onclick: (e) => {
+              console.log(e);
+            },
+          },
+        ],
+        onWatchSetting: [
+          {
+            data: (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
+            },
+          },
+        ],
       },
     },
     {
@@ -646,6 +718,28 @@ var config = {
             },
           ],
         },
+        onMessageMeta: [
+          {
+            changeInfo: (e) => {
+              console.log(e);
+              this.data = { text: String(e.body) };
+            },
+          },
+        ],
+        onDOMEvent: [
+          {
+            onclick: (e) => {
+              console.log(e);
+            },
+          },
+        ],
+        onWatchSetting: [
+          {
+            data: (newVal, oldVal, component) => {
+              console.log(newVal, oldVal, component);
+            },
+          },
+        ],
       },
     },
     {
@@ -1274,12 +1368,10 @@ var config = {
   <q-echarts-gl id="q-echarts-gl-jx345jn55ug2"></q-echarts-gl>
 </div>
 <q-router-config
-data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","target":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"source":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }","replyStatus":false,"reply":[]}]},"q-text-dvoly35smyer":{"title":"text1-text2","target":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"source":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return String(new Date()); }","replyStatus":false,"reply":[]}]}}}'
 data-component="true"
-id="drag-v6vxvmr9d29f"
-data-parent-id="inner-dropzone"
-data-x="0"
-data-y="0"
+id="q-router-config-741zj09abdcs"
+data-parent-id="inner-dropzone" 
+data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","src":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"target":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function(data) { return 123123123; }"}]},"q-text-dvoly35smyer":{"title":"text1-text2","src":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"target":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function(data) { return String(new Date()); }"}]}}}'
 ></q-router-config>
   `,
 };

@@ -1,3 +1,6 @@
+import { cloneDeep, isFunction, isObject } from "lodash-es";
+import { ISchema, IWatchSetting } from "../types/IComponent";
+
 /**
  * 生成hashid
  * @param {*} hashLength
@@ -37,7 +40,7 @@ export function getElementTree(target = document, { isEle = false } = {}) {
         data = JSON.parse(data);
         data.id = c.id;
         data.proxyInfo = c.data;
-        data.parentId = parentId; 
+        data.parentId = parentId;
         data.style = c.parentElement.style.cssText;
         data.parentClass = c.parentElement.classList.value;
         data.x = x;
@@ -87,3 +90,57 @@ export function getTargetElement(target = "") {
 
     return findTarget(allElement as never[], target);
 }
+
+/**
+ * 深度监听
+ * @param obj 代理对象
+ * @param cb 回调
+ * @returns 
+ */
+export function deepWatchModelProxy(obj: ISchema) {
+
+    if (isObject(obj) && !isFunction(obj)) {
+
+        for (let key of Object.keys(obj)) {
+            if (isObject(obj[key]) && !isFunction(obj)) {
+                try {
+                    obj[key] = deepWatchModelProxy(obj[key]) as any;
+                } catch (error) {
+                    // console.log(error);
+                }
+
+            }
+        }
+
+    }
+
+    return new Proxy(obj, {
+
+        /**
+         * @param {Object, Array} target 设置值的对象
+         * @param {String} key 属性
+         * @param {any} value 值
+         * @param {Object} receiver this
+         */
+        set: function (target: any, key, value: { [key: string]: {} }, receiver) {
+
+            const copyValue = cloneDeep(target[key]);
+
+            if (isObject(value) && !isFunction(obj)) {
+                value = deepWatchModelProxy(value as any);
+            }
+
+            const onWatchFn = obj.onWatchSetting as IWatchSetting;
+            const propertyWatch = onWatchFn[key as string] ?? [];
+            propertyWatch.forEach((callBack: Function) => {
+                callBack(value, copyValue, obj);
+            });
+            return Reflect.set(target, key, value, receiver);
+
+        },
+        deleteProperty(target, key) {
+            return Reflect.deleteProperty(target, key);
+        }
+
+    });
+} 

@@ -1,3 +1,4 @@
+import { type } from "os";
 import { IComponent, IMessage } from "./IComponent";
 
 export interface IEventBus {
@@ -12,7 +13,16 @@ export interface IconfigData {
     },
     componentsArray: IComponent[],
     dynamicHTML: string,
+    watch: {
+        get onPageModelWatchMeta(): IPageModelWatchMeta[];
+        set onPageModelWatchMeta(value: IPageModelWatchMeta[]);
+        [key: string]: any,
+    }
 }
+
+type IPageModelWatchMeta = { [key: string]: (e: IMessage) => void }
+
+
 
 
 

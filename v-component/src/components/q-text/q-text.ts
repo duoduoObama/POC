@@ -1,13 +1,15 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { isArray, isString, cloneDeep } from "lodash-es";
+import { isArray, isString, cloneDeep, isObject } from "lodash-es";
 import { Component } from "../../types/Component";
 import {
   IEventSpecificationEvent,
   IMessage,
   ISchema,
+  IWatchSetting,
 } from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+import { deepWatchModelProxy } from "../../util/utils";
 import { IQtextOptions } from "./IQText";
 
 /**
@@ -88,13 +90,15 @@ export class QText extends Component {
         index,
       },
     };
+    console.log(message);
+    
     this.sendMessage(message);
   }
 
-  initModel(): void {
+  initModel(): void { 
     const self = this;
 
-    this.model = {
+    this.model = deepWatchModelProxy({
       get id() {
         return cloneDeep(self.id);
       },
@@ -121,7 +125,7 @@ export class QText extends Component {
         return cloneDeep(this._initStyle);
       },
       set initStyle(value) {
-        this.initStyle = value;
+        this._initStyle = value;
       },
       get description() {
         return "文本组件,可以编写文字信息";
@@ -213,21 +217,9 @@ export class QText extends Component {
         this._eventSpecification = value;
         self.receiveInfo(value);
       },
-      _onMessageMeta: [
-        {
-          changeInfo: (e: IMessage) => {
-            console.log(e);
-            self.data = { text: String(e.body) };
-          },
-        },
-      ],
-      _onDOMEvent: [
-        {
-          onclick: (e: Event) => {
-            console.log(e);
-          },
-        },
-      ],
+      _onMessageMeta: [],
+      _onDOMEvent: [],
+      _onWatchSetting: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
@@ -248,13 +240,22 @@ export class QText extends Component {
         domAssemblyCustomEvents(self, value);
         this._onDOMEvent = value;
       },
+      get onWatchSetting() {
+        return cloneDeep(this._onWatchSetting);
+      },
+      set onWatchSetting(value: IWatchSetting) {
+        if (!isObject(value)) {
+          return;
+        }
+        this._onWatchSetting = value;
+      },
       get data() {
         return cloneDeep(self.data);
       },
       set data(value) {
         self.data = value;
       },
-    };
+    });
   }
 }
 

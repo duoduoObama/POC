@@ -12,12 +12,12 @@ const eventBusProcess = ({ staticRoute = {} as never, data = {} } = {}) => {
     header: { src, srcType, reply },
     body,
   } = data as IMessage;
-  const { target, trigger = [], receive = [] } = staticRoute;
+  const { src: targetSrc, trigger = [], receive = [] } = staticRoute;
 
   // 目标是否为当前组件,事件是否与触发器匹配
-  if (target === src && trigger.includes(srcType as never)) {
+  if (targetSrc === src && trigger.includes(srcType as never)) {
     receive.forEach((cur) => {
-      let { source, event = [], script = "return data" } = cur;
+      let { target, event = [], script = "return data" } = cur;
       if (!script.length) {
         script = "function (body, data){return data}";
       }
@@ -29,7 +29,7 @@ const eventBusProcess = ({ staticRoute = {} as never, data = {} } = {}) => {
           header: {
             src,
             srcType,
-            dst: source,
+            dst: target,
             dstType: event[0],
             fn: dataScript,
             reply,
@@ -37,7 +37,7 @@ const eventBusProcess = ({ staticRoute = {} as never, data = {} } = {}) => {
           body: conventInfo,
         };
         console.log(`事件总线分发消息:`, message);
-        const dom = document.querySelector(`#${source}`) as any;
+        const dom = document.querySelector(`#${target}`) as any;
         // dom存在即向dom发送消息
         if (dom) {
           dom.onMessage(message);

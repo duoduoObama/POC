@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export interface IComponent {
     model?: ISchema,
 }
@@ -18,11 +20,16 @@ export interface ISchema {
     set onMessageMeta(value: IMessageMeta[]);
     get onDOMEvent(): IDOMEventMeta[];
     set onDOMEvent(value: IDOMEventMeta[]);
+    get onWatchSetting(): IWatchSetting;
+    set onWatchSetting(value: IWatchSetting);
     [key: string]: any,
 }
 
 
 export type IMessageMeta = { [key: string]: (e: IMessage) => void };
+
+type IWatchFn = (newVal: any, oldVal: any, component: any) => void;
+export type IWatchSetting = { [key: string]: IWatchFn[] };
 
 export type IEventHandlersEventName = `on${keyof GlobalEventHandlersEventMap}`;
 export type IDOMEventMeta = { [key in IEventHandlersEventName]: (e: Event) => void };
