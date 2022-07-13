@@ -130,7 +130,7 @@ export function deepWatchModelProxy(obj: ISchema) {
                 value = deepWatchModelProxy(value as any);
             }
 
-            const onWatchFn = obj.onWatchSetting as IWatchSetting;
+            const onWatchFn = obj.onWatchSetting as IWatchSetting || {};
             const propertyWatch = onWatchFn[key as string] ?? [];
             propertyWatch.forEach((callBack: Function) => {
                 callBack(value, copyValue, obj);

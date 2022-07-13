@@ -15,8 +15,8 @@ import { deepWatchModelProxy } from '../../util/utils';
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement('q-echarts-gl')
-export class QEchartsGl extends Component {
+@customElement('q-echarts-stack-are')
+export class QEchartsStackAre extends Component {
   static styles = css`
     :host {
       display: block; 
@@ -52,158 +52,85 @@ export class QEchartsGl extends Component {
   }
 
   render() {
-    const { text } = this.data;
-    return html`
-      <div id="chart-container">${text}</div> 
-    `
+    const div = document.createElement('div');
+    div.id = 'chart-container';
+    return div;
   }
 
   async initCharts(): Promise<void> {
-    const dom = this.chartContainer; 
+    const dom = this.chartContainer;
 
     this.myChart || (this.myChart = echarts.init(dom));
     this.myChart.showLoading();
-    const data = gl;//await fetch(uploadedDataURL).then(res => res.json());
+    const data = this.data;//await fetch(uploadedDataURL).then(res => res.json());
 
     this.myChart.hideLoading();
-    var sizeValue = '57%';
-    var symbolSize = 2.5;
     this.myOptions = {
-      legend: {},
-      tooltip: {},
-      toolbox: {
-        left: 'center',
-        feature: {
-          dataZoom: {}
+      title: {
+        text: '堆叠面积图'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
         }
       },
-      grid: [
-        { right: sizeValue, bottom: sizeValue },
-        { left: sizeValue, bottom: sizeValue },
-        { right: sizeValue, top: sizeValue },
-        { left: sizeValue, top: sizeValue }
-      ],
+      legend: {
+        data: ["Income", "Life Expectancy", "Population", "Year"]
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
       xAxis: [
         {
-          type: 'value',
-          gridIndex: 0,
-          name: 'Income',
-          axisLabel: { rotate: 50, interval: 0 },
-          xAxisIndex: 0,
-        },
-        {
           type: 'category',
-          gridIndex: 1,
-          name: 'Country',
           boundaryGap: false,
-          axisLabel: { rotate: 50, interval: 0 },
-          xAxisIndex: 1,
-        },
-        {
-          type: 'value',
-          gridIndex: 2,
-          name: 'Income',
-          axisLabel: { rotate: 50, interval: 0 },
-          xAxisIndex: 2,
-        },
-        {
-          type: 'value',
-          gridIndex: 3,
-          name: 'Life Expectancy',
-          axisLabel: { rotate: 50, interval: 0 },
-          xAxisIndex: 3,
+          data: ["Income", "Life Expectancy", "Population", "Year"]
         }
       ],
-      yAxis: [
-        { type: 'value', gridIndex: 0, name: 'Life Expectancy' },
-        { type: 'value', gridIndex: 1, name: 'Income' },
-        { type: 'value', gridIndex: 2, name: 'Population' },
-        { type: 'value', gridIndex: 3, name: 'Population' }
-      ],
       dataset: {
-        dimensions: [
-          'Income',
-          'Life Expectancy',
-          'Population',
-          'Country',
-          { name: 'Year', type: 'ordinal' }
-        ],
         source: data
       },
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
       series: [
         {
-          type: 'scatter',
-          symbolSize: symbolSize,
-          xAxisIndex: 0,
-          yAxisIndex: 0,
-          encode: {
-            x: 'Income',
-            y: 'Life Expectancy',
-            tooltip: [0, 1, 2, 3, 4]
-          }
+          name: 'Income',
+          type: 'line',
+          seriesLayoutBy: 'row'
         },
         {
-          type: 'scatter',
-          symbolSize: symbolSize,
-          xAxisIndex: 1,
-          yAxisIndex: 1,
-          encode: {
-            x: 'Country',
-            y: 'Income',
-            tooltip: [0, 1, 2, 3, 4]
-          }
+          name: 'Life Expectancy',
+          type: 'line',
+          seriesLayoutBy: 'row'
         },
         {
-          type: 'scatter',
-          symbolSize: symbolSize,
-          xAxisIndex: 2,
-          yAxisIndex: 2,
-          encode: {
-            x: 'Income',
-            y: 'Population',
-            tooltip: [0, 1, 2, 3, 4]
-          }
+          name: 'Population',
+          type: 'line',
+          seriesLayoutBy: 'row'
         },
         {
-          type: 'scatter',
-          symbolSize: symbolSize,
-          xAxisIndex: 3,
-          yAxisIndex: 3,
-          encode: {
-            x: 'Life Expectancy',
-            y: 'Population',
-            tooltip: [0, 1, 2, 3, 4]
-          }
+          name: 'Year',
+          type: 'line',
+          seriesLayoutBy: 'row'
         }
       ]
     };
     this.myChart.setOption(this.myOptions);
-
-    this.myChart.on("datazoom", (params: any) => {
-      const { batch = [] } = params;
-      const [{ startValue: startValue1, endValue: endValue1 }, { startValue: startValue2, endValue: endValue2 }] = batch;
-
-      const changeData = this.data.slice().filter((item: any) => {
-        if (startValue1 < item[0] && endValue1 > item[0] || startValue2 < item[1] && endValue2 > item[1]) {
-          return true;
-        }
-        return false;
-      });
-      changeData.unshift(['Income', 'Life Expectancy', 'Population', 'Country', 'Year']);
-
-
-      this.sendMessage({
-        header: {
-          srcType: "datazoom",
-          src: this.id,
-          dst: "",
-          dstType: "",
-        },
-        body: {
-          changeData: cloneDeep(changeData),
-        }
-      })
-    });
 
     this.myOptions && this.myChart.setOption(this.myOptions);
     window.addEventListener("resize", () => {
@@ -353,7 +280,7 @@ export class QEchartsGl extends Component {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'q-echarts-gl': QEchartsGl
+    'q-echarts-stack-are': QEchartsStackAre
   }
 }
 

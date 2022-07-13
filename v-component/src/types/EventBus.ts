@@ -37,8 +37,7 @@ class EventBus implements IEventBus {
    * @param eventName 事件名称
    * @param callBack
    */
-  onMessage(eventName: string, callBack: Function): void {
-    console.log(eventName);
+  onMessage(eventName: string, callBack: Function): void { 
     this.eventObj[eventName] = callBack;
     window.addEventListener(eventName, (event: any) => {
       callBack && callBack(event);

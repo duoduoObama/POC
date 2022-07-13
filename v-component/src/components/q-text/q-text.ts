@@ -42,35 +42,12 @@ export class QText extends Component {
   constructor() {
     super();
     this.initModel();
-    this.receiveInfo(this.model.eventSpecification);
     domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
   render() {
     const { text } = this.data;
     return html` <p @click=${this.clickFont}>${text}</p> `;
-  }
-
-  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
-    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
-      const allListener = this.getListener();
-      Object.keys(allListener).forEach((eventName: string) => {
-        if (allListener[item.eventType]) {
-          this.removeListener(item.eventType);
-        }
-      });
-
-      this.removeListener(item.eventType);
-      this.addListener(item.eventType, (listener: IMessage) => {
-        const { body } = listener;
-
-        if (isString(body)) {
-          this.data = { ...this.data, text: body };
-          return;
-        }
-        this.data = { ...this.data, text: JSON.stringify(body) };
-      });
-    });
   }
 
   clickFont(e: Event) {
@@ -178,43 +155,22 @@ export class QText extends Component {
           },
         };
       },
-      _eventSpecification: {
-        inputEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        inputCustomEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        outputEvent: [
-          {
-            text: "组件点击数据",
-            eventType: "click",
-            messageSchema: "",
-            messageDemo: "文本数据1",
-          },
-        ],
+      _onMessageMeta: {
+        changeInfo: [function (e: IMessage) {
+          console.log(e, self);
+          self.data = { text: String(e.body) };
+        }]
       },
-
-      get eventSpecification() {
-        return cloneDeep(this._eventSpecification);
+      _onDOMEvent: {
+        onclick: [function (e: PointerEvent) {
+          console.log("domevent", e)
+        }]
       },
-      set eventSpecification(value) {
-        this._eventSpecification = value;
-        self.receiveInfo(value);
+      _onWatchSetting: {
+        data: [function (newVal: any, oldVal: any, context: any) {
+          console.log(newVal, oldVal, context);
+        }]
       },
-      _onMessageMeta: {},
-      _onDOMEvent: {},
-      _onWatchSetting: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },

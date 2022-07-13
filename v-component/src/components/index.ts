@@ -11,3 +11,4 @@ export * from "./q-data-source/q-data-source";
 export * from "./q-router-config/q-router-config";
 export * from "./q-page-model/q-page-model";
 export * from "./q-moveable-demo//q-moveable-demo";
+export * from "./q-echarts-gl/q-echarts-stack-are";

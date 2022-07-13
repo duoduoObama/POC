@@ -1,5 +1,4 @@
-import { cloneDeep, isString } from "lodash-es";
-import { BehaviorSubject, filter } from "rxjs";
+import { isString } from "lodash-es";
 import { IBootStrap } from "./IBootStrap";
 import { IComponent } from "./IComponent";
 import { IconfigData } from "./IEventBus";
@@ -64,43 +63,11 @@ class BootStrap implements IBootStrap {
     }
 }
 
-class EventMap {
-
-    private obSubject!: any;
-
-    constructor() {
-        this.createEvent();
-    }
-
-    $on(eventName: string) {
-        this.createEvent();
-        return this.obSubject.pipe(
-            filter((x) => x !== 0),
-            filter((x: any) => x.eventName.includes(eventName))
-        );
-    }
-
-    $emit(eventName: string, context: any) {
-        this.obSubject.next({
-            eventName,
-            context
-        });
-    }
-
-    createEvent() {
-        if (!this.obSubject) {
-            const subject = new BehaviorSubject(0);
-            this.obSubject = subject;
-        }
-    }
-}
-
-class PageModel extends EventMap {
+class PageModel {
 
     pageModel: IconfigData;
 
     constructor(pageModel: IconfigData) {
-        super();
         this.pageModel = pageModel;
     }
 
@@ -119,6 +86,7 @@ class PageModel extends EventMap {
     delete(id: string) {
         const component = this.pageModel.componentsArray.findIndex((component: any) => component.id === id);
         if (component > -1) {
+            document.getElementById(id)?.parentElement?.remove();
             this.pageModel.componentsArray.splice(component, 1);
             return true;
         }
