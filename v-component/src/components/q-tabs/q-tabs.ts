@@ -4,6 +4,7 @@ import { styles } from "./styles";
 import { isString, cloneDeep, isArray, isObject } from "lodash-es";
 import { Component } from "../../types/Component";
 import {
+  IDOMEventMeta,
   IEventSpecificationEvent,
   IMessage,
   ISchema,
@@ -42,38 +43,38 @@ export class QTabs extends Component {
     this.receiveInfo(this.model.eventSpecification);
     domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
-
   render() {
     const { tabs = [] } = this.data;
     return html`
       <div class="container">
         <ul id="tabs">
           ${tabs.map((item, index) => {
-      const { title } = item;
-      return html` <li>
+            const { title } = item;
+
+            return html` <li>
               <a
                 href="javascript:void(0);"
                 id="${index === 0 ? "current" : ""}"
                 @click="${(e: Event) => {
-          this.clickTitle(e, index);
-        }}"
+                  this.clickTitle(e, index);
+                }}"
               >
                 ${title}
               </a>
             </li>`;
-    })}
+          })}
         </ul>
         <div id="content">
           ${tabs.map(
-      ({ id }, index) =>
-        html`<div
+            ({ id }, index) =>
+              html`<div
                 class="content-panel"
                 id="${id}"
                 style="display: ${index === 0 ? "block" : "none"}"
               >
                 <slot name="${id}"></slot>
               </div>`
-    )}
+          )}
         </div>
       </div>
     `;
@@ -95,6 +96,7 @@ export class QTabs extends Component {
   receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
     value.inputEvent.forEach((item: IEventSpecificationEvent) => {
       const allListener = this.getListener();
+
       Object.keys(allListener).forEach((eventName: string) => {
         if (allListener[item.eventType]) {
           this.removeListener(item.eventType);
@@ -135,6 +137,7 @@ export class QTabs extends Component {
     if (targetDOM) {
       targetDOM.style.display = "block";
     }
+    console.log("index", index);
 
     clickTab.id = "current";
     this.onSendMessage(e, this.data, index);
@@ -280,15 +283,20 @@ export class QTabs extends Component {
         self.receiveInfo(value);
       },
       _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
+        changeInfo: [
+          (e: IMessage) => {
+            console.log(e);
+          },
+        ],
       },
       _onDOMEvent: {
-        onclick: [(e: Event) => {
-          console.log(e);
-        }],
+        onclick: [
+          (e: Event) => {
+            console.log(e);
+          },
+        ],
       },
+      _onWatchSetting: {},
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);
       },
@@ -306,7 +314,7 @@ export class QTabs extends Component {
           return;
         }
         // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
+        domAssemblyCustomEvents(self, value as IDOMEventMeta);
         this._onDOMEvent = value;
       },
       get data() {

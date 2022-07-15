@@ -2,7 +2,8 @@ import { defineConfig } from "vite";
 import { resolve, join } from "path";
 import { writeFileSync } from "fs";
 import vue from "@vitejs/plugin-vue";
-
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
 // https://vitejs.dev/config/
 export default defineConfig({
   // micro App 子应用配置

@@ -105,6 +105,8 @@ export class QListText extends Component {
         index,
       },
     };
+    console.log("message", message);
+
     this.sendMessage(message);
   }
 
@@ -231,14 +233,18 @@ export class QListText extends Component {
         self.receiveInfo(value);
       },
       _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
+        changeInfo: [
+          (e: IMessage) => {
+            console.log(e);
+          },
+        ],
       },
       _onDOMEvent: {
-        onclick: [(e: Event) => {
-          console.log(e);
-        }],
+        onclick: [
+          (e: Event) => {
+            console.log(e);
+          },
+        ],
       },
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);

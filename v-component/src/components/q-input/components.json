@@ -1,0 +1,63 @@
+{
+  "id": "",
+  "componentName": "q-input",
+  "type": "输入框",
+  "text": "输入框",
+  "group": ["输入框"],
+  "createTime": "2022-07-11T07:49:43.975Z",
+  "image": "",
+  "initStyle": "",
+  "description": "",
+  "options": { "text": "输入框数据text" },
+
+  "schema": {
+    "eventSpecification": {
+      "inputEvent": [
+        {
+          "text": "更改组件数据",
+          "eventType": "changeInfo",
+          "messageSchema": "",
+          "messageDemo": ""
+        }
+      ],
+      "outputEvent": [
+        {
+          "text": "组件输入数据",
+          "eventType": "change",
+          "messageSchema": "",
+          "messageDemo": "文本数据1"
+        }
+      ]
+    },
+    "optionsView": {
+      "list": [
+        {
+          "type": "textarea",
+          "label": "文本框",
+          "options": {
+            "width": "100%",
+            "maxLength": 0,
+            "defaultValue": "",
+            "rows": 4,
+            "clearable": false,
+            "tooptip": "",
+            "hidden": false,
+            "disabled": false,
+            "placeholder": "请输入",
+            "dynamicHide": false,
+            "dynamicHideValue": ""
+          },
+          "model": "list",
+          "key": "list",
+          "rules": [
+            {
+              "required": false,
+              "message": "必填项",
+              "trigger": ["blur"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

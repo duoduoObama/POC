@@ -69,6 +69,8 @@ export class QMoveableDemo extends LitElement {
 
   clickTitle(e: Event, index: number) {
     const { tabs = [] } = this.data;
+    // console.log("tabs", tabs);
+
     if (!tabs[index]) return;
     const clickTab = this.root.querySelector("#tabs")?.children[index]
       .children[0] as HTMLElement;

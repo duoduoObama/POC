@@ -11,7 +11,7 @@ import {
 export const componentAssemblyCustomEvents = (
   imessage: IMessage,
   events: IMessageMeta[]
-) => { };
+) => {};
 
 /**
  * DOM事件装配

@@ -325,7 +325,7 @@ export class QRouterConfig extends Component {
                   if (
                     tempDataInfo.value.title &&
                     data[handleRouterKey.value].title ===
-                    tempDataInfo.value.title
+                      tempDataInfo.value.title
                   ) {
                     drawerVisible.value = false;
                   }
@@ -710,9 +710,11 @@ export class QRouterConfig extends Component {
         self.receiveInfo(value);
       },
       _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
+        changeInfo: [
+          (e: IMessage) => {
+            console.log(e);
+          },
+        ],
       },
       _onDOMEvent: {},
       get onMessageMeta() {

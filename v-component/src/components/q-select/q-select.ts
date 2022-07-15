@@ -11,15 +11,14 @@ import {
 } from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
 import { deepWatchModelProxy } from "../../util/utils";
-
-import { IQtextOptions } from "./IQText";
+import { IQselectOptions } from "./IQSelect";
 
 /**
  * 文本组件
  *
  */
-@customElement("q-text")
-export class QText extends Component {
+@customElement("q-select")
+export class QSelect extends Component {
   static styles = css`
     :host {
       display: block;
@@ -33,7 +32,22 @@ export class QText extends Component {
    * 绑定data数据
    */
   @property({ type: Object, attribute: "data-data" })
-  data: IQtextOptions = { text: "文本数据1" };
+  data: IQselectOptions = {
+    list: [
+      {
+        id: 1,
+        value: "选项一",
+      },
+      {
+        id: 2,
+        value: "选项二",
+      },
+      {
+        id: 3,
+        value: "选项三",
+      },
+    ],
+  };
 
   /**
    * 数据模型
@@ -48,9 +62,20 @@ export class QText extends Component {
   }
 
   render() {
-    const { text } = this.data;
+    const { list = [] } = this.data;
 
-    return html` <p @click=${this.clickFont}>${text}</p> `;
+    return html`
+      <select
+        @change="${(e: Event) => {
+          this.handleChange(e);
+        }}"
+      >
+        ${list.map((item) => {
+          const { value, id } = item;
+          return html`<option value="${id}">${value}</option>`;
+        })}
+      </select>
+    `;
   }
 
   receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
@@ -75,13 +100,11 @@ export class QText extends Component {
     });
   }
 
-  clickFont(e: Event) {
-    this.onSendMessage(e, this.data, "text");
+  handleChange(e: Event) {
+    this.onSendMessage(e, this.data, "select");
   }
 
   onSendMessage(e: Event, node: any, index: number | string) {
-    console.log("e.type", e.type);
-
     const message: IMessage = {
       header: {
         src: this.id,
@@ -89,8 +112,13 @@ export class QText extends Component {
         srcType: e.type,
         dstType: "",
       },
-      body: cloneDeep(this.data),
+      body: {
+        ...e,
+        node,
+        index,
+      },
     };
+
     this.sendMessage(message);
   }
 
@@ -101,16 +129,16 @@ export class QText extends Component {
         return cloneDeep(self.id);
       },
       get componentName() {
-        return "q-text";
+        return "q-select";
       },
       get type() {
-        return "文本";
+        return "选择框";
       },
       get text() {
-        return "文本";
+        return "选择框";
       },
       get group() {
-        return ["文本"];
+        return ["选择框"];
       },
       get createTime() {
         return new Date();
@@ -126,7 +154,7 @@ export class QText extends Component {
         this._initStyle = value;
       },
       get description() {
-        return "文本组件,可以编写文字信息";
+        return "选择框组件,可以进行选择列表选择";
       },
       get options() {
         return cloneDeep(self.data);
@@ -200,8 +228,8 @@ export class QText extends Component {
         ],
         outputEvent: [
           {
-            text: "组件点击数据",
-            eventType: "click",
+            text: "组件切换数据",
+            eventType: "change",
             messageSchema: "",
             messageDemo: "文本数据1",
           },
@@ -253,12 +281,11 @@ export class QText extends Component {
         self.data = value;
       },
     });
-    console.log("this.model", this.model);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "q-text": QText;
+    "q-select": QSelect;
   }
 }

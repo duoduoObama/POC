@@ -1,0 +1,75 @@
+{
+  "id": "",
+  "componentName": "q-select",
+  "type": "",
+  "text": "颜色框",
+  "group": ["颜色框"],
+  "createTime": "2022-06-20T07:49:43.975Z",
+  "image": "",
+  "initStyle": "",
+  "description": "",
+  "options": {
+    "selectList": [
+      {
+        "id": 1,
+        "value": "选项一"
+      },
+      {
+        "id": 2,
+        "value": "选项二"
+      },
+      {
+        "id": 3,
+        "value": "选项三"
+      }
+    ]
+  },
+  "schema": {
+    "eventSpecification": {
+      "inputEvent": [
+        {
+          "text": "更改组件数据",
+          "eventType": "changeInfo",
+          "messageSchema": "",
+          "messageDemo": ""
+        }
+      ],
+      "outputEvent": [
+        {
+          "text": "组件选择数据",
+          "eventType": "change",
+          "messageSchema": "",
+          "messageDemo": "颜色数据1"
+        }
+      ]
+    },
+    "optionsView": {
+      "list": [
+        {
+          "type": "color",
+          "label": "颜色框",
+          "options": {
+            "type": "text",
+            "width": "100%",
+            "defaultValue": "",
+            "placeholder": "请选择",
+            "clearable": false,
+            "maxLength": 0,
+            "prepend": "",
+            "append": "",
+            "tooptip": "",
+            "hidden": false,
+            "disabled": false,
+            "dynamicHide": false,
+            "dynamicHideValue": ""
+          },
+          "model": "text",
+          "key": "text",
+          "rules": [
+            { "required": false, "message": "必填项", "trigger": ["blur"] }
+          ]
+        }
+      ]
+    }
+  }
+}

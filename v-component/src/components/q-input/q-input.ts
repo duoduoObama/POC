@@ -1,25 +1,24 @@
-import { html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { isArray, isString, cloneDeep, isObject } from "lodash-es";
+import { css, html } from "lit";
+
 import { Component } from "../../types/Component";
+import { IQinputOptions } from "./IQInput";
+import { customElement, property } from "lit/decorators.js";
 import {
-  IDOMEventMeta,
   IEventSpecificationEvent,
   IMessage,
   ISchema,
+  IDOMEventMeta,
   IWatchSetting,
 } from "../../types/IComponent";
+import { cloneDeep, isArray, isObject, isString } from "lodash-es";
 import { domAssemblyCustomEvents } from "../../util/base-method";
-import { deepWatchModelProxy } from "../../util/utils";
-
-import { IQtextOptions } from "./IQText";
 
 /**
  * 文本组件
  *
  */
-@customElement("q-text")
-export class QText extends Component {
+@customElement("q-input")
+export class QInput extends Component {
   static styles = css`
     :host {
       display: block;
@@ -30,16 +29,9 @@ export class QText extends Component {
   `;
 
   /**
-   * 绑定data数据
-   */
-  @property({ type: Object, attribute: "data-data" })
-  data: IQtextOptions = { text: "文本数据1" };
-
-  /**
    * 数据模型
    */
   model!: ISchema;
-
   constructor() {
     super();
     this.initModel();
@@ -47,15 +39,43 @@ export class QText extends Component {
     domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
+  /**
+   * 绑定data数据
+   */
+  @property({ type: Object, attribute: "data-data" })
+  data: IQinputOptions = { text: "文本输入框测试" };
   render() {
     const { text } = this.data;
 
-    return html` <p @click=${this.clickFont}>${text}</p> `;
+    return html` <input @change=${this.handleChange}>${text}</input> `;
   }
+  handleChange(e: Event) {
+    console.log("e", e);
+    this.onSendMessage(e, this.data, "input");
+  }
+  onSendMessage(e: Event, node: any, index: number | string) {
+    console.log("e.type", e.type);
 
+    const message: IMessage = {
+      header: {
+        src: this.id,
+        dst: "",
+        srcType: e.type,
+        dstType: "",
+      },
+      body: {
+        ...e,
+        node,
+        index,
+      },
+    };
+
+    this.sendMessage(message);
+  }
   receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
     value.inputEvent.forEach((item: IEventSpecificationEvent) => {
       const allListener = this.getListener();
+
       Object.keys(allListener).forEach((eventName: string) => {
         if (allListener[item.eventType]) {
           this.removeListener(item.eventType);
@@ -74,29 +94,9 @@ export class QText extends Component {
       });
     });
   }
-
-  clickFont(e: Event) {
-    this.onSendMessage(e, this.data, "text");
-  }
-
-  onSendMessage(e: Event, node: any, index: number | string) {
-    console.log("e.type", e.type);
-
-    const message: IMessage = {
-      header: {
-        src: this.id,
-        dst: "",
-        srcType: e.type,
-        dstType: "",
-      },
-      body: cloneDeep(this.data),
-    };
-    this.sendMessage(message);
-  }
-
   initModel(): void {
     const self = this;
-    this.model = deepWatchModelProxy({
+    this.model = {
       get id() {
         return cloneDeep(self.id);
       },
@@ -123,7 +123,7 @@ export class QText extends Component {
         return cloneDeep(this._initStyle);
       },
       set initStyle(value) {
-        this._initStyle = value;
+        this.initStyle = value;
       },
       get description() {
         return "文本组件,可以编写文字信息";
@@ -145,7 +145,7 @@ export class QText extends Component {
             outputEvent: [
               {
                 text: "组件点击数据",
-                eventType: "click",
+                eventType: "change",
                 messageSchema: "",
                 messageDemo: "文本数据1",
               },
@@ -207,10 +207,15 @@ export class QText extends Component {
           },
         ],
       },
-
       get eventSpecification() {
+        console.log(
+          ` cloneDeep(this._eventSpecification);`,
+          cloneDeep(this._eventSpecification)
+        );
+
         return cloneDeep(this._eventSpecification);
       },
+
       set eventSpecification(value) {
         this._eventSpecification = value;
         self.receiveInfo(value);
@@ -222,7 +227,7 @@ export class QText extends Component {
         return cloneDeep(this._onMessageMeta);
       },
       set onMessageMeta(value) {
-        if (!isObject(value)) {
+        if (!isArray(value)) {
           return;
         }
         this._onMessageMeta = value;
@@ -234,6 +239,7 @@ export class QText extends Component {
         if (!isObject(value)) {
           return;
         }
+
         domAssemblyCustomEvents(self, value as IDOMEventMeta);
         this._onDOMEvent = value;
       },
@@ -246,19 +252,15 @@ export class QText extends Component {
         }
         this._onWatchSetting = value;
       },
-      get data() {
-        return cloneDeep(self.data);
-      },
-      set data(value) {
-        self.data = value;
-      },
-    });
+    };
+    console.log("this", this);
+
     console.log("this.model", this.model);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "q-text": QText;
+    "q-input": QInput;
   }
 }
