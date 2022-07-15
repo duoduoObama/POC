@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>v-component</title>
+    <script type="module" src="./src/main.ts"></script> 
+  </head>
+  <body></body>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+  </style>
+  <body>
+    <div id="component"></div>
+  </body>
+  <script type="module">
+    import BootStrap from "./src/types/runtime/BootStrap";
+    import { config } from "./src/dp/dp.js";
+
+    const bootStrap = new BootStrap("#component", config);
+  </script>
+</html>

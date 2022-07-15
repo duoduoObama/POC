@@ -1,14 +1,11 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { isString, cloneDeep, isArray, isObject } from "lodash-es";
-import { Component } from "../../types/Component";
-import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-} from "../../types/IComponent";
+import { isString, cloneDeep, isArray, isObject } from "lodash-es"; 
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema, IEventSpecificationEvent } from "../../types/runtime/IModelSchema";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 import { IQImageOptions } from "./IQImage";
 
 /**
@@ -110,7 +107,7 @@ export class QImage extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
+    this.model = deepWatchModelProxy(mergeModel(this.model, {
       get id() {
         return cloneDeep(self.id);
       },
@@ -256,7 +253,7 @@ export class QImage extends Component {
           return;
         }
         // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
+        domAssemblyCustomEvents(self, value as any);
         this._onDOMEvent = value;
       },
       get data() {
@@ -265,7 +262,7 @@ export class QImage extends Component {
       set data(value) {
         self.data = value;
       },
-    };
+    }));
   }
 }
 

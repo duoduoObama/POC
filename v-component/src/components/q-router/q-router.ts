@@ -4,13 +4,13 @@ import { IQRouterOptions } from "./IQRouter";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { createApp, nextTick, reactive, ref } from "vue";
 import { cloneDeep, isString } from "lodash-es";
-import { Component } from "../../types/Component";
 import {
   IComponent,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-} from "../../types/IComponent";
+} from "../../types/runtime/IComponent";
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema, IEventSpecificationEvent } from "../../types/runtime/IModelSchema";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 
 /**
  * An example element.
@@ -115,35 +115,35 @@ export class QRouter extends Component {
     // 1. 定义路由组件.
     // 也可以从其他文件导入
     const slotComponent = (slotName: string) =>
-      ({
-        template: `<div></div>`,
-        data() {
-          return {
-            name: this.name,
-          };
-        },
+    ({
+      template: `<div></div>`,
+      data() {
+        return {
+          name: this.name,
+        };
+      },
 
-        methods: {
-          appendSlot() {
-            if (Array.isArray(slotName)) {
-              slotName.forEach((item) => {
-                const slot = document.createElement("slot");
-                slot.name = item;
-                this.$el.appendChild(slot);
-              });
-            } else {
+      methods: {
+        appendSlot() {
+          if (Array.isArray(slotName)) {
+            slotName.forEach((item) => {
               const slot = document.createElement("slot");
-              slot.name = slotName;
+              slot.name = item;
               this.$el.appendChild(slot);
-            }
-          },
-        } as { [key: string]: any },
-        mounted() {
-          nextTick(() => {
-            this.appendSlot();
-          });
+            });
+          } else {
+            const slot = document.createElement("slot");
+            slot.name = slotName;
+            this.$el.appendChild(slot);
+          }
         },
-      } as any);
+      } as { [key: string]: any },
+      mounted() {
+        nextTick(() => {
+          this.appendSlot();
+        });
+      },
+    } as any);
     path.forEach((element: any) => {
       const { url, keepAlive, isIframe, slotName } = element;
       const component = slotComponent(slotName);
@@ -223,7 +223,7 @@ export class QRouter extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
+    this.model = deepWatchModelProxy(mergeModel(this.model, {
       get id() {
         return self.id;
       },
@@ -309,7 +309,7 @@ export class QRouter extends Component {
       set data(value) {
         self.data = value;
       },
-    };
+    }));
   }
 }
 

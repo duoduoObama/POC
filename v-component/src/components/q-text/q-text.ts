@@ -1,16 +1,11 @@
-import { html, css } from "lit";
+import { css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { isArray, isString, cloneDeep, isObject } from "lodash-es";
-import { Component } from "../../types/Component";
-import {
-  IDOMEventMeta,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-  IWatchSetting,
-} from "../../types/IComponent";
+import { cloneDeep } from "lodash-es";
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema } from "../../types/runtime/IModelSchema";
 import { domAssemblyCustomEvents } from "../../util/base-method";
-import { deepWatchModelProxy } from "../../util/utils";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 import { IQtextOptions } from "./IQText";
 
 /**
@@ -32,7 +27,7 @@ export class QText extends Component {
    * 绑定data数据
    */
   @property({ type: Object, attribute: "data-data" })
-  data: IQtextOptions = { text: "文本数据1" };
+  text: string = "文本数据1";
 
   /**
    * 数据模型
@@ -46,15 +41,10 @@ export class QText extends Component {
   }
 
   render() {
-    const { text } = this.data;
-    return html` <p @click=${this.clickFont}>${text}</p> `;
+    return html` <p @click=${this.clickFont}>${this.text}</p> `;
   }
 
   clickFont(e: Event) {
-    this.onSendMessage(e, this.data, "text");
-  }
-
-  onSendMessage(e: Event, node: any, index: number | string) {
     const message: IMessage = {
       header: {
         src: this.id,
@@ -62,7 +52,7 @@ export class QText extends Component {
         srcType: e.type,
         dstType: "",
       },
-      body: cloneDeep(this.data),
+      body:this.text,
     };
     this.sendMessage(message);
   }
@@ -70,14 +60,12 @@ export class QText extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = deepWatchModelProxy({
-      get id() {
-        return cloneDeep(self.id);
-      },
+    this.model = deepWatchModelProxy(mergeModel(this.model, {
       get componentName() {
         return "q-text";
       },
       get type() {
+
         return "文本";
       },
       get text() {
@@ -86,29 +74,16 @@ export class QText extends Component {
       get group() {
         return ["文本"];
       },
-      get createTime() {
-        return new Date();
-      },
       get image() {
         return "";
-      },
-      _initStyle: "",
-      get initStyle() {
-        return cloneDeep(this._initStyle);
-      },
-      set initStyle(value) {
-        this._initStyle = value;
       },
       get description() {
         return "文本组件,可以编写文字信息";
       },
-      get options() {
-        return cloneDeep(self.data);
-      },
       get schema() {
         return {
           eventSpecification: {
-            inputEvent: [
+            inputMessage: [
               {
                 text: "更改组件数据",
                 eventType: "changeInfo",
@@ -116,7 +91,7 @@ export class QText extends Component {
                 messageDemo: "",
               },
             ],
-            outputEvent: [
+            outputMessage: [
               {
                 text: "组件点击数据",
                 eventType: "click",
@@ -158,54 +133,24 @@ export class QText extends Component {
       _onMessageMeta: {
         changeInfo: [function (e: IMessage) {
           console.log(e, self);
-          self.data = { text: String(e.body) };
+          self.text = String(e.body);
         }]
       },
       _onDOMEvent: {
-        onclick: [function (e: PointerEvent) {
-          console.log("domevent", e)
-        }]
+        onclick: [self.clickFont]
       },
       _onWatchSetting: {
         data: [function (newVal: any, oldVal: any, context: any) {
           console.log(newVal, oldVal, context);
         }]
       },
-      get onMessageMeta() {
-        return cloneDeep(this._onMessageMeta);
-      },
-      set onMessageMeta(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onMessageMeta = value;
-      },
-      get onDOMEvent() {
-        return cloneDeep(this._onDOMEvent);
-      },
-      set onDOMEvent(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        domAssemblyCustomEvents(self, value as IDOMEventMeta);
-        this._onDOMEvent = value;
-      },
-      get onWatchSetting() {
-        return cloneDeep(this._onWatchSetting);
-      },
-      set onWatchSetting(value: IWatchSetting) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onWatchSetting = value;
-      },
       get data() {
-        return cloneDeep(self.data);
+        return self.text;
       },
       set data(value) {
-        self.data = value;
+        self.text = value;
       },
-    });
+    }));
   }
 }
 

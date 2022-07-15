@@ -33,14 +33,11 @@ import antdCss from "ant-design-vue/dist/antd.min.css";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import axios from "axios";
 import fetchJsonp from "fetch-jsonp";
-import { Component } from "../../types/Component";
-import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-} from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema, IEventSpecificationEvent } from "../../types/runtime/IModelSchema";
+import { Component } from "../../types/runtime/Component";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 
 /**
  * An example element.
@@ -985,7 +982,7 @@ export class QDataSource extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
+    this.model = deepWatchModelProxy(mergeModel(this.model, {
       get id() {
         return cloneDeep(self.id);
       },
@@ -1023,7 +1020,7 @@ export class QDataSource extends Component {
       get schema() {
         return {
           eventSpecification: {
-            inputEvent: [
+            inputMessage: [
               {
                 text: "更改组件数据",
                 eventType: "changeInfo",
@@ -1031,7 +1028,7 @@ export class QDataSource extends Component {
                 messageDemo: "",
               },
             ],
-            outputEvent: [
+            outputMessage: [
               {
                 text: "数据请求",
                 eventType: "request",
@@ -1046,7 +1043,7 @@ export class QDataSource extends Component {
         };
       },
       _eventSpecification: {
-        inputEvent: [
+        inputMessage: [
           {
             text: "更改组件数据",
             eventType: "changeInfo",
@@ -1054,15 +1051,7 @@ export class QDataSource extends Component {
             messageDemo: "",
           },
         ],
-        inputCustomEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        outputEvent: [
+        outputMessage: [
           {
             text: "数据请求",
             eventType: "request",
@@ -1102,7 +1091,7 @@ export class QDataSource extends Component {
           return;
         }
         // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
+        domAssemblyCustomEvents(self, value as any);
         this._onDOMEvent = value;
       },
       get data() {
@@ -1111,7 +1100,7 @@ export class QDataSource extends Component {
       set data(value) {
         self.data = value;
       },
-    };
+    }));
   }
 }
 

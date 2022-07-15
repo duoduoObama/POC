@@ -1,9 +1,7 @@
-import {
-  IDOMEventMeta,
-  IEventHandlersEventName,
-  IMessage,
-  IMessageMeta,
-} from "../types/IComponent";
+import { IMessage } from "../types/runtime/IMessage";
+import { IMessageMeta, IDOMEventMeta, IEventHandlersEventName } from "../types/runtime/IModelSchema";
+
+ 
 
 /**
  * 组件自定义事件装配
@@ -20,7 +18,7 @@ export const domAssemblyCustomEvents = (
   DOM: HTMLElement,
   events: IDOMEventMeta
 ) => {
-  // DOM[eventName] = fn;
+  if (!DOM || !events) return;
   // eventName: IEventHandlersEventName, fn: () => void
   Object.keys(events).forEach((eventName) => {
     // 只取数组对象中第一个的值

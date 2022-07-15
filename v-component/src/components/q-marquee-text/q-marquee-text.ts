@@ -1,13 +1,11 @@
 import { html, css, LitElement, PropertyValueMap } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { cloneDeep, isString } from "lodash-es";
-import { Component } from "../../types/Component";
-import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-} from "../../types/IComponent";
+import { Component } from "../../types/runtime/Component";
+import { IComponent } from "../../types/runtime/IComponent";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema, IEventSpecificationEvent } from "../../types/runtime/IModelSchema";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 import { IQMarqueeTextOptions } from "./IQMarqueeText";
 
 /**
@@ -116,7 +114,7 @@ export class QMarqueeText extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
+    this.model = deepWatchModelProxy(mergeModel(this.model, {
       get id() {
         return self.id;
       },
@@ -241,7 +239,7 @@ export class QMarqueeText extends Component {
       set data(value) {
         self.data = value;
       },
-    };
+    }));
   }
 }
 
