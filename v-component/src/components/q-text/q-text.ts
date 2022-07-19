@@ -10,6 +10,7 @@ import {
   IWatchSetting,
 } from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+
 import { deepWatchModelProxy } from "../../util/utils";
 import { IQtextOptions } from "./IQText";
 
