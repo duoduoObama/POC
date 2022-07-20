@@ -10,7 +10,7 @@ export interface ISchema {
     get image(): string;
     get initStyle(): string;
     set initStyle(value: string);
-    get description(): string; 
+    get description(): string;
     get iovSchema(): ICustomSchema;
     get onMessageMeta(): IMessageMeta;
     set onMessageMeta(value: IMessageMeta);
@@ -18,6 +18,8 @@ export interface ISchema {
     set onDOMEvent(value: IDOMEventMeta);
     get onWatchSetting(): IWatchSetting;
     set onWatchSetting(value: IWatchSetting);
+    // initModel(schema: ISchema): IWatch;
+    // shuxingshezhi: IWatch;
     [key: string]: any,
 }
 

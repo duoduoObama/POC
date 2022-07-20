@@ -256,8 +256,13 @@ export class QImage extends Component {
         domAssemblyCustomEvents(self, value as any);
         this._onDOMEvent = value;
       },
+      _onWatchSetting: {
+        data: [function (newVal: any, oldVal: any, context: any) {
+          console.log(newVal, oldVal, context);
+        }]
+      },
       get data() {
-        return cloneDeep(self.data);
+        return self.data;
       },
       set data(value) {
         self.data = value;

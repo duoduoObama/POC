@@ -97,12 +97,12 @@ export function getTargetElement(target = "") {
  * @returns 
  */
 export function deepWatchModelProxy(obj: ISchema) {
-
+    
     if (isObject(obj) && !isFunction(obj)) {
 
         for (let key of Object.keys(obj)) {
             if (isObject(obj[key]) && !isFunction(obj[key])) {
-                try {
+                try { 
                     obj[key] = deepWatchModelProxy(obj[key]);
                 } catch (error) {
                     // console.log(error);
@@ -121,8 +121,7 @@ export function deepWatchModelProxy(obj: ISchema) {
          * @param {any} value 值
          * @param {Object} receiver this
          */
-        set: function (target: any, key, value: { [key: string]: {} }, receiver) {
-
+        set: function (target: any, key, value: { [key: string]: {} }, receiver) { 
             const copyValue = cloneDeep(target[key]);
 
             if (isObject(value) && !isFunction(value)) {

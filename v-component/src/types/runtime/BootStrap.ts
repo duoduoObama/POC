@@ -1,8 +1,9 @@
-import { cloneDeep, isString } from "lodash-es";
+import { cloneDeep, isNull, isObject, isString } from "lodash-es";
 import { IBootStrap } from "./IBootStrap";
 import { eventBus } from "./EventBus";
 import { PageModel } from "./PageModel";
 import { IconfigData } from "./IConfigData";
+import { mergeModel } from "../../util/utils";
 
 declare global {
     let pageModel: any;
@@ -54,7 +55,11 @@ class BootStrap implements IBootStrap {
 
             if (componentElement?.model) {
                 for (const key in component.model) {
-                    componentElement.model[key] = component.model[key];
+                    if (!component.model[key] && !componentElement.model[key] && isObject(component.model[key])) {
+                        mergeModel(componentElement.model[key], component.model[key]);
+                    } else {
+                        componentElement.model[key] = component.model[key];
+                    }
                 }
                 component.model = componentElement.model;
             }

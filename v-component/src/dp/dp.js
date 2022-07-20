@@ -271,9 +271,10 @@ export const config = {
           ],
         },
         onDOMEvent: {
-          onclick: [
+          click: [
             function (e) {
               this.clickFont(e);
+              console.log(this, 666666);
             },
           ],
         },
@@ -418,7 +419,7 @@ export const config = {
           ],
         },
         onDOMEvent: {
-          onclick: [
+          click: [
             (e) => {
               console.log(e);
             },
@@ -572,7 +573,7 @@ export const config = {
           ],
         },
         onDOMEvent: {
-          onclick: [
+          click: [
             (e) => {
               console.log(e);
             },
@@ -722,7 +723,7 @@ export const config = {
         },
 
         onDOMEvent: {
-          onclick: [
+          click: [
             (e) => {
               console.log(e);
             },

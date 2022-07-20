@@ -17,8 +17,7 @@ class EventBus implements IEventBus {
 
       const router = [...document.querySelectorAll("q-router-config")].map(
         (current: any) => JSON.parse(current.dataset.data).router
-      ) as IRouterConfig[];
-console.log(data);
+      ) as IRouterConfig[]; 
 
       router.forEach((target: { [key: string]: any }) => {
         const route = target[src];
