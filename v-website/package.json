@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "@micro-zoe/micro-app": "^0.8.5",
-    "vue": "^3.2.25"
+    "ant-design-vue": "^3.2.10",
+    "lit": "^2.2.7",
+    "vue": "^3.2.25",
+    "vue-router": "^4.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
