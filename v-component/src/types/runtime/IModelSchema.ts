@@ -1,3 +1,4 @@
+import { type } from "os";
 import { IMessage } from "./IMessage";
 
 export interface ISchema {
@@ -17,13 +18,17 @@ export interface ISchema {
     get onDOMEvent(): IDOMEventMeta;
     set onDOMEvent(value: IDOMEventMeta);
     get onWatchSetting(): IWatchSetting;
-    set onWatchSetting(value: IWatchSetting);
-    // initModel(schema: ISchema): IWatch;
-    // shuxingshezhi: IWatch;
+    set onWatchSetting(value: IWatchSetting); 
+    get attributeSetting(): ISchema;
+    set attributeSetting(value: ISchema);
+    set lifecycle(value: ILifeCycle);
+    get lifecycle(): ILifeCycle;
+    set contextType(value: boolean);
+    get contextType(): boolean;
     [key: string]: any,
 }
 
-
+type ILifeCycle = {};
 type IEventHandler = (e: IMessage) => void;
 type IWatchFn = (newVal: any, oldVal: any, component: any) => void;
 
