@@ -1,0 +1,67 @@
+.q-shrink-wrapper {
+  position: relative;
+}
+.q-shrink .is-absolute {
+  position: absolute;
+}
+.q-shrink .panel-put-away {
+  background: #fafafa;
+  color: #898989;
+  border: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.q-shrink .panel-put-away.right-ui {
+  height: 82px;
+  width: 8px;
+  top: 15px;
+  border-right: 0;
+  border-bottom-left-radius: 82px;
+  border-top-left-radius: 82px;
+  left: 0;
+}
+
+.q-shrink .panel-put-away.top-ui {
+  width: 82px;
+  height: 8px;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  border-radius: 0 0 82px 82px;
+}
+
+.q-shrink .panel-put-away.bottom-ui {
+  width: 82px;
+  height: 8px;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%);
+  border-radius: 82px 82px 0 0;
+}
+
+.q-shrink .panel-put-away.left-ui {
+  height: 82px;
+  width: 8px;
+  top: 15px;
+  border-left: 0;
+  border-bottom-right-radius: 82px;
+  border-top-right-radius: 82px;
+  right: 0;
+}
+
+.q-shrink .q-shrink-content-hide {
+  /* display: none; */
+  visibility: hidden;
+}
+
+.q-shrink .q-shrink-content {
+  position: relative;
+  border: 1px solid #d9d9d9;
+}
+
+.q-shrink {
+  outline: 1px solid transparent;
+}

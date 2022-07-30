@@ -4,13 +4,14 @@ import { IQRouterOptions } from "./IQRouter";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { createApp, nextTick, reactive, ref } from "vue";
 import { cloneDeep, isString } from "lodash-es";
-import { Component } from "../../types/Component";
+import { IComponent } from "../../types/runtime/IComponent";
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
 import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
   ISchema,
-} from "../../types/IComponent";
+  IEventSpecificationEvent,
+} from "../../types/runtime/IModelSchema";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 
 /**
  * An example element.
@@ -223,93 +224,95 @@ export class QRouter extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
-      get id() {
-        return self.id;
-      },
-      get componentName() {
-        return "q-router";
-      },
-      get type() {
-        return "导航";
-      },
-      get text() {
-        return "路由";
-      },
-      get group() {
-        return ["导航"];
-      },
-      get createTime() {
-        return new Date();
-      },
-      get image() {
-        return "";
-      },
-      _initStyle: "",
-      get initStyle() {
-        return this._initStyle;
-      },
-      set initStyle(value) {
-        this.initStyle = value;
-      },
-      get description() {
-        return "路由组件,可以实现不同路由切换";
-      },
-      get options() {
-        return cloneDeep(self.data);
-      },
-      get schema() {
-        return {
-          eventSpecification: {
-            inputEvent: [
-              {
-                text: "更改组件数据",
-                eventType: "changeInfo",
-                messageSchema: "",
-                messageDemo: "",
-              },
-            ],
-            outputEvent: [],
-          },
-          optionsView: {
-            list: [],
-          },
-        };
-      },
-      _eventSpecification: {
-        inputEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        inputCustomEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        outputEvent: [],
-      },
+    this.model = deepWatchModelProxy(
+      mergeModel(this.model, {
+        get id() {
+          return self.id;
+        },
+        get componentName() {
+          return "q-router";
+        },
+        get type() {
+          return "导航";
+        },
+        get text() {
+          return "路由";
+        },
+        get group() {
+          return ["导航"];
+        },
+        get createTime() {
+          return new Date();
+        },
+        get image() {
+          return "";
+        },
+        _initStyle: "",
+        get initStyle() {
+          return this._initStyle;
+        },
+        set initStyle(value) {
+          this.initStyle = value;
+        },
+        get description() {
+          return "路由组件,可以实现不同路由切换";
+        },
+        get options() {
+          return cloneDeep(self.data);
+        },
+        get schema() {
+          return {
+            eventSpecification: {
+              inputEvent: [
+                {
+                  text: "更改组件数据",
+                  eventType: "changeInfo",
+                  messageSchema: "",
+                  messageDemo: "",
+                },
+              ],
+              outputEvent: [],
+            },
+            optionsView: {
+              list: [],
+            },
+          };
+        },
+        _eventSpecification: {
+          inputEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          inputCustomEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputEvent: [],
+        },
 
-      get eventSpecification() {
-        return this._eventSpecification;
-      },
-      set eventSpecification(value) {
-        this._eventSpecification = value;
-        self.receiveInfo(value);
-      },
-      get data() {
-        return cloneDeep(self.data);
-      },
-      set data(value) {
-        self.data = value;
-      },
-    };
+        get eventSpecification() {
+          return this._eventSpecification;
+        },
+        set eventSpecification(value) {
+          this._eventSpecification = value;
+          self.receiveInfo(value);
+        },
+        get data() {
+          return cloneDeep(self.data);
+        },
+        set data(value) {
+          self.data = value;
+        },
+      })
+    );
   }
 }
 

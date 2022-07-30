@@ -1,4 +1,4 @@
-import { IComponent } from "../../types/IComponent";
+import { IComponent } from "../../types/runtime/IComponent";
 
 export interface IQText extends IComponent {
   options: IQtextOptions;

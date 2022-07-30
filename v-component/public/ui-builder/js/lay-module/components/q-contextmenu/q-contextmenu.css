@@ -1,0 +1,109 @@
+#left-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 400px;
+  background-color: #cccccc;
+  z-index: 15;
+}
+#right-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 400px;
+  background-color: greenyellow;
+  z-index: 15;
+}
+#bottom-panel {
+  /* position: absolute; */
+  /* bottom: 0; */
+  height: 400px;
+  width: calc(100% - 0px);
+  background-color: #e5e5e5;
+  z-index: 15;
+}
+
+.layui-event-btn {
+  display: inline-block;
+  height: 100%;
+  margin-top: 4px;
+}
+/* 横向 */
+.panel-container-horizontal {
+  height: 200px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  z-index: 999;
+}
+
+.panel-top-header {
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  background-color: #e5e5e5;
+  z-index: 1000;
+  display: none;
+  cursor: pointer;
+}
+
+.panel-toggle-icon {
+  position: absolute;
+  left: 50%;
+  margin-top: -5px;
+  width: 50px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.panel-top-header-block {
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  background-color: #e5e5e5;
+  z-index: 1000;
+  display: block;
+}
+
+.panel-left-horizontal {
+  height: 100%;
+  width: 200px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  z-index: 999;
+}
+
+.panel-right-horizontal {
+  height: 100%;
+  width: 200px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  z-index: 999;
+}
+
+.panel-content-horizontal {
+  height: 100%;
+  padding: 0;
+}
+
+.panel-content-none {
+  display: none;
+}
+
+.icons-list {
+  margin-top: 10px;
+}

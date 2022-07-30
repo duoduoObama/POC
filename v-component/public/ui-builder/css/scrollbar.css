@@ -1,0 +1,27 @@
+.auto-size-inner-dropzone::-webkit-scrollbar {
+  height: 12px !important;
+  width: 12px !important;
+}
+
+.auto-size-inner-dropzone::-webkit-scrollbar-thumb {
+  border-radius: 0 !important;
+  border-style: dashed;
+  background-color: rgb(156, 157, 160);
+  border-color: transparent;
+  border-top-width: 6px;
+  border-left-width: 6px;
+  border-bottom-width: 0;
+  border-right-width: 0;
+  background-clip: content-box;
+  cursor: pointer;
+}
+
+.auto-size-inner-dropzone::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-color);
+  border-radius: 6px !important;
+}
+
+.auto-size-inner-dropzone {
+  overflow-x: overlay !important;
+  overflow-y: overlay !important;
+}

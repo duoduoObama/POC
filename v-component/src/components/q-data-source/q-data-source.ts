@@ -33,14 +33,14 @@ import antdCss from "ant-design-vue/dist/antd.min.css";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import axios from "axios";
 import fetchJsonp from "fetch-jsonp";
-import { Component } from "../../types/Component";
-import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-} from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+import { IMessage } from "../../types/runtime/IMessage";
+import {
+  ISchema,
+  IEventSpecificationEvent,
+} from "../../types/runtime/IModelSchema";
+import { Component } from "../../types/runtime/Component";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 
 /**
  * An example element.
@@ -824,7 +824,7 @@ export class QDataSource extends Component {
                   ? item.requestMethod.value
                   : eval(item.requestMethod.value);
               item.requestMethod.value === "PUT" ||
-                item.requestMethod.value === "POST"
+              item.requestMethod.value === "POST"
                 ? (config.data = data)
                 : (config.params = data);
               config.timeout =
@@ -985,133 +985,129 @@ export class QDataSource extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
-      get id() {
-        return cloneDeep(self.id);
-      },
-      get componentName() {
-        return "q-data-source";
-      },
-      get type() {
-        return "数据源";
-      },
-      get text() {
-        return "dataSource";
-      },
-      get group() {
-        return ["数据源"];
-      },
-      get createTime() {
-        return new Date();
-      },
-      get image() {
-        return "";
-      },
-      _initStyle: "",
-      get initStyle() {
-        return cloneDeep(this._initStyle);
-      },
-      set initStyle(value) {
-        this.initStyle = value;
-      },
-      get description() {
-        return "dataSource组件,可以配置页面数据请求";
-      },
-      get options() {
-        return cloneDeep(self.data);
-      },
-      get schema() {
-        return {
-          eventSpecification: {
-            inputEvent: [
-              {
-                text: "更改组件数据",
-                eventType: "changeInfo",
-                messageSchema: "",
-                messageDemo: "",
-              },
-            ],
-            outputEvent: [
-              {
-                text: "数据请求",
-                eventType: "request",
-                messageSchema: "",
-                messageDemo: "",
-              },
-            ],
-          },
-          optionsView: {
-            list: [],
-          },
-        };
-      },
-      _eventSpecification: {
-        inputEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        inputCustomEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        outputEvent: [
-          {
-            text: "数据请求",
-            eventType: "request",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-      },
+    this.model = deepWatchModelProxy(
+      mergeModel(this.model, {
+        get id() {
+          return cloneDeep(self.id);
+        },
+        get componentName() {
+          return "q-data-source";
+        },
+        get type() {
+          return "数据源";
+        },
+        get text() {
+          return "dataSource";
+        },
+        get group() {
+          return ["数据源"];
+        },
+        get createTime() {
+          return new Date();
+        },
+        get image() {
+          return "";
+        },
+        _initStyle: "",
+        get initStyle() {
+          return cloneDeep(this._initStyle);
+        },
+        set initStyle(value) {
+          this.initStyle = value;
+        },
+        get description() {
+          return "dataSource组件,可以配置页面数据请求";
+        },
+        get options() {
+          return cloneDeep(self.data);
+        },
+        get schema() {
+          return {
+            eventSpecification: {
+              inputMessage: [
+                {
+                  text: "更改组件数据",
+                  eventType: "changeInfo",
+                  messageSchema: "",
+                  messageDemo: "",
+                },
+              ],
+              outputMessage: [
+                {
+                  text: "数据请求",
+                  eventType: "request",
+                  messageSchema: "",
+                  messageDemo: "",
+                },
+              ],
+            },
+            optionsView: {
+              list: [],
+            },
+          };
+        },
+        _eventSpecification: {
+          inputMessage: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputMessage: [
+            {
+              text: "数据请求",
+              eventType: "request",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+        },
 
-      get eventSpecification() {
-        return this._eventSpecification;
-      },
-      set eventSpecification(value) {
-        this._eventSpecification = value;
-        self.receiveInfo(value);
-      },
-      _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
-      },
-      _onDOMEvent: {},
-      get onMessageMeta() {
-        return cloneDeep(this._onMessageMeta);
-      },
-      set onMessageMeta(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onMessageMeta = value;
-      },
-      get onDOMEvent() {
-        return cloneDeep(this._onDOMEvent);
-      },
-      set onDOMEvent(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
-        this._onDOMEvent = value;
-      },
-      get data() {
-        return cloneDeep(self.data);
-      },
-      set data(value) {
-        self.data = value;
-      },
-    };
+        get eventSpecification() {
+          return this._eventSpecification;
+        },
+        set eventSpecification(value) {
+          this._eventSpecification = value;
+          self.receiveInfo(value);
+        },
+        _onMessageMeta: {
+          changeInfo: [
+            (e: IMessage) => {
+              console.log(e);
+            },
+          ],
+        },
+        _onDOMEvent: {},
+        get onMessageMeta() {
+          return cloneDeep(this._onMessageMeta);
+        },
+        set onMessageMeta(value) {
+          if (!isObject(value)) {
+            return;
+          }
+          this._onMessageMeta = value;
+        },
+        get onDOMEvent() {
+          return cloneDeep(this._onDOMEvent);
+        },
+        set onDOMEvent(value) {
+          if (!isObject(value)) {
+            return;
+          }
+          // , this._onDOMEvent
+          domAssemblyCustomEvents(self, value as any);
+          this._onDOMEvent = value;
+        },
+        get data() {
+          return cloneDeep(self.data);
+        },
+        set data(value) {
+          self.data = value;
+        },
+      })
+    );
   }
 }
 

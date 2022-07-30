@@ -1,0 +1,44 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* margin: 10% auto; */
+  /* background: #000; */
+  /* font-size: 0; */
+  overflow: hidden;
+}
+.wrap .cont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 宽度 大于容器的两倍即可 */
+  width: 200%;
+  -webkit-animation: 5s move infinite linear;
+}
+.wrap .txt {
+  /* font-size: 18px; */
+  /* color: #fff; */
+  display: inline-block;
+  /* 宽度 等于容器的宽度 */
+  width: 50%;
+  height: 30px;
+  border-left: 1px solid #fff;
+  line-height: 30px;
+  text-align: center;
+  margin-top: 5px;
+  /* background: #000; */
+  white-space: nowrap;
+}
+.wrap:hover .cont {
+  -webkit-animation-play-state: paused;
+}
+
+@-webkit-keyframes move {
+  /* 原理 left值的变化 移动一个容器的宽度 */
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}

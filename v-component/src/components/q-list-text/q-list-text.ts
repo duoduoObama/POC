@@ -105,7 +105,6 @@ export class QListText extends Component {
         index,
       },
     };
-    console.log("message", message);
 
     this.sendMessage(message);
   }

@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
     "test": "vitest",
-    "coverage": "c8 vitest run --coverage"
+    "coverage": "c8 vitest run --coverage",
+    "build": "tsc --noEmit && vite build "
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",

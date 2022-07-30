@@ -3,10 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import { isArray, isString, cloneDeep, isObject } from "lodash-es";
 import { Component } from "../../types/Component";
 import {
-  IDOMEventMeta,
-  IEventSpecificationEvent,
   IMessage,
   ISchema,
+  IDOMEventMeta,
   IWatchSetting,
 } from "../../types/IComponent";
 import { domAssemblyCustomEvents } from "../../util/base-method";
@@ -14,7 +13,7 @@ import { deepWatchModelProxy } from "../../util/utils";
 import { IQselectOptions } from "./IQSelect";
 
 /**
- * 文本组件
+ * 多选框组件
  *
  */
 @customElement("q-select")
@@ -57,7 +56,7 @@ export class QSelect extends Component {
   constructor() {
     super();
     this.initModel();
-    this.receiveInfo(this.model.eventSpecification);
+
     domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
@@ -76,28 +75,6 @@ export class QSelect extends Component {
         })}
       </select>
     `;
-  }
-
-  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
-    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
-      const allListener = this.getListener();
-      Object.keys(allListener).forEach((eventName: string) => {
-        if (allListener[item.eventType]) {
-          this.removeListener(item.eventType);
-        }
-      });
-
-      this.removeListener(item.eventType);
-      this.addListener(item.eventType, (listener: IMessage) => {
-        const { body } = listener;
-
-        if (isString(body)) {
-          this.data = { ...this.data, text: body };
-          return;
-        }
-        this.data = { ...this.data, text: JSON.stringify(body) };
-      });
-    });
   }
 
   handleChange(e: Event) {
@@ -155,6 +132,56 @@ export class QSelect extends Component {
       },
       get description() {
         return "选择框组件,可以进行选择列表选择";
+      },
+      get iovSchema() {
+        return {
+          eventSpecification: {
+            inputMessage: {
+              text: "",
+              eventType: "",
+              messageSchema: "",
+              messageDemo: "",
+            },
+            outputMessage: {
+              text: "",
+              eventType: "",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          },
+          optionsView: {
+            list: [
+              {
+                type: "string",
+                label: "string",
+                options: {
+                  type: "string",
+                  width: "",
+                  defaultValue: "",
+                  placeholder: "",
+                  clearable: "",
+                  maxLength: "",
+                  prepend: "",
+                  append: "",
+                  tooptip: "",
+                  hidden: false,
+                  disabled: false,
+                  dynamicHide: false,
+                  dynamicHideValue: "",
+                },
+                model: "",
+                key: "",
+                rules: [
+                  {
+                    required: true,
+                    message: "",
+                    trigger: [],
+                  },
+                ],
+              },
+            ],
+          },
+        };
       },
       get options() {
         return cloneDeep(self.data);
@@ -241,7 +268,6 @@ export class QSelect extends Component {
       },
       set eventSpecification(value) {
         this._eventSpecification = value;
-        self.receiveInfo(value);
       },
       _onMessageMeta: {},
       _onDOMEvent: {},

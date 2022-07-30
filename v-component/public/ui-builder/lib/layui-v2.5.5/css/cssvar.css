@@ -1,0 +1,15 @@
+:root {
+  /*--theme-color: #24292e;*/
+  /*--theme-color: #4185d9;*/
+  /*--canvas-color: #04172f;*/
+  /*--canvas-color: #ffffff;*/
+  --canvas-fence-color: rgba(36, 41, 46, 0.25);
+  --dark-color: #24292e;
+  --header-font-size: 14px;
+  --header-height: 48px;
+  --left-menu: 54px;
+  --accordion-bgColor: #f2f5f7;
+  --default-box-shadow-color: rgba(36, 41, 46, 0.25);
+  --force-box-shadow: 0 0 3px rgba(39, 142, 255, 0.8);
+  --force-border: 1.5px solid #59f7d5;
+}

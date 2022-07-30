@@ -1,14 +1,14 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { isString, cloneDeep, isArray, isObject } from "lodash-es";
-import { Component } from "../../types/Component";
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
 import {
-  IComponent,
-  IEventSpecificationEvent,
-  IMessage,
   ISchema,
-} from "../../types/IComponent";
+  IEventSpecificationEvent,
+} from "../../types/runtime/IModelSchema";
 import { domAssemblyCustomEvents } from "../../util/base-method";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 import { IQImageOptions } from "./IQImage";
 
 /**
@@ -110,162 +110,168 @@ export class QImage extends Component {
   initModel(): void {
     const self = this;
 
-    this.model = {
-      get id() {
-        return cloneDeep(self.id);
-      },
-      get componentName() {
-        return "q-image";
-      },
-      get type() {
-        return "媒体";
-      },
-      get text() {
-        return "图片";
-      },
-      get group() {
-        return ["媒体"];
-      },
-      get createTime() {
-        return new Date();
-      },
-      get image() {
-        return "";
-      },
-      _initStyle: "",
-      get initStyle() {
-        return cloneDeep(this._initStyle);
-      },
-      set initStyle(value) {
-        this.initStyle = value;
-      },
-      get description() {
-        return "图片组件,可以显示图片信息";
-      },
-      get options() {
-        return cloneDeep(self.data);
-      },
-      get schema() {
-        return {
-          eventSpecification: {
-            inputEvent: [
-              {
-                text: "更改组件数据",
-                eventType: "changeInfo",
-                messageSchema: "",
-                messageDemo: "",
-              },
-            ],
-            outputEvent: [
-              {
-                text: "组件点击数据",
-                eventType: "click",
-                messageSchema: "",
-                messageDemo: "图片数据1",
-              },
-            ],
-          },
-          optionsView: {
-            list: [
-              {
-                type: "input",
-                label: "输入框",
-                options: {
-                  type: "text",
-                  width: "100%",
-                  defaultValue: "",
-                  placeholder: "请输入",
-                  clearable: false,
-                  maxLength: 0,
-                  prepend: "",
-                  append: "",
-                  tooptip: "",
-                  hidden: false,
-                  disabled: false,
-                  dynamicHide: false,
-                  dynamicHideValue: "",
+    this.model = deepWatchModelProxy(
+      mergeModel(this.model, {
+        get id() {
+          return cloneDeep(self.id);
+        },
+        get componentName() {
+          return "q-image";
+        },
+        get type() {
+          return "媒体";
+        },
+        get text() {
+          return "图片";
+        },
+        get group() {
+          return ["媒体"];
+        },
+        get createTime() {
+          return new Date();
+        },
+        get image() {
+          return "";
+        },
+        _initStyle: "",
+        get initStyle() {
+          return cloneDeep(this._initStyle);
+        },
+        set initStyle(value) {
+          this.initStyle = value;
+        },
+        get description() {
+          return "图片组件,可以显示图片信息";
+        },
+        get options() {
+          return cloneDeep(self.data);
+        },
+        get schema() {
+          return {
+            eventSpecification: {
+              inputEvent: [
+                {
+                  text: "更改组件数据",
+                  eventType: "changeInfo",
+                  messageSchema: "",
+                  messageDemo: "",
                 },
-                model: "src",
-                key: "src",
-                rules: [
-                  { required: false, message: "必填项", trigger: ["blur"] },
-                ],
-              },
-            ],
-          },
-        };
-      },
-      _eventSpecification: {
-        inputEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        inputCustomEvent: [
-          {
-            text: "更改组件数据",
-            eventType: "changeInfo",
-            messageSchema: "",
-            messageDemo: "",
-          },
-        ],
-        outputEvent: [
-          {
-            text: "组件点击数据",
-            eventType: "click",
-            messageSchema: "",
-            messageDemo: "图片数据1",
-          },
-        ],
-      },
+              ],
+              outputEvent: [
+                {
+                  text: "组件点击数据",
+                  eventType: "click",
+                  messageSchema: "",
+                  messageDemo: "图片数据1",
+                },
+              ],
+            },
+            optionsView: {
+              list: [
+                {
+                  type: "input",
+                  label: "输入框",
+                  options: {
+                    type: "text",
+                    width: "100%",
+                    defaultValue: "",
+                    placeholder: "请输入",
+                    clearable: false,
+                    maxLength: 0,
+                    prepend: "",
+                    append: "",
+                    tooptip: "",
+                    hidden: false,
+                    disabled: false,
+                    dynamicHide: false,
+                    dynamicHideValue: "",
+                  },
+                  model: "src",
+                  key: "src",
+                  rules: [
+                    { required: false, message: "必填项", trigger: ["blur"] },
+                  ],
+                },
+              ],
+            },
+          };
+        },
+        _eventSpecification: {
+          inputEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          inputCustomEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputEvent: [
+            {
+              text: "组件点击数据",
+              eventType: "click",
+              messageSchema: "",
+              messageDemo: "图片数据1",
+            },
+          ],
+        },
 
-      get eventSpecification() {
-        return cloneDeep(this._eventSpecification);
-      },
-      set eventSpecification(value) {
-        this._eventSpecification = value;
-        self.receiveInfo(value);
-      },
-      _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
-      },
-      _onDOMEvent: {
-        onclick: [(e: Event) => {
-          console.log(e);
-        }],
-      },
-      get onMessageMeta() {
-        return cloneDeep(this._onMessageMeta);
-      },
-      set onMessageMeta(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onMessageMeta = value;
-      },
-      get onDOMEvent() {
-        return cloneDeep(this._onDOMEvent);
-      },
-      set onDOMEvent(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        // , this._onDOMEvent
-        domAssemblyCustomEvents(self, value);
-        this._onDOMEvent = value;
-      },
-      get data() {
-        return cloneDeep(self.data);
-      },
-      set data(value) {
-        self.data = value;
-      },
-    };
+        get eventSpecification() {
+          return cloneDeep(this._eventSpecification);
+        },
+        set eventSpecification(value) {
+          this._eventSpecification = value;
+          self.receiveInfo(value);
+        },
+        _onMessageMeta: {
+          changeInfo: [
+            (e: IMessage) => {
+              console.log(e);
+            },
+          ],
+        },
+        _onDOMEvent: {
+          onclick: [
+            (e: Event) => {
+              console.log(e);
+            },
+          ],
+        },
+        get onMessageMeta() {
+          return cloneDeep(this._onMessageMeta);
+        },
+        set onMessageMeta(value) {
+          if (!isObject(value)) {
+            return;
+          }
+          this._onMessageMeta = value;
+        },
+        get onDOMEvent() {
+          return cloneDeep(this._onDOMEvent);
+        },
+        set onDOMEvent(value) {
+          if (!isObject(value)) {
+            return;
+          }
+          // , this._onDOMEvent
+          domAssemblyCustomEvents(self, value as any);
+          this._onDOMEvent = value;
+        },
+        get data() {
+          return cloneDeep(self.data);
+        },
+        set data(value) {
+          self.data = value;
+        },
+      })
+    );
   }
 }
 

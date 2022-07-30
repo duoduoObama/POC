@@ -1,0 +1,27 @@
+.q-rich-text-btn {
+  position: absolute;
+  right: 0;
+  z-index: 999;
+  line-height: 34px;
+}
+
+.q-rich-text-content {
+  position: absolute;
+  width: 100%;
+  height: 97%;
+  top: 0;
+  padding-right: 7px;
+  padding: 10px;
+}
+
+.q-rich-body {
+  padding: 0 200px;
+  overflow: auto;
+  height: 100%;
+  max-height: 650px;
+  min-height: 500px;
+}
+
+.editor-container {
+  height: 100vh;
+}

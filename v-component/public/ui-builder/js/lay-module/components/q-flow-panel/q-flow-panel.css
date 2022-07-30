@@ -1,0 +1,6 @@
+div[data-element-type="q-flow-panel"] {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}

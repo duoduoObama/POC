@@ -1,0 +1,131 @@
+
+
+/*.layui-event-btn {*/
+/*  display: inline-block;*/
+/*  height: 100%;*/
+/*  margin-top: 4px;*/
+/*}*/
+/* 横向 */
+.q-toogle-panel .tpanel-container-horizontal {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+}
+
+/*.panel-top-more {*/
+/*  z-index: 2000;*/
+/*}*/
+
+/*.panel-top-header {*/
+/*  height: 50px;*/
+/*  width: 100%;*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  background-color: #e5e5e5;*/
+/*  z-index: 1000;*/
+/*  display: none;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.panel-toggle-icon {*/
+/*  position: absolute;*/
+/*  left: 50%;*/
+/*  margin-top: -5px;*/
+/*  width: 50px;*/
+/*  cursor: pointer;*/
+/*  z-index: 9999;*/
+/*}*/
+
+/*.panel-top-header-block {*/
+/*  height: 50px;*/
+/*  width: 100%;*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  background-color: #e5e5e5;*/
+/*  z-index: 1000;*/
+/*  display: block;*/
+/*}*/
+
+.q-toogle-panel .tpanel-left-horizontal {
+    position: relative;
+  /*height: 100%;*/
+  /*padding: 0;*/
+  /*margin: 0;*/
+  /*position: absolute;*/
+  /*left: 0;*/
+  /*z-index: 999;*/
+}
+
+.q-toogle-panel  .tpanel-right-horizontal {
+    position: relative;
+  /*height: 100%;*/
+  /*padding: 0;*/
+  /*margin: 0;*/
+  /*position: absolute;*/
+  /*right: 0;*/
+  /*z-index: 999;*/
+}
+.q-toogle-panel .q-toogle-panel-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.panel-content-none {
+  display: none;
+}
+
+.icons-list {
+  margin-top: 10px;
+}
+
+.panel-expand-handler {
+  background: #fff;
+  color: #898989;
+  border: 1px solid #e8e8e8;
+  border-bottom: none;
+  height: 8px;
+  width: 82px;
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translate(-50%);
+  border-radius: 82px 82px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.panel-put-away {
+  position: absolute;
+  background: #fafafa;
+  color: #898989;
+  border: 1px solid #e8e8e8;
+  height: 82px;
+  width: 8px;
+  top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.panel-put-away.left-ui {
+  border-left: 0;
+  border-bottom-right-radius: 82px;
+  border-top-right-radius: 82px;
+  right: -9px;
+}
+
+.panel-put-away.right-ui {
+  border-right: 0;
+  border-bottom-left-radius: 82px;
+  border-top-left-radius: 82px;
+  left: -9px;
+}

@@ -1,0 +1,134 @@
+.transform-options-wrapper {
+  height: 300px;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  border: 1px solid #d9d9d9;
+}
+.transform-output-wrapper {
+  height: 330px;
+  width: 100%;
+  overflow: auto;
+
+  border-radius: 4px;
+}
+
+.transform-output-wrapper .transform-output-title {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#transform-output-wrapper {
+  height: 300px;
+}
+
+.transform-tabs-wrapper {
+  overflow: auto;
+  width: 30%;
+  height: 300px;
+  border-right: 1px solid #d9d9d9;
+}
+
+.transform-selected-wrapper {
+  width: calc(100% - 30%);
+  height: 100%;
+  position: relative;
+}
+
+.transform-selected-show {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.transform-selected-show-textarea {
+  width: 100%;
+  height: 100% !important;
+}
+
+.transform-selected-item {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.transform-selected-item .label {
+  width: 80px;
+  line-height: 40px;
+  padding-left: 5px;
+  border-right: 1px solid #e7e7e7;
+}
+.transform-selected-item .condition {
+  flex: 1;
+  line-height: 40px;
+  padding-left: 5px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transform-selected-show:last-child {
+  margin-bottom: 20px;
+}
+
+.selected-des {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transition: all 0.2s linear;
+  border-top: 1px solid #d9d9d9;
+  z-index: 10;
+  background-color: #fff;
+}
+
+.selected-des-title {
+  width: 100%;
+  height: 10px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.selected-des-title-icon {
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.hide-selected-des {
+  height: 10px;
+}
+
+.hide-selected-des-title-icon {
+  transform: rotate(180edg);
+}
+
+.selected-des-content {
+  padding: 10px;
+}
+
+/* 自定义方法 */
+.transform-customEdit {
+  width: 100%;
+  height: 300px;
+}
+
+.transform-editArg {
+  width: 100%;
+  height: 300px;
+}
+
+.default-font {
+  font-size: inherit;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  color: #fff !important;
+}

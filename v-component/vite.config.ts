@@ -50,7 +50,7 @@ export default defineConfig({
 
   build: {
     lib: {
-      entry: "src/main.ts",
+      entry: "src/components/q-text/q-text.ts",
       formats: ["es"],
     },
     manifest: false,

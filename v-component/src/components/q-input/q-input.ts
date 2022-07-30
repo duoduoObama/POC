@@ -35,7 +35,6 @@ export class QInput extends Component {
   constructor() {
     super();
     this.initModel();
-    this.receiveInfo(this.model.eventSpecification);
     domAssemblyCustomEvents(this, this.model.onDOMEvent);
   }
 
@@ -50,12 +49,9 @@ export class QInput extends Component {
     return html` <input @change=${this.handleChange}>${text}</input> `;
   }
   handleChange(e: Event) {
-    console.log("e", e);
     this.onSendMessage(e, this.data, "input");
   }
   onSendMessage(e: Event, node: any, index: number | string) {
-    console.log("e.type", e.type);
-
     const message: IMessage = {
       header: {
         src: this.id,
@@ -72,28 +68,7 @@ export class QInput extends Component {
 
     this.sendMessage(message);
   }
-  receiveInfo(value: { [key: string]: IEventSpecificationEvent[] }) {
-    value.inputEvent.forEach((item: IEventSpecificationEvent) => {
-      const allListener = this.getListener();
 
-      Object.keys(allListener).forEach((eventName: string) => {
-        if (allListener[item.eventType]) {
-          this.removeListener(item.eventType);
-        }
-      });
-
-      this.removeListener(item.eventType);
-      this.addListener(item.eventType, (listener: IMessage) => {
-        const { body } = listener;
-
-        if (isString(body)) {
-          this.data = { ...this.data, text: body };
-          return;
-        }
-        this.data = { ...this.data, text: JSON.stringify(body) };
-      });
-    });
-  }
   initModel(): void {
     const self = this;
     this.model = {
@@ -208,17 +183,11 @@ export class QInput extends Component {
         ],
       },
       get eventSpecification() {
-        console.log(
-          ` cloneDeep(this._eventSpecification);`,
-          cloneDeep(this._eventSpecification)
-        );
-
         return cloneDeep(this._eventSpecification);
       },
 
       set eventSpecification(value) {
         this._eventSpecification = value;
-        self.receiveInfo(value);
       },
       _onMessageMeta: {},
       _onDOMEvent: {},
@@ -253,9 +222,6 @@ export class QInput extends Component {
         this._onWatchSetting = value;
       },
     };
-    console.log("this", this);
-
-    console.log("this.model", this.model);
   }
 }
 

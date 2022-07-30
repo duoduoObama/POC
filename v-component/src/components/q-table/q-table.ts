@@ -364,17 +364,23 @@ export class QTable extends Component {
         self.receiveInfo(value);
       },
       _onMessageMeta: {
-        changeInfo: [(e: IMessage) => {
-          console.log(e);
-        }],
+        changeInfo: [
+          (e: IMessage) => {
+            console.log(e);
+          },
+        ],
       },
       _onDOMEvent: {
-        onEdit: [(e: any) => {
-          console.log(e);
-        }],
-        onDelete: [(e: any) => {
-          console.log(e);
-        }],
+        onEdit: [
+          (e: any) => {
+            console.log(e);
+          },
+        ],
+        onDelete: [
+          (e: any) => {
+            console.log(e);
+          },
+        ],
       },
       get onMessageMeta() {
         return cloneDeep(this._onMessageMeta);

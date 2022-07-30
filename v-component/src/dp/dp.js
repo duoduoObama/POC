@@ -1,4 +1,4 @@
-var tableInfo = {
+const tableInfo = {
   columns: [
     {
       title: "Full Name",
@@ -94,7 +94,7 @@ var tableInfo = {
   ],
 };
 
-var config = {
+export const config = {
   componentsArray: [
     {
       id: "q-router-config-741zj09abdcs",
@@ -103,7 +103,6 @@ var config = {
       text: "路由配置",
       group: ["数据源"],
       createTime: "2022-06-20T07:49:43.975Z",
-      image: "",
       initStyle:
         "position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
       options: {
@@ -156,11 +155,7 @@ var config = {
       description: "",
       group: ["文本"],
       id: "q-text-ka5ue9mx5qd7",
-      image: "",
       initStyle: "position: absolute; top: 0px; width: 100%;",
-      options: {
-        text: "数据可视化显示系统",
-      },
       schema: {
         eventSpecification: {
           inputEvent: [
@@ -216,7 +211,7 @@ var config = {
       text: "文本",
       type: "文本",
       model: {
-        data: { text: "数据可视化显示系统" },
+        data: "测试用例-数据可视化显示系统",
         eventSpecification: {
           inputEvent: [
             {
@@ -271,14 +266,14 @@ var config = {
           changeInfo: [
             function (e) {
               console.log(e, this);
-              this.data = { text: String(e.body) };
+              this.text = e.body;
             },
           ],
         },
         onDOMEvent: {
           onclick: [
-            (e) => {
-              console.log(e);
+            function (e) {
+              this.clickFont(e);
             },
           ],
         },
@@ -303,7 +298,6 @@ var config = {
       description: "",
       group: ["文本"],
       id: "q-text-dvoly35smyer",
-      image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
       options: {
@@ -364,6 +358,7 @@ var config = {
       text: "文本",
       type: "文本",
       model: {
+        data: "疫情曲线",
         eventSpecification: {
           inputEvent: [
             {
@@ -418,7 +413,7 @@ var config = {
           changeInfo: [
             function (e) {
               console.log(e, this);
-              this.data = { text: String(e.body) };
+              this.text = e.body;
             },
           ],
         },
@@ -460,12 +455,8 @@ var config = {
       description: "",
       group: ["文本"],
       id: "q-text-3wgumvizrx6r",
-      image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
-      options: {
-        text: "图谱分析",
-      },
       schema: {
         eventSpecification: {
           inputEvent: [
@@ -521,6 +512,7 @@ var config = {
       text: "文本",
       type: "文本",
       model: {
+        data: "图谱分析",
         eventSpecification: {
           inputEvent: [
             {
@@ -571,16 +563,14 @@ var config = {
             },
           ],
         },
-        onMessageMeta: [
-          {
-            changeInfo: [
-              (e) => {
-                console.log(e);
-                this.data = { text: String(e.body) };
-              },
-            ],
-          },
-        ],
+        onMessageMeta: {
+          changeInfo: [
+            (e) => {
+              console.log(e);
+              this.text = e.body;
+            },
+          ],
+        },
         onDOMEvent: {
           onclick: [
             (e) => {
@@ -614,12 +604,8 @@ var config = {
       description: "",
       group: ["文本"],
       id: "q-text-he2cuh2mchr0",
-      image: "",
       initStyle:
         "position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
-      options: {
-        text: "离散分析",
-      },
       schema: {
         eventSpecification: {
           inputEvent: [
@@ -675,6 +661,7 @@ var config = {
       text: "文本",
       type: "文本",
       model: {
+        data: "离散分析",
         eventSpecification: {
           inputEvent: [
             {
@@ -725,16 +712,15 @@ var config = {
             },
           ],
         },
-        onMessageMeta: [
-          {
-            changeInfo: [
-              (e) => {
-                console.log(e);
-                this.data = { text: String(e.body) };
-              },
-            ],
-          },
-        ],
+        onMessageMeta: {
+          changeInfo: [
+            (e) => {
+              console.log(e);
+              this.text = e.body;
+            },
+          ],
+        },
+
         onDOMEvent: {
           onclick: [
             (e) => {
@@ -778,7 +764,6 @@ var config = {
       description: "",
       group: ["容器"],
       id: "q-tabs-oq8hj6jg0w61",
-      image: "",
       initStyle:
         "height: 84.8%; width: 22.8%; position: absolute; left: 22%; top: 10%;",
       options: {
@@ -977,7 +962,6 @@ var config = {
       description: "",
       group: ["容器"],
       id: "q-tabs-vmid2ibz6k9r",
-      image: "",
       initStyle:
         "height: 30%; width: 50%; position: absolute; right: 4.5%; top: 10%;",
       options: {
@@ -1169,6 +1153,85 @@ var config = {
       default: null,
       id: "drag-l209tsce62zm",
     },
+    {
+      id: "q-echarts-stack-are-kv0byj7aro7p",
+      componentName: "q-echarts-stack-are",
+      type: "图元",
+      text: "gl图元",
+      group: ["图元"],
+      createTime: "2022-07-12T07:06:24.976Z",
+      _initStyle: "",
+      initStyle: "",
+      description: "图元组件,可以编写图元信息",
+      options: [],
+      schema: {
+        eventSpecification: {
+          inputEvent: [
+            {
+              text: "更改组件数据",
+              eventType: "changeInfo",
+              messageSchema: "",
+              messageDemo: "",
+            },
+          ],
+          outputEvent: [
+            {
+              text: "组件点击数据",
+              eventType: "click",
+              messageSchema: "",
+              messageDemo: "文本数据1",
+            },
+          ],
+        },
+        optionsView: {
+          list: [
+            {
+              type: "input",
+              label: "输入框",
+              options: {
+                type: "text",
+                width: "100%",
+                defaultValue: "",
+                placeholder: "请输入",
+                clearable: false,
+                maxLength: 0,
+                prepend: "",
+                append: "",
+                tooptip: "",
+                hidden: false,
+                disabled: false,
+                dynamicHide: false,
+                dynamicHideValue: "",
+              },
+              model: "text",
+              key: "text",
+              rules: [
+                {
+                  required: false,
+                  message: "必填项",
+                  trigger: ["blur"],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      model: {
+        onMessageMeta: {
+          changeInfo: [
+            (e) => {
+              this.data.splice(0, Infinity);
+              Object.assign(this.data, e.body);
+              setTimeout(() => {
+                this.initCharts();
+              }, 500);
+            },
+          ],
+        },
+        onDOMEvent: {},
+        onWatchSetting: {},
+      },
+    },
   ],
   dynamicHTML: `
   <div
@@ -1186,8 +1249,7 @@ var config = {
   ></q-image>
 </div>
 <div style="position: absolute; top: 0; width: 100%">
-  <q-text
-    data-data='{"text":"数据可视化显示系统"}'
+  <q-text 
     style="
       text-align: center;
       font-size: 30px;
@@ -1209,7 +1271,7 @@ var config = {
   "
 >
   <q-text
-    data-data='{"text":"疫情曲线"}'
+    data-data='疫情曲线'
     id="q-text-dvoly35smyer"
   ></q-text>
 </div>
@@ -1241,7 +1303,7 @@ var config = {
   "
 >
   <q-text
-    data-data='{"text":"图谱分析"}'
+    data-data='图谱分析'
     id="q-text-3wgumvizrx6r"
   ></q-text>
 </div>
@@ -1273,7 +1335,7 @@ var config = {
   "
 >
   <q-text
-    data-data='{"text":"离散分析"}'
+    data-data='离散分析'
     id="q-text-he2cuh2mchr0"
   ></q-text>
 </div>
@@ -1350,10 +1412,9 @@ var config = {
     data-data='{"tabs":[{"title":"桑基划分","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
-      <q-image
-        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654840806851.jpg"}'
-        id="q-image-kv0byj7aro7p"
-      ></q-image>
+      <q-echarts-stack-are 
+        id="q-echarts-stack-are-kv0byj7aro7p"
+      ></q-echarts-stack-are>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
@@ -1380,7 +1441,67 @@ var config = {
 data-component="true"
 id="q-router-config-741zj09abdcs"
 data-parent-id="inner-dropzone" 
-data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","src":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"target":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function (data) { return data.text; }"}]},"q-text-dvoly35smyer":{"title":"text1-text2","src":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"target":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function (data) {return data.text; }"}]}}}'
+data-data='{
+  "router": {
+      "q-text-ka5ue9mx5qd7": {
+          "title": "text1-text2",
+          "src": "q-text-ka5ue9mx5qd7",
+          "trigger": [
+              "click"
+          ],
+          "receive": [
+              {
+                  "target": "q-text-dvoly35smyer",
+                  "event": [
+                      "changeInfo"
+                  ],
+                  "script": "function (data) { return data; }"
+              }
+          ]
+      },
+      "q-text-dvoly35smyer": {
+          "title": "text1-text2",
+          "src": "q-text-dvoly35smyer",
+          "trigger": [
+              "click"
+          ],
+          "receive": [
+              {
+                  "target": "q-text-ka5ue9mx5qd7",
+                  "event": [
+                      "changeInfo"
+                  ],
+                  "script": "function (data) {return data; }"
+              },
+              {
+                  "target": "q-text-ka5ue9mx5qd7",
+                  "event": [
+                      "testInfo"
+                  ],
+                  "script": "function (data) {return data; }"
+              }
+          ]
+      },
+      "q-echarts-gl-jx345jn55ug2": {
+          "title": "echarts1-echarts2",
+          "src": "q-echarts-gl-jx345jn55ug2",
+          "trigger": [
+              "datazoom"
+          ],
+          "receive": [
+              {
+                  "target": "q-echarts-stack-are-kv0byj7aro7p",
+                  "event": [
+                      "changeInfo"
+                  ],
+                  "script": "function (data) { return data.changeData; }"
+              }
+          ]
+      }
+  }
+}'
 ></q-router-config>
   `,
 };
+
+window.config = config;

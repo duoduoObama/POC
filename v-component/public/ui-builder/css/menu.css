@@ -1,0 +1,111 @@
+/*  主要样式 */
+.yyui_menu1 {
+  height: 100%;
+  font-size: 14px;
+  /* background-color: #fff; */
+  position: relative;
+}
+
+.yyui_menu1 li {
+  float: left;
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  /* background-color: #fff; */
+  justify-content: center;
+  min-height: 34px;
+} /*这一级是导航*/
+.yyui_menu1 li a {
+  display: flex;
+  width: 149px;
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  text-decoration: none;
+  /* color: #333333; */
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+}
+.yyui_menu1 li:hover {
+  /* background: #e6f7ff; */
+  -webkit-transform: translateY(-3px);
+  -ms-transform: translateY(-3px);
+  transform: translateY(-3px);
+  -webkit-box-shadow: 0 0 6px #999;
+  box-shadow: 0 0 6px #999;
+  -webkit-transition: all .5s ease-out;
+  transition: all .5s ease-out;
+}
+.yyui_menu1 li.ub-active-menu {
+  /* color: #1890ff; */
+  border-bottom: 2px solid #1890ff;
+}
+.yyui_menu1 li a.more:after {
+  content: "\27A4";
+  position: absolute;
+  right: 4px;
+}
+.yyui_menu1 li a.more {
+  font-size: 13px;
+}
+.yyui_menu1 li a:hover + ul {
+  display: block !important;
+}
+
+.yyui_menu1 li ul:hover {
+  display: block !important;
+}
+
+.yyui_menu1 li ul {
+  position: absolute;
+  float: left;
+  width: 150px;
+  /* border: 1px solid #d2d2d2; */
+  display: none;
+  /* background-color: #ffffff; */
+  z-index: 9999;
+  transition: all 0.3s;
+  top: 100%;
+} /*这是第二级菜单*/
+.yyui_menu1 li ul a {
+  width: 148px;
+  text-decoration: none;
+  color: #333333;
+  word-break: break-all;
+}
+.yyui_menu1 li ul a:hover {
+  background: #e6f7ff;
+}
+
+.yyui_menu1 li ul ul {
+  top: 0;
+  left: 149px;
+  border: none;
+} /*从第三级菜单开始,所有的子级菜单都相对偏移*/
+
+.yyui_menu1 .layui-event-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.float_menu {
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: -92px;
+  flex-wrap: wrap;
+}
+
+.layui-layer-page .layui-layer-content {
+  position: relative;
+  overflow: initial;
+}
+
+.layui-tab-title li:hover {
+  background: #e6f7ff;
+}
