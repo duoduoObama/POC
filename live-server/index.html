@@ -8,7 +8,7 @@
   </head>
   <body></body>
   <!-- 包含组件与runtime库函数,后续进行组件与runtime库函数分离 -->
-  <script type="module" src="http://192.168.21.92:3000/src/main.ts"></script>
+  <script type="module" src=" http://172.19.224.1:3000/v-component/main.ts"></script>
   <script>
     var config = {
   componentsArray: [
@@ -59,7 +59,7 @@
       initStyle:
         "position: absolute; z-index: -1; width: 100vw; height: 100vh; overflow: hidden;",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/bg.png",
+        src: "http://192.168.21.16:3000/v-component/src/assets/bg.png",
       },
       model: {},
       default: null,
@@ -363,7 +363,7 @@
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%;",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654829140850.jpg",
       },
       model: {},
       default: null,
@@ -515,7 +515,7 @@
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%;",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654829578132.jpg",
       },
       model: {},
       default: null,
@@ -668,7 +668,7 @@
       initStyle:
         "height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%;",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654829505010.jpg",
       },
       model: {},
       default: null,
@@ -868,7 +868,7 @@
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1655104783919.jpg",
       },
       model: {},
       default: null,
@@ -877,7 +877,7 @@
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654853215692.png",
       },
       model: {},
       default: null,
@@ -1067,7 +1067,7 @@
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654840806851.jpg",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654840806851.jpg",
       },
       model: {},
       default: null,
@@ -1076,7 +1076,7 @@
     {
       initStyle: "height: 100%; border: 2px solid rgb(3, 61, 55);",
       options: {
-        src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
+        src: "http://192.168.21.16:3000/v-component/src/assets/1654853215692.png",
       },
       model: {},
       default: null,
@@ -1149,8 +1149,8 @@
       model: {
         onMessageMeta: {
           changeInfo: [
-            (e) => { 
-              this.data.splice(0, Infinity); 
+            (e) => {
+              this.data.splice(0, Infinity);
               Object.assign(this.data, e.body);
               setTimeout(() => {
                 this.initCharts();
@@ -1174,7 +1174,7 @@
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/bg.png"}'
+    data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/bg.png"}'
     id="q-image-ouky34zcvhun"
   ></q-image>
 </div>
@@ -1218,7 +1218,7 @@
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg"}'
+    data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1654829140850.jpg"}'
     id="q-image-y3md2bby3y37"
   ></q-image>
 </div>
@@ -1250,7 +1250,7 @@
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg"}'
+    data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1654829578132.jpg"}'
     id="q-image-yfs1wndkejkl"
   ></q-image>
 </div>
@@ -1282,7 +1282,7 @@
   "
 >
   <q-image
-    data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg"}'
+    data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1654829505010.jpg"}'
     id="q-image-pmku7p087gwi"
   ></q-image>
 </div>
@@ -1317,13 +1317,13 @@
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
       <q-image
-        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg"}'
+        data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1655104783919.jpg"}'
         id="drag-hke0o1cj9liz"
       ></q-image>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
-        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
+        data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1654853215692.png"}'
         id="drag-8e24nd8l8ap9"
       ></q-image>
     </div>
@@ -1343,14 +1343,14 @@
     data-data='{"tabs":[{"title":"桑基划分","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
   >
     <div slot="test1" style="height: 100%; border: 2px solid #033d37">
-      <q-echarts-stack-are 
+      <q-echarts-stack-are
         id="q-echarts-stack-are-kv0byj7aro7p"
       ></q-echarts-stack-are>
     </div>
     <div slot="test2" style="height: 100%; border: 2px solid #033d37">
       <q-image
         slot="test2"
-        data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
+        data-data='{"src":"http://192.168.21.16:3000/v-component/src/assets/1654853215692.png"}'
         id="q-image-l209tsce62zm"
       ></q-image>
     </div>
@@ -1371,14 +1371,14 @@
 <q-router-config
 data-component="true"
 id="q-router-config-741zj09abdcs"
-data-parent-id="inner-dropzone" 
+data-parent-id="inner-dropzone"
 data-data='{"router":{"q-text-ka5ue9mx5qd7":{"title":"text1-text2","src":"q-text-ka5ue9mx5qd7","trigger":["click"],"receive":[{"target":"q-text-dvoly35smyer","event":["changeInfo"],"script":"function (data) { return data.text; }"}]},"q-text-dvoly35smyer":{"title":"text1-text2","src":"q-text-dvoly35smyer","trigger":["click"],"receive":[{"target":"q-text-ka5ue9mx5qd7","event":["changeInfo"],"script":"function (data) {return data.text; }"}]},"q-echarts-gl-jx345jn55ug2":{"title":"echarts1-echarts2","src":"q-echarts-gl-jx345jn55ug2","trigger":["datazoom"],"receive":[{"target":"q-echarts-stack-are-kv0byj7aro7p","event":["changeInfo"],"script":"function (data) { return data.changeData; }"}]}}}'
 ></q-router-config>
   `,
 };
 
-    // var pg = v_component.bootstrap.bootStrap(document.body, config);
+    var pg = v_component.bootstrap.bootStrap(document.body, config);
 
-    // pg.eventBusSubscribe();
+    pg.eventBusSubscribe();
   </script>
 </html>

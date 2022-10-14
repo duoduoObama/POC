@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>micro-app主应用</title>
+		<!-- <script src="./src/dp/dp.js"></script> -->
+	</head>
+	<body style="overflow: hidden">
+		<website-construction
+			id="q-router-x59fwb3g5kep"
+			data-data='{ "path":[
+			{
+			  "key": "configPage",
+			  "title": "config页面",
+			  "type": "config",
+			  "elementId": "config-element",
+			  "routerName": "/config-page",
+			  "slotName": "config-page",
+			  "config": {},
+			  "keepAlive": true,
+			  "isIframe": false,
+			  "children": []
+			},
+			{
+			  "key": "urlPage",
+			  "title": "url页面",
+			  "type": "url",
+			  "elementId": "url-element",
+			  "routerName": "/url-page",
+			  "slotName": "url-page",
+			  "url": "https://v3.cn.vuejs.org/",
+			  "keepAlive": true,
+			  "isIframe": true,
+			  "children": [
+				{
+				  "key": "urlPage-1",
+				  "title": "url页面-1",
+				  "type": "url",
+				  "elementId": "url-element",
+				  "routerName": "/url-page-1",
+				  "slotName": "url-page-1",
+				  "url": "https://v3.cn.vuejs.org/",
+				  "keepAlive": true,
+				  "isIframe": true,
+				  "children": []
+				},
+				{
+				  "key": "urlPage-2",
+				  "title": "url页面-2",
+				  "type": "url",
+				  "elementId": "url-element",
+				  "routerName": "/url-page-2",
+				  "slotName": "url-page-2",
+				  "url": "https://v3.cn.vuejs.org/",
+				  "keepAlive": true,
+				  "isIframe": true,
+				  "children": [
+					{
+					  "key": "urlPage-2-1",
+					  "title": "url页面-2-1",
+					  "type": "url",
+					  "elementId": "url-element",
+					  "routerName": "/url-page-2-1",
+					  "slotName": "url-page-2-1",
+					  "url": "https://v3.cn.vuejs.org/",
+					  "keepAlive": true,
+					  "isIframe": true,
+					  "children": []
+					}
+				  ]
+				}
+			  ]
+			}
+		  ]}'
+		>
+		</website-construction>
+	</body>
+	<micro-app
+		name="v-component"
+		url="http://192.168.21.40:3000/v-component/"
+		inline
+		disableSandbox
+	></micro-app>
+	<script type="module" src="/src/main.ts"></script>
+	<script type="module">
+		export const config = {
+			componentsArray: [
+				{
+					id: "q-router-config-741zj09abdcs",
+					componentName: "q-router-config",
+					type: "数据源",
+					text: "路由配置",
+					group: ["数据源"],
+					createTime: "2022-06-20T07:49:43.975Z",
+					initStyle:
+						"position: absolute; top: 140px; width: 30%;height:30%;background-color: #fff;",
+					options: {
+						router: {
+							"q-text-ka5ue9mx5qd7": {
+								title: "text1-text2",
+								target: "q-text-ka5ue9mx5qd7",
+								trigger: ["click"],
+								receive: [
+									{
+										source: "q-text-dvoly35smyer",
+										event: ["changeInfo"],
+										script: "function(data) { return data.node; }",
+										replyStatus: false,
+										reply: [],
+									},
+								],
+							},
+							"q-text-dvoly35smyer": {
+								title: "text1-text2",
+								target: "q-text-dvoly35smyer",
+								trigger: ["click"],
+								receive: [
+									{
+										source: "q-text-ka5ue9mx5qd7",
+										event: ["changeInfo"],
+										script: "function(data) { return data.node; }",
+										replyStatus: false,
+										reply: [],
+									},
+								],
+							},
+						},
+					},
+				},
+				{
+					initStyle:
+						"position: absolute; z-index: -1; width: 100vw; height: 100vh; overflow: hidden;",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/bg.png",
+					},
+					model: {},
+					default: null,
+					id: "drag-ouky34zcvhun",
+				},
+				{
+					componentName: "q-text",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["文本"],
+					id: "q-text-ka5ue9mx5qd7",
+					initStyle: "position: absolute; top: 0px; width: 100%;",
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "文本",
+					type: "文本",
+					model: {
+						data: "主应用-数据可视化显示系统",
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+						onMessageMeta: {
+							changeInfo: [
+								function (e) {
+									console.log(e, this);
+									this.text = e.body;
+								},
+							],
+						},
+						onDOMEvent: {
+							onclick: [
+								function (e) {
+									this.clickFont(e);
+								},
+							],
+						},
+						onWatchSetting: {
+							data: [
+								(newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							],
+							initStyle: [
+								(newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							],
+						},
+					},
+				},
+				{
+					componentName: "q-text",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["文本"],
+					id: "q-text-dvoly35smyer",
+					initStyle:
+						"position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
+					options: {
+						text: "疫情曲线",
+					},
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "文本",
+					type: "文本",
+					model: {
+						data: "疫情曲线",
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+						onMessageMeta: {
+							changeInfo: [
+								function (e) {
+									console.log(e, this);
+									this.text = e.body;
+								},
+							],
+						},
+						onDOMEvent: {
+							onclick: [
+								(e) => {
+									console.log(e);
+								},
+							],
+						},
+						onWatchSetting: {
+							data: [
+								(newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							],
+							initStyle: [
+								(newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							],
+						},
+					},
+				},
+				{
+					initStyle:
+						"height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; left: 5%;",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg",
+					},
+					model: {},
+					default: null,
+					id: "drag-y3md2bby3y37",
+				},
+				{
+					componentName: "q-text",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["文本"],
+					id: "q-text-3wgumvizrx6r",
+					initStyle:
+						"position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "文本",
+					type: "文本",
+					model: {
+						data: "图谱分析",
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+						onMessageMeta: {
+							changeInfo: [
+								(e) => {
+									console.log(e);
+									this.text = e.body;
+								},
+							],
+						},
+						onDOMEvent: {
+							onclick: [
+								(e) => {
+									console.log(e);
+								},
+							],
+						},
+						onWatchSetting: [
+							{
+								data: (newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							},
+						],
+					},
+				},
+				{
+					initStyle:
+						"height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 40%; left: 5%;",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg",
+					},
+					model: {},
+					default: null,
+					id: "drag-yfs1wndkejkl",
+				},
+				{
+					componentName: "q-text",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["文本"],
+					id: "q-text-he2cuh2mchr0",
+					initStyle:
+						"position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%; color: rgb(8, 170, 153); z-index: 1;",
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "文本",
+					type: "文本",
+					model: {
+						data: "离散分析",
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+						onMessageMeta: {
+							changeInfo: [
+								(e) => {
+									console.log(e);
+									this.text = e.body;
+								},
+							],
+						},
+
+						onDOMEvent: {
+							onclick: [
+								(e) => {
+									console.log(e);
+								},
+							],
+						},
+						onWatchSetting: [
+							{
+								data: (newVal, oldVal, component) => {
+									console.log(newVal, oldVal, component);
+								},
+							},
+						],
+					},
+				},
+				{
+					initStyle:
+						"height: 24%; width: 16%; position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 71%; left: 5%;",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg",
+					},
+					model: {},
+					default: null,
+					id: "drag-pmku7p087gwi",
+				},
+				{
+					initStyle:
+						"position: absolute; overflow: hidden; border: 2px solid rgb(3, 61, 55); top: 10%; right: 4.5%; color: rgb(8, 170, 153); z-index: 1;",
+					options: {
+						text: "告警数据已更新,请注意查收!!!",
+					},
+					model: {},
+					default: null,
+					id: "drag-hsrhgh7gcb6k",
+				},
+				{
+					componentName: "q-tabs",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["容器"],
+					id: "q-tabs-oq8hj6jg0w61",
+					initStyle:
+						"height: 84.8%; width: 22.8%; position: absolute; left: 22%; top: 10%;",
+					options: {
+						tabs: [
+							{
+								title: "正态分布",
+								id: "test1",
+							},
+							{
+								title: "GIS动态",
+								id: "test2",
+							},
+						],
+					},
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "切换选项卡",
+									eventType: "switchTAB",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "title",
+									key: "title",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+								{
+									type: "textarea",
+									label: "文本框",
+									options: {
+										width: "100%",
+										maxLength: 0,
+										defaultValue: "",
+										rows: 4,
+										clearable: false,
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										placeholder: "请输入",
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "id",
+									key: "id",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "选项卡",
+					type: "容器",
+					model: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "切换选项卡",
+									eventType: "switchTAB",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "title",
+									key: "title",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+								{
+									type: "textarea",
+									label: "文本框",
+									options: {
+										width: "100%",
+										maxLength: 0,
+										defaultValue: "",
+										rows: 4,
+										clearable: false,
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										placeholder: "请输入",
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "id",
+									key: "id",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+				},
+				{
+					initStyle:
+						"height: 100%; border: 2px solid rgb(3, 61, 55);",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg",
+					},
+					model: {},
+					default: null,
+					id: "drag-hke0o1cj9liz",
+				},
+				{
+					initStyle:
+						"height: 100%; border: 2px solid rgb(3, 61, 55);",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
+					},
+					model: {},
+					default: null,
+					id: "drag-8e24nd8l8ap9",
+				},
+				{
+					componentName: "q-tabs",
+					createTime: "2022-06-20T07:49:43.975Z",
+					default: null,
+					description: "",
+					group: ["容器"],
+					id: "q-tabs-vmid2ibz6k9r",
+					initStyle:
+						"height: 30%; width: 50%; position: absolute; right: 4.5%; top: 10%;",
+					options: {
+						tabs: [
+							{
+								title: "桑基划分",
+								id: "test1",
+							},
+							{
+								title: "GIS动态",
+								id: "test2",
+							},
+						],
+					},
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "切换选项卡",
+									eventType: "switchTAB",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "title",
+									key: "title",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+								{
+									type: "textarea",
+									label: "文本框",
+									options: {
+										width: "100%",
+										maxLength: 0,
+										defaultValue: "",
+										rows: 4,
+										clearable: false,
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										placeholder: "请输入",
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "id",
+									key: "id",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					text: "选项卡",
+					type: "容器",
+					model: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "切换选项卡",
+									eventType: "switchTAB",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "title",
+									key: "title",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+								{
+									type: "textarea",
+									label: "文本框",
+									options: {
+										width: "100%",
+										maxLength: 0,
+										defaultValue: "",
+										rows: 4,
+										clearable: false,
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										placeholder: "请输入",
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "id",
+									key: "id",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+				},
+				{
+					initStyle:
+						"height: 100%; border: 2px solid rgb(3, 61, 55);",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654840806851.jpg",
+					},
+					model: {},
+					default: null,
+					id: "drag-kv0byj7aro7p",
+				},
+				{
+					initStyle:
+						"height: 100%; border: 2px solid rgb(3, 61, 55);",
+					options: {
+						src: "http://192.168.21.92:3000/v-component/src/assets/1654853215692.png",
+					},
+					model: {},
+					default: null,
+					id: "drag-l209tsce62zm",
+				},
+				{
+					id: "q-echarts-stack-are-kv0byj7aro7p",
+					componentName: "q-echarts-stack-are",
+					type: "图元",
+					text: "gl图元",
+					group: ["图元"],
+					createTime: "2022-07-12T07:06:24.976Z",
+					_initStyle: "",
+					initStyle: "",
+					description: "图元组件,可以编写图元信息",
+					options: [],
+					schema: {
+						eventSpecification: {
+							inputEvent: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputEvent: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					},
+					model: {
+						onMessageMeta: {
+							changeInfo: [
+								(e) => {
+									this.data.splice(0, Infinity);
+									Object.assign(this.data, e.body);
+									setTimeout(() => {
+										this.initCharts();
+									}, 500);
+								},
+							],
+						},
+						onDOMEvent: {},
+						onWatchSetting: {},
+					},
+				},
+			],
+			dynamicHTML: `
+				<div
+				style="
+					position: absolute;
+					z-index: -1;
+					width: 100vw;
+					height: 100vh;
+					overflow: hidden;
+				"
+				>
+				<q-image
+					data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/bg.png"}'
+					id="q-image-ouky34zcvhun"
+				></q-image>
+				</div>
+				<div style="position: absolute; top: 0; width: 100%">
+				<q-text 
+					style="
+					text-align: center;
+					font-size: 30px;
+					color: white;
+					line-height: 66px;
+					"
+					id="q-text-ka5ue9mx5qd7"
+				></q-text>
+				</div>
+				<div
+				style="
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 10%;
+					left: 5%;
+					color: #08aa99;
+					z-index: 1;
+				"
+				>
+				<q-text
+					data-data='疫情曲线'
+					id="q-text-dvoly35smyer"
+				></q-text>
+				</div>
+				<div
+				style="
+					height: 24%;
+					width: 16%;
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 10%;
+					left: 5%;
+				"
+				>
+				<q-image
+					data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829140850.jpg"}'
+					id="q-image-y3md2bby3y37"
+				></q-image>
+				</div>
+				<div
+				style="
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 40%;
+					left: 5%;
+					color: #08aa99;
+					z-index: 1;
+				"
+				>
+				<q-text
+					data-data='图谱分析'
+					id="q-text-3wgumvizrx6r"
+				></q-text>
+				</div>
+				<div
+				style="
+					height: 24%;
+					width: 16%;
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 40%;
+					left: 5%;
+				"
+				>
+				<q-image
+					data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829578132.jpg"}'
+					id="q-image-yfs1wndkejkl"
+				></q-image>
+				</div>
+				<div
+				style="
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 71%;
+					left: 5%;
+					color: #08aa99;
+					z-index: 1;
+				"
+				>
+				<q-text
+					data-data='离散分析'
+					id="q-text-he2cuh2mchr0"
+				></q-text>
+				</div>
+				<div
+				style="
+					height: 24%;
+					width: 16%;
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 71%;
+					left: 5%;
+				"
+				>
+				<q-image
+					data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654829505010.jpg"}'
+					id="q-image-pmku7p087gwi"
+				></q-image>
+				</div>
+				<div
+				style="
+					position: absolute;
+					overflow: hidden;
+					border: 2px solid #033d37;
+					top: 10%;
+					right: 4.5%;
+					color: #08aa99;
+					z-index: 1;
+				"
+				>
+				<q-marquee-text
+					data-data='{"text":"告警数据已更新,请注意查收!!!"}'
+					id="q-marquee-text-hsrhgh7gcb6k"
+				></q-marquee-text>
+				</div>
+				<div
+				style="
+					height: 84.8%;
+					width: 22.8%;
+					position: absolute;
+					left: 22%;
+					top: 10%;
+				"
+				>
+				<q-tabs
+					id="q-tabs-oq8hj6jg0w61"
+					data-data='{"tabs":[{"title":"正态分布","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
+				>
+					<div slot="test1" style="height: 100%; border: 2px solid #033d37">
+					<q-image
+						data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1655104783919.jpg"}'
+						id="drag-hke0o1cj9liz"
+					></q-image>
+					</div>
+					<div slot="test2" style="height: 100%; border: 2px solid #033d37">
+					<q-image
+						data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
+						id="drag-8e24nd8l8ap9"
+					></q-image>
+					</div>
+				</q-tabs>
+				</div>
+				<div
+				style="
+					height: 30%;
+					width: 50%;
+					position: absolute;
+					right: 4.5%;
+					top: 10%;
+				"
+				>
+				<q-tabs
+					id="q-tabs-vmid2ibz6k9r"
+					data-data='{"tabs":[{"title":"桑基划分","id":"test1"},{"title":"GIS动态","id":"test2"}]}'
+				>
+					<div slot="test1" style="height: 100%; border: 2px solid #033d37">
+					<q-echarts-stack-are 
+						id="q-echarts-stack-are-kv0byj7aro7p"
+					></q-echarts-stack-are>
+					</div>
+					<div slot="test2" style="height: 100%; border: 2px solid #033d37">
+					<q-image
+						slot="test2"
+						data-data='{"src":"http://192.168.21.92:3000/v-component/src/assets/1654853215692.png"}'
+						id="q-image-l209tsce62zm"
+					></q-image>
+					</div>
+				</q-tabs>
+				</div>
+				<div
+				style="
+					height: 54%;
+					width: 50%;
+					position: absolute;
+					right: 4.5%;
+					top: 41%;
+					border: 2px solid #033d37;
+				"
+				>
+				<q-echarts-gl id="q-echarts-gl-jx345jn55ug2"></q-echarts-gl>
+				</div>
+				<q-router-config
+				data-component="true"
+				id="q-router-config-741zj09abdcs"
+				data-parent-id="inner-dropzone" 
+				data-data='{
+				"router": {
+					"q-text-ka5ue9mx5qd7": {
+						"title": "text1-text2",
+						"src": "q-text-ka5ue9mx5qd7",
+						"trigger": [
+							"click"
+						],
+						"receive": [
+							{
+								"target": "q-text-dvoly35smyer",
+								"event": [
+									"changeInfo"
+								],
+								"script": "function (data) { return data; }"
+							}
+						]
+					},
+					"q-text-dvoly35smyer": {
+						"title": "text1-text2",
+						"src": "q-text-dvoly35smyer",
+						"trigger": [
+							"click"
+						],
+						"receive": [
+							{
+								"target": "q-text-ka5ue9mx5qd7",
+								"event": [
+									"changeInfo"
+								],
+								"script": "function (data) {return data; }"
+							},
+							{
+								"target": "q-text-ka5ue9mx5qd7",
+								"event": [
+									"testInfo"
+								],
+								"script": "function (data) {return data; }"
+							}
+						]
+					},
+					"q-echarts-gl-jx345jn55ug2": {
+						"title": "echarts1-echarts2",
+						"src": "q-echarts-gl-jx345jn55ug2",
+						"trigger": [
+							"datazoom"
+						],
+						"receive": [
+							{
+								"target": "q-echarts-stack-are-kv0byj7aro7p",
+								"event": [
+									"changeInfo"
+								],
+								"script": "function (data) { return data.changeData; }"
+							}
+						]
+					}
+				}
+				}'
+				></q-router-config>
+			`,
+		};
+
+		/**
+		 * runtime库函数
+		 */
+		import BootStrap from "../v-component/src/types/runtime/BootStrap";
+		window.initRouter = () => {
+			const websiteConstruction = document.querySelector(
+				"website-construction"
+			);
+			const { path } = JSON.parse(websiteConstruction.dataset.data);
+			const handlerPath = (path) => {
+				path.forEach((item) => {
+					const div = document.createElement("div");
+					div.slot = item.slotName;
+					div.style.cssText =
+						"width: 100%; height: 100%; overflow: hidden; position: absolute";
+					websiteConstruction.appendChild(div);
+					switch (item.type) {
+						case "config":
+							new BootStrap(div, config);
+							break;
+						case "url":
+							const iframe = document.createElement("iframe");
+							iframe.src = item.url;
+							iframe.style.cssText =
+								"width: 100%; height: 100%; overflow: hidden; border: 0";
+							div.appendChild(iframe);
+							break;
+					}
+					if (item.children && item.children.length) {
+						handlerPath(item.children);
+					}
+				});
+			};
+			handlerPath(path);
+		};
+	</script>
+</html>

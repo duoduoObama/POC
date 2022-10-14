@@ -116,7 +116,7 @@ export class QTable extends Component {
                     </template>
                     </div>
                 </template>
-                <template v-else-if="column.dataIndex === 'operation'">
+                  <template v-else-if="column.dataIndex === 'operation'">
                     <div class="editable-row-operations">
                     <span v-if="editableData[record.key]">
                         <a-typography-link @click="save(record.key)">保存</a-typography-link>

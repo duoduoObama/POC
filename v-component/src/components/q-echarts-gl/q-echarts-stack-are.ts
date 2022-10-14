@@ -1,12 +1,12 @@
 import { html, css, PropertyValueMap } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
-import * as echarts from 'echarts';
-import { Component } from '../../types/Component';
+import * as echarts from 'echarts'; 
 import { cloneDeep, isObject } from 'lodash-es';
-import { domAssemblyCustomEvents } from '../../util/base-method';
-import { IDOMEventMeta, IWatchSetting } from '../../types/IComponent';
+import { domAssemblyCustomEvents } from '../../util/base-method'; 
 import gl from './q-echarts-gl.json';
 import { deepWatchModelProxy } from '../../util/utils';
+import { Component } from '../../types/runtime/Component';
+import { IDOMEventMeta, IWatchSetting } from '../../types/runtime/IModelSchema';
 // import "https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js" 
 
 /**
@@ -187,10 +187,10 @@ export class QEchartsStackAre extends Component {
       get options() {
         return cloneDeep(self.data);
       },
-      get schema() {
+      get iovSchema() {
         return {
           eventSpecification: {
-            inputEvent: [
+            inputMessage: [
               {
                 text: "更改组件数据",
                 eventType: "changeInfo",
@@ -198,7 +198,7 @@ export class QEchartsStackAre extends Component {
                 messageDemo: "",
               },
             ],
-            outputEvent: [
+            outputMessage: [
               {
                 text: "组件点击数据",
                 eventType: "click",

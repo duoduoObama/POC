@@ -166,5 +166,5 @@ export interface IPagination {
     current: number,
     pageSize: number,
     total: number,
-    [key: string]: number | string
+    [key: string]: number | string | string[]
 }

@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@ant-design/icons-vue': ^6.1.0
   '@surely-vue/table': ^2.4.0
+  '@types/jquery': ^3.5.14
   '@types/lodash-es': ^4.17.6
   '@types/node': ^17.0.42
   '@vitejs/plugin-vue': ^2.3.3
@@ -11,6 +12,7 @@ specifiers:
   echarts: 5.3.2
   echarts-gl: ^2.0.9
   fetch-jsonp: ^1.2.1
+  jquery: ^3.6.0
   lit: ^2.0.2
   lodash-es: ^4.17.21
   moveable: ^0.30.0
@@ -33,6 +35,7 @@ dependencies:
   echarts: 5.3.2
   echarts-gl: 2.0.9_echarts@5.3.2
   fetch-jsonp: 1.2.1
+  jquery: 3.6.0
   lit: 2.2.5
   lodash-es: 4.17.21
   moveable: 0.30.0
@@ -43,6 +46,7 @@ dependencies:
   vuex: 4.0.2_vue@3.2.37
 
 devDependencies:
+  '@types/jquery': 3.5.14
   '@types/node': 17.0.42
   sass: 1.52.3
   typescript: 4.7.3
@@ -173,6 +177,12 @@ packages:
     resolution: {integrity: sha512-A79HEEiwXTFtfY+Bcbo58M2GRYzCr9itHWzbzHVFNEYCcoU/MMGwYYf721gBrnhpj1s6RGVVha/IgNFnR0Iw/Q==}
     dev: false
 
+  /@types/jquery/3.5.14:
+    resolution: {integrity: sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==}
+    dependencies:
+      '@types/sizzle': 2.3.3
+    dev: true
+
   /@types/lodash-es/4.17.6:
     resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
     dependencies:
@@ -185,6 +195,10 @@ packages:
 
   /@types/node/17.0.42:
     resolution: {integrity: sha512-Q5BPGyGKcvQgAMbsr7qEGN/kIPN6zZecYYABeTDBizOsau+2NMdSVTar9UQw21A2+JyA2KRNDYaYrPB0Rpk2oQ==}
+    dev: true
+
+  /@types/sizzle/2.3.3:
+    resolution: {integrity: sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==}
     dev: true
 
   /@types/trusted-types/2.0.2:
@@ -784,6 +798,10 @@ packages:
   /isobject/4.0.0:
     resolution: {integrity: sha512-S/2fF5wH8SJA/kmwr6HYhK/RI/OkhD84k8ntalo0iJjZikgq1XFvR5M8NPT1x5F7fBwCG3qHfnzeP/Vh/ZxCUA==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /jquery/3.6.0:
+    resolution: {integrity: sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==}
     dev: false
 
   /js-tokens/4.0.0:

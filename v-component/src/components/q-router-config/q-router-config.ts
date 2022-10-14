@@ -31,8 +31,7 @@ import Popconfirm from "ant-design-vue/lib/popconfirm";
 import ConfigProvider from "ant-design-vue/lib/config-provider";
 import antdCss from "ant-design-vue/dist/antd.min.css";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-import axios from "axios";
-import { Component } from "../../types/Component";
+import axios from "axios"; 
 import {
   IComponent,
   IEventSpecificationEvent,
@@ -78,9 +77,7 @@ export class QRouterConfig extends Component {
 
   constructor() {
     super();
-    this.initModel();
-    this.receiveInfo(this.model.eventSpecification);
-    domAssemblyCustomEvents(this, this.model.onDOMEvent);
+    this.initModel(); 
   }
 
   /**

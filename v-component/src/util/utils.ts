@@ -1,5 +1,5 @@
-import { cloneDeep, isFunction, isObject } from "lodash-es";
-import { ISchema, IWatchSetting } from "../types/IComponent";
+import { cloneDeep, isFunction, isObject } from "lodash-es";  
+import { ISchema, IWatchSetting } from "../types/runtime/IModelSchema";
 
 /**
  * 生成hashid
@@ -94,17 +94,16 @@ export function getTargetElement(target = "") {
 /**
  * 深度监听
  * @param obj 代理对象
- * @param cb 回调
  * @returns 
  */
 export function deepWatchModelProxy(obj: ISchema) {
-
+    
     if (isObject(obj) && !isFunction(obj)) {
 
         for (let key of Object.keys(obj)) {
             if (isObject(obj[key]) && !isFunction(obj[key])) {
-                try {
-                    obj[key] = deepWatchModelProxy(obj[key]) as any;
+                try { 
+                    obj[key] = deepWatchModelProxy(obj[key]);
                 } catch (error) {
                     // console.log(error);
                 }
@@ -122,18 +121,17 @@ export function deepWatchModelProxy(obj: ISchema) {
          * @param {any} value 值
          * @param {Object} receiver this
          */
-        set: function (target: any, key, value: { [key: string]: {} }, receiver) {
-
+        set: function (target: any, key, value: { [key: string]: {} }, receiver) { 
             const copyValue = cloneDeep(target[key]);
 
-            if (isObject(value) && !isFunction(obj)) {
+            if (isObject(value) && !isFunction(value)) {
                 value = deepWatchModelProxy(value as any);
             }
 
             const onWatchFn = obj.onWatchSetting as IWatchSetting || {};
             const propertyWatch = onWatchFn[key as string] ?? [];
             propertyWatch.forEach((callBack: Function) => {
-                callBack(value, copyValue, obj);
+                callBack && callBack(value, copyValue, obj);
             });
             return Reflect.set(target, key, value, receiver);
 
@@ -143,4 +141,8 @@ export function deepWatchModelProxy(obj: ISchema) {
         }
 
     });
-} 
+}
+
+export const mergeModel = (model: ISchema, changeModel: any) => {
+    return Object.defineProperties(model, Object.getOwnPropertyDescriptors(changeModel));
+}

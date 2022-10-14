@@ -1,17 +1,11 @@
-import { html, css } from "lit";
+import { css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { isArray, isString, cloneDeep, isObject } from "lodash-es";
-import { Component } from "../../types/Component";
-import {
-  IDOMEventMeta,
-  IEventSpecificationEvent,
-  IMessage,
-  ISchema,
-  IWatchSetting,
-} from "../../types/IComponent";
+import { cloneDeep } from "lodash-es";
+import { Component } from "../../types/runtime/Component";
+import { IMessage } from "../../types/runtime/IMessage";
+import { ISchema } from "../../types/runtime/IModelSchema";
 import { domAssemblyCustomEvents } from "../../util/base-method";
-
-import { deepWatchModelProxy } from "../../util/utils";
+import { deepWatchModelProxy, mergeModel } from "../../util/utils";
 import { IQtextOptions } from "./IQText";
 
 /**
@@ -20,198 +14,157 @@ import { IQtextOptions } from "./IQText";
  */
 @customElement("q-text")
 export class QText extends Component {
-  static styles = css`
-    :host {
-      display: block;
-    }
-    p {
-      margin: 0;
-    }
-  `;
+	static styles = css`
+		:host {
+			display: block;
+		}
+		p {
+			margin: 0;
+		}
+	`;
 
-  /**
-   * 绑定data数据
-   */
-  @property({ type: Object, attribute: "data-data" })
-  data: IQtextOptions = { text: "文本数据1" };
+	/**
+	 * 绑定data数据
+	 */
+	@property({ type: Object, attribute: "data-data" })
+	text: string = "文本数据1";
 
-  /**
-   * 数据模型
-   */
-  model!: ISchema;
+	/**
+	 * 数据模型
+	 */
+	model!: ISchema;
 
-  constructor() {
-    super();
-    this.initModel();
-    domAssemblyCustomEvents(this, this.model.onDOMEvent);
-  }
+	constructor() {
+		super();
+		this.initModel();
+		domAssemblyCustomEvents(this, this.model.onDOMEvent);
+	}
 
-  render() {
-    const { text } = this.data;
-    return html` <p @click=${this.clickFont}>${text}</p> `;
-  }
+	render() {
+		return html` <p @click=${this.clickFont}>${this.text}</p> `;
+	}
 
-  clickFont(e: Event) {
-    this.onSendMessage(e, this.data, "text");
-  }
+	clickFont(e: Event) {
+		const message: IMessage = {
+			header: {
+				src: this.id,
+				dst: "",
+				srcType: e.type,
+				dstType: "",
+			},
+			body: this.text,
+		};
+		this.sendMessage(message);
+	}
 
-  onSendMessage(e: Event, node: any, index: number | string) {
-    const message: IMessage = {
-      header: {
-        src: this.id,
-        dst: "",
-        srcType: e.type,
-        dstType: "",
-      },
-      body: cloneDeep(this.data),
-    };
-    this.sendMessage(message);
-  }
+	initModel(): void {
+		const self = this;
 
-  initModel(): void {
-    const self = this;
-
-    this.model = deepWatchModelProxy({
-      get id() {
-        return cloneDeep(self.id);
-      },
-      get componentName() {
-        return "q-text";
-      },
-      get type() {
-        return "文本";
-      },
-      get text() {
-        return "文本";
-      },
-      get group() {
-        return ["文本"];
-      },
-      get createTime() {
-        return new Date();
-      },
-      get image() {
-        return "";
-      },
-      _initStyle: "",
-      get initStyle() {
-        return cloneDeep(this._initStyle);
-      },
-      set initStyle(value) {
-        this._initStyle = value;
-      },
-      get description() {
-        return "文本组件,可以编写文字信息";
-      },
-      get options() {
-        return cloneDeep(self.data);
-      },
-      get schema() {
-        return {
-          eventSpecification: {
-            inputEvent: [
-              {
-                text: "更改组件数据",
-                eventType: "changeInfo",
-                messageSchema: "",
-                messageDemo: "",
-              },
-            ],
-            outputEvent: [
-              {
-                text: "组件点击数据",
-                eventType: "click",
-                messageSchema: "",
-                messageDemo: "文本数据1",
-              },
-            ],
-          },
-          optionsView: {
-            list: [
-              {
-                type: "input",
-                label: "输入框",
-                options: {
-                  type: "text",
-                  width: "100%",
-                  defaultValue: "",
-                  placeholder: "请输入",
-                  clearable: false,
-                  maxLength: 0,
-                  prepend: "",
-                  append: "",
-                  tooptip: "",
-                  hidden: false,
-                  disabled: false,
-                  dynamicHide: false,
-                  dynamicHideValue: "",
-                },
-                model: "text",
-                key: "text",
-                rules: [
-                  { required: false, message: "必填项", trigger: ["blur"] },
-                ],
-              },
-            ],
-          },
-        };
-      },
-      _onMessageMeta: {
-        changeInfo: [function (e: IMessage) {
-          console.log(e, self);
-          self.data = { text: String(e.body) };
-        }]
-      },
-      _onDOMEvent: {
-        onclick: [function (e: PointerEvent) {
-          console.log("domevent", e)
-        }]
-      },
-      _onWatchSetting: {
-        data: [function (newVal: any, oldVal: any, context: any) {
-          console.log(newVal, oldVal, context);
-        }]
-      },
-      get onMessageMeta() {
-        return cloneDeep(this._onMessageMeta);
-      },
-      set onMessageMeta(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onMessageMeta = value;
-      },
-      get onDOMEvent() {
-        return cloneDeep(this._onDOMEvent);
-      },
-      set onDOMEvent(value) {
-        if (!isObject(value)) {
-          return;
-        }
-        domAssemblyCustomEvents(self, value as IDOMEventMeta);
-        this._onDOMEvent = value;
-      },
-      get onWatchSetting() {
-        return cloneDeep(this._onWatchSetting);
-      },
-      set onWatchSetting(value: IWatchSetting) {
-        if (!isObject(value)) {
-          return;
-        }
-        this._onWatchSetting = value;
-      },
-      get data() {
-        return cloneDeep(self.data);
-      },
-      set data(value) {
-        self.data = value;
-      },
-    });
-  }
+		this.model = deepWatchModelProxy(
+			mergeModel(this.model, {
+				get componentName() {
+					return "q-text";
+				},
+				get type() {
+					return "文本";
+				},
+				get text() {
+					return "文本";
+				},
+				get group() {
+					return ["文本"];
+				},
+				get image() {
+					return "";
+				},
+				get description() {
+					return "文本组件,可以编写文字信息";
+				},
+				get schema() {
+					return {
+						eventSpecification: {
+							inputMessage: [
+								{
+									text: "更改组件数据",
+									eventType: "changeInfo",
+									messageSchema: "",
+									messageDemo: "",
+								},
+							],
+							outputMessage: [
+								{
+									text: "组件点击数据",
+									eventType: "click",
+									messageSchema: "",
+									messageDemo: "文本数据1",
+								},
+							],
+						},
+						optionsView: {
+							list: [
+								{
+									type: "input",
+									label: "输入框",
+									options: {
+										type: "text",
+										width: "100%",
+										defaultValue: "",
+										placeholder: "请输入",
+										clearable: false,
+										maxLength: 0,
+										prepend: "",
+										append: "",
+										tooptip: "",
+										hidden: false,
+										disabled: false,
+										dynamicHide: false,
+										dynamicHideValue: "",
+									},
+									model: "text",
+									key: "text",
+									rules: [
+										{
+											required: false,
+											message: "必填项",
+											trigger: ["blur"],
+										},
+									],
+								},
+							],
+						},
+					};
+				},
+				_onMessageMeta: {
+					changeInfo: [
+						function (e: IMessage) {
+							console.log(e, self);
+							self.text = String(e.body);
+						},
+					],
+				},
+				_onDOMEvent: {
+					onclick: [self.clickFont],
+				},
+				_onWatchSetting: {
+					data: [
+						function (newVal: any, oldVal: any, context: any) {
+							console.log(newVal, oldVal, context);
+						},
+					],
+				},
+				get data() {
+					return self.text;
+				},
+				set data(value) {
+					self.text = value;
+				},
+			})
+		);
+	}
 }
 
 declare global {
-  interface HTMLElementTagNameMap {
-    "q-text": QText;
-  }
+	interface HTMLElementTagNameMap {
+		"q-text": QText;
+	}
 }
