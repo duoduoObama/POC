@@ -3,7 +3,7 @@ export default (
   filename
 ) => `console.log('before', window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__)
 
-const base = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || 'http://dev.xtrfr.cn:4173'
+const base = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
 
 async function bootstrap() {
   // 异步等到promise resolve才会去调用mount，保证mount的时候window上一定有函数。
